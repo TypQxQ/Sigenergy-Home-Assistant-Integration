@@ -51,7 +51,7 @@ modbus:
         address: 30005
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -65,7 +65,7 @@ modbus:
         address: 30007
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -130,7 +130,7 @@ modbus:
         address: 30015
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -143,7 +143,7 @@ modbus:
         address: 30017
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -156,7 +156,7 @@ modbus:
         address: 30019
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -169,7 +169,7 @@ modbus:
         address: 30021
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -182,7 +182,7 @@ modbus:
         address: 30023
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -195,7 +195,7 @@ modbus:
         address: 30025
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -392,7 +392,7 @@ modbus:
         address: 30052
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -408,7 +408,7 @@ modbus:
         address: 30054
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -424,7 +424,7 @@ modbus:
         address: 30056
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -438,7 +438,7 @@ modbus:
         address: 30058
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -452,7 +452,7 @@ modbus:
         address: 30060
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -466,7 +466,7 @@ modbus:
         address: 30062
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -1707,17 +1707,17 @@ modbus:
         device_class: power
         scale: 0.001
 
-      - name: Sigen ESS max discharging limit
-      # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
-        unique_id: sigen_ess_max_discharging_limit
-        device_address: 247
-        address: 40034
-        input_type: holding
-        data_type: int32
-        precision: 1
-        unit_of_measurement: kW
-        device_class: power
-        scale: 0.001
+      # - name: Sigen ESS max discharging limit
+      # # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
+      #   unique_id: sigen_ess_max_discharging_limit
+      #   device_address: 247
+      #   address: 40034
+      #   input_type: holding
+      #   data_type: int32
+      #   precision: 1
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   scale: 0.001
 
       - name: Sigen PV max power limit
       # This register will take effect when Remote EMS control mode (40031) is 3, 4, 5 or 6.
@@ -2050,27 +2050,93 @@ template:
           {% endif %}
         icon: mdi:eye
 
+      - name: Sigen Description Set Unlimited
+        unique_id: sigen_description_set_unlimited
+        state: To set the value to unlimited, set the value to -0.
   
+      - name: Sigen Grid active power
+        unique_id: sigen_grid_active_power
+        state: "{{ states('sensor.sigen_grid_phase_a_active_power') | float + states('sensor.sigen_grid_phase_b_active_power') | float + states('sensor.sigen_grid_phase_c_active_power') | float |int }}"
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        icon: mdi:power
+
+      - name: Sigen Grid reactive power
+        unique_id: sigen_grid_reactive_power
+        state: "{{ states('sensor.sigen_grid_phase_a_reactive_power') | float + states('sensor.sigen_grid_phase_b_reactive_power') | float + states('sensor.sigen_grid_phase_c_reactive_power') | float |int }}"
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        icon: mdi:power
+
+      - name: Sigen Daily energy production
+        unique_id: sigen_daily_energy_production
+        state: "{{ ((states('sensor.sigendev_daily_export_energy') | float + states('sensor.sigendev_daily_charge_energy') | float - states('sensor.sigendev_daily_discharge_energy') | float - states('sensor.sigendev_daily_import_energy') | float) | round(1)) | int }}"
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        icon: mdi:power
+
+      # - Sigen Plant active power calculation
+      #   unique_id: sigen_plant_active_power_calculation
+      #   state: "{{ states('sensor.sigen_plant_phase_a_active_power') | float + states('sensor.sigen_plant_phase_b_active_power') | float + states('sensor.sigen_plant_phase_c_active_power') | float |int }}"
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   state_class: measurement
+      #   icon: mdi:power
+
+      - name: Sigen PV1 power
+        unique_id: sigendev_pv1_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: "{{ (states('sensor.sigendev_pv1_voltage') | float * states('sensor.sigendev_pv1_current') | float) |int }}"
+        icon: mdi:solar-power
+
+      - name: Sigen PV2 power
+        unique_id: sigendev_pv2_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: "{{ (states('sensor.sigendev_pv2_voltage') | float * states('sensor.sigendev_pv2_current') | float) |int }}"
+        icon: mdi:solar-power
+
+      - name: Sigen PV3 power
+        unique_id: sigendev_pv3_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: "{{ (states('sensor.sigendev_pv3_voltage') | float * states('sensor.sigendev_pv3_current') | float) |int }}"
+        icon: mdi:solar-power
+
+      - name: Sigen PV4 power
+        unique_id: sigendev_pv4_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: "{{ (states('sensor.sigendev_pv4_voltage') | float * states('sensor.sigendev_pv4_current') | float) |int }}"
+        icon: mdi:solar-power
 
 ################################################
 # Create input option selectors
 ################################################
 input_select:
   set_sigen_plant_run_mode:
-    name: Sigen Plant Run mode
+    name: Set Sigen Plant Run mode
     options:
       - "Enabled"
       - "Shutdown"
 
   set_sigen_remote_ems:
-    name: Sigen Remote EMS
+    name: Set Sigen Remote EMS
     options:
       - "Disabled (default, uses the app)"
       - "Enabled (Home Assistant control)"
     icon: mdi:remote
 
   set_sigen_remote_ems_control_mode:
-    name: Remote EMS control mode
+    name: Set Sigen Remote EMS control mode
     options:
       - "PCS remote control"
       - "Standby"
@@ -2083,13 +2149,13 @@ input_select:
     icon: mdi:battery-unknown
 
   set_sigen_run_mode:
-    name: Sigen Run mode
+    name: Set Sigen Run mode
     options:
       - "Enabled"
       - "Shutdown"
 
   set_sigen_indenpendent_phase_power_control:
-    name: Sigen Independent phase power control
+    name: Set Sigen Independent phase power control
     options:
       - "Disabled"
       - "Enabled"
@@ -2099,18 +2165,18 @@ input_select:
 ################################################
 input_text:
   set_sigen_ess_max_charging_limit:
-    name: Sigen ESS max charging limit
-    pattern: "^(?:-0|[1-9]\d*|0)$"
+    name: Set Sigen ESS max charging limit
+    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:battery-positive
 
   set_sigen_ess_max_discharging_limit:
-    name: Sigen ESS max discharging limit
-    pattern: "^(?:-0|[1-9]\d*|0)$"
+    name: Set Sigen ESS max discharging limit
+    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:battery-negative
 
   set_sigen_pv_max_power_limit:
-    name: Sigen PV max power limit
-    pattern: "^(?:-0|[1-9]\d*|0)$"
+    name: Set Sigen PV max power limit
+    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:solar-power
 
   
@@ -2393,3 +2459,97 @@ automation:
               Enabled
             {% endif %}
     mode: single
+
+  - id: "automation_sigen_ess_max_charging_limit_input_text_action"
+    alias: "sigen ESS max charging limit input text action"
+    description: "Sigen ESS max charging limit action"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_text.set_sigen_ess_max_charging_limit
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40032
+          value: "{{ states('input_text.set_sigen_ess_max_charging_limit') |float |int }}"
+    mode: single
+
+  - id: "automation_sigen_ess_max_charging_limit_input_text_update"
+    alias: "sigen ESS max charging limit input text update"
+    description: "Updates ESS max charging limit input text"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_ess_max_charging_limit
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_ess_max_charging_limit', 'unavailable') }}"
+    action:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.set_sigen_ess_max_charging_limit
+        data:
+          value: "{{ states('sensor.sigen_ess_max_charging_limit') }}"
+    mode: single
+
+  - id: "automation_sigen_ess_max_discharging_limit_input_text_action"
+    alias: "sigen ESS max discharging limit input text action"
+    description: "Sigen ESS max discharging limit action"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_text.set_sigen_ess_max_discharging_limit
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40034
+          value: "{{ states('input_text.set_sigen_ess_max_discharging_limit') |float |int }}"
+    mode: single
+
+  - id: "automation_sigen_ess_max_discharging_limit_input_text_update"
+    alias: "sigen ESS max discharging limit input text update"
+    description: "Updates ESS max discharging limit input text"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_ess_max_discharging_limit
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_ess_max_discharging_limit', 'unavailable') }}"
+    action:
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.set_sigen_ess_max_discharging_limit
+        data:
+          value: "{{ states('sensor.sigen_ess_max_discharging_limit') }}"
+    mode: single
+
+  - id: "automation_sigen_pv_max_power_limit_input_text_action"
+    alias: "sigen PV max power limit input text action"
+    description: "Sigen PV max power limit action"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_text.set_sigen_pv_max_power_limit
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40036
+          value: "{{ states('input_text.set_sigen_pv_max_power_limit') |float |int }}"
+    mode: single
+    
+
+
