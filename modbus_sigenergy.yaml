@@ -1438,7 +1438,7 @@ modbus:
 
 
 ################################################
-# Read/Write registers
+# Read/Write registers for Sigen Plant
 ################################################
       - name: Sigen Plant Start/Stop code
       # 0: Stop
@@ -1448,7 +1448,218 @@ modbus:
         address: 40000
         input_type: holding
         data_type: uint16
+
+      - name: Sigen Active power fixed adjustment target value
+        unique_id: sigen_active_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40001
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen Reactive power fixed adjustment target value
+        unique_id: sigen_reactive_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40003
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        scale: 0.001
+
+      - name: Sigen Active power percentage adjustment target value
+      # Range:[-100.00,100.00]
+        unique_id: sigen_active_power_percentage_adjustment_target_value
+        device_address: 247
+        address: 40005
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Q/S adjustment target value
+      # Range:[-60.00,60.00]
+        unique_id: sigen_q_s_adjustment_target_value
+        device_address: 247
+        address: 40006
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Power factor adjustment target value
+      # Range: [-1, -0.8] U [0.8, 1 ]
+        unique_id: sigen_power_factor_adjustment_target_value
+        device_address: 247
+        address: 40007
+        input_type: holding
+        data_type: int16
+        precision: 1
+        scale: 0.001
+
+      - name: Sigen Phase A active power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_a_active_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40008
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen Phase B active power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_b_active_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40010
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen Phase C active power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_c_active_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40012
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen Phase A reactive power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_a_reactive_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40014
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVar
+        scale: 0.01
+
+      - name: Sigen Phase B reactive power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_b_reactive_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40016
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVar
+        scale: 0.01
+
+      - name: Sigen Phase C reactive power fixed adjustment target value
+      # Valid only when output type is L1/L2/L3/N.
+        unique_id: sigen_phase_c_reactive_power_fixed_adjustment_target_value
+        device_address: 247
+        address: 40018
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVar
+        scale: 0.01
+
+      - name: Sigen Phase A active power percentage adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        unique_id: sigen_phase_a_active_power_percentage_adjustment_target_value
+        device_address: 247
+        address: 40020
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Phase B active power percentage adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        unique_id: sigen_phase_b_active_power_percentage_adjustment_target_value
+        device_address: 247
+        address: 40021
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Phase C active power percentage adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        unique_id: sigen_phase_c_active_power_percentage_adjustment_target_value
+        device_address: 247
+        address: 40022
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Phase A Q/S adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        unique_id: sigen_phase_a_q_s_adjustment_target_value
+        device_address: 247
+        address: 40023
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+
+      - name: Sigen Phase B Q/S adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        unique_id: sigen_phase_b_q_s_adjustment_target_value
+        device_address: 247
+        address: 40024
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
       
+      - name: Sigen Phase C Q/S adjustment target value
+      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        unique_id: sigen_phase_c_q_s_adjustment_target_value
+        device_address: 247
+        address: 40025
+        input_type: holding
+        data_type: int16
+        precision: 1
+        unit_of_measurement: "%"
+        scale: 0.01
+      
+      # - name: Sigen Active power fixed adjustment upper limit
+      # # The actual power adjustment value will be the lesser of this register and register 40001.
+      #   unique_id: sigen_active_power_fixed_adjustment_upper_limit
+      #   device_address: 247
+      #   address: 40026
+      #   input_type: holding
+      #   data_type: int32
+      #   precision: 1
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   scale: 0.001
+
+      # - name: Sigen Active power percentage adjustment upper limit
+      # # The actual power adjustment value will be the lesser of this register and register 40005
+      #   unique_id: sigen_active_power_percentage_adjustment_upper_limit
+      #   device_address: 247
+      #   address: 40028
+      #   input_type: holding
+      #   data_type: int16
+      #   precision: 1
+      #   unit_of_measurement: "%"
+      #   scale: 0.01
+
       - name: Sigen Remote EMS code
       # 0: disabled
       # 1: enabled
@@ -1457,6 +1668,16 @@ modbus:
         unique_id: sigen_remote_ems_code
         device_address: 247
         address: 40029
+        input_type: holding
+        data_type: uint16
+
+      - name: Sigen Independent phase power control code
+      # Valid only when output type is L1/L2/L3/N. To enable independent phase control, this parameter must be enabled.
+      # 0: disabled
+      # 1: enabled
+        unique_id: sigen_independent_phase_power_control_code
+        device_address: 247
+        address: 40030
         input_type: holding
         data_type: uint16
 
@@ -1473,6 +1694,42 @@ modbus:
         address: 40031
         input_type: holding
         data_type: uint16
+
+      - name: Sigen ESS max charging limit
+      # [0, Rated ESS charging power]. This register will take effect when Remote EMS control mode (40031) is 3 or 4.
+        unique_id: sigen_ess_max_charging_limit
+        device_address: 247
+        address: 40032
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen ESS max discharging limit
+      # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
+        unique_id: sigen_ess_max_discharging_limit
+        device_address: 247
+        address: 40034
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
+
+      - name: Sigen PV max power limit
+      # This register will take effect when Remote EMS control mode (40031) is 3, 4, 5 or 6.
+        unique_id: sigen_pv_max_power_limit
+        device_address: 247
+        address: 40036
+        input_type: holding
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        scale: 0.001
 
 ################################################
 # Read/Write registers for device
@@ -1783,10 +2040,20 @@ template:
         state: "{{ states('input_select.set_sigen_remote_ems_control_mode') }}"
         icon: mdi:battery-unknown
 
+      - name: Sigen Independent phase power control
+        unique_id: sigen_independent_phase_power_control
+        state: >-
+          {% if ((states('sensor.sigen_independent_phase_power_control_code') |int) == "0") %}
+            Disabled
+          {% else %}
+            Enabled
+          {% endif %}
+        icon: mdi:eye
 
+  
 
 ################################################
-# Create input fields
+# Create input option selectors
 ################################################
 input_select:
   set_sigen_plant_run_mode:
@@ -1821,8 +2088,34 @@ input_select:
       - "Enabled"
       - "Shutdown"
 
+  set_sigen_indenpendent_phase_power_control:
+    name: Sigen Independent phase power control
+    options:
+      - "Disabled"
+      - "Enabled"
 
+################################################
+# Create text input fields
+################################################
+input_text:
+  set_sigen_ess_max_charging_limit:
+    name: Sigen ESS max charging limit
+    pattern: "^(?:-0|[1-9]\d*|0)$"
+    icon: mdi:battery-positive
 
+  set_sigen_ess_max_discharging_limit:
+    name: Sigen ESS max discharging limit
+    pattern: "^(?:-0|[1-9]\d*|0)$"
+    icon: mdi:battery-negative
+
+  set_sigen_pv_max_power_limit:
+    name: Sigen PV max power limit
+    pattern: "^(?:-0|[1-9]\d*|0)$"
+    icon: mdi:solar-power
+
+  
+
+  
   # # get input for battery mode (forced charge/discharge, stop (default) )
   # set_sg_ems_mode:
   #   name: EMS mode
@@ -2051,3 +2344,52 @@ automation:
             {% endif %}
     mode: single
 
+  - id: "automation_sigen_indenpendent_phase_power_control_input_selector_action"
+    alias: "sigen indenpendent phase power control input selector action"
+    description: "Sigen Independent phase power control action"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sigen_indenpendent_phase_power_control
+    condition: []
+    variables:
+      sg_disable: 0
+      sg_enable: 1
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40030
+          value: >
+            {% if is_state('input_select.set_sigen_indenpendent_phase_power_control', "Enabled") %}
+              {{sg_enable}}
+            {% else %}
+              {{sg_disable}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_indenpendent_phase_power_control_input_selector_update"
+    alias: "sigen indenpendent phase power control input selector update"
+    description: "Updates indenpendent phase power control input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_independent_phase_power_control_code
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_independent_phase_power_control_code', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sigen_indenpendent_phase_power_control
+        data:
+          option: >
+            {% if is_state('sensor.sigen_independent_phase_power_control_code', "0") %}
+              Disabled
+            {% else %}
+              Enabled
+            {% endif %}
+    mode: single
