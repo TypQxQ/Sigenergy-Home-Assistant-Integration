@@ -1,0 +1,2053 @@
+# Home Assistant Sigenergy inverter integration
+# https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
+# by Andrei Ignat (TypQxQ)
+# last update: 2024-08-28
+#
+# Adapted from Sungrow SHx Inverter Modbus Home Assistant
+# https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
+# by Martin Kaiser
+#
+# Note: This YAML file will only work with Home Assistant >= 2023.10
+
+# Entities where the unique_id starts with "sigendev_" are read from the Sigenergy inverter.
+# Entities where the unique_id starts with "sigen " are read for the Sigenergy EMS plant.
+# It's possible to add more inverters by adding more entities with the same structure but diffrent names and unique_id.
+
+modbus:
+  - name: Sigenergy
+    type: tcp
+    host: !secret sigenergy_modbus_host_ip
+    port: !secret sigenergy_modbus_port
+    sensors:
+      - name: Sigen EMS work mode code
+      # 0: Max self consumption;
+      # 1: Sigen AI Mode;
+      # 2: TOU
+      # 7: Remote EMS mode
+        unique_id: sigen_ems_work_mode_code
+        device_address: 247
+        address: 30003
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Grid sensor status code
+      # (gateway or meter connection status)
+      # 0: not connected
+      # 1: connected
+        unique_id: sigen_grid_sensor_status_code
+        device_address: 247
+        address: 30004
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Grid sensor active power
+      # Data collected from grid sensor at grid to system checkpoint
+      # > 0: power from grid to system
+      # < 0: power from system to grid
+        unique_id: sigen_grid_sensor_active_power
+        device_address: 247
+        address: 30005
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid sensor reactive power
+      # Data collected from grid sensor at grid to system checkpoint
+        unique_id: sigen_grid_sensor_reactive_power
+        device_address: 247
+        address: 30007
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen On/Off grid status code
+      # 0: on grid
+      # 1: off grid (auto)
+      # 2: off grid (manual)
+        unique_id: sigen_on_off_grid_status_code
+        device_address: 247
+        address: 30009
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Plant max active power
+      # This should be the base value of all active power
+        unique_id: sigen_max_active_power
+        device_address: 247
+        address: 30010
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max apparent power
+      # This is should be the base value of all reactive power adjustment actions
+        unique_id: sigen_max_apparent_power
+        device_address: 247
+        address: 30012
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVar
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Energy storage system SOC
+        unique_id: sigen_energy_storage_system_soc
+        device_address: 247
+        address: 30014
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigen Plant phase A active Power
+        unique_id: sigen_plant_phase_a_active_power
+        device_address: 247
+        address: 30015
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant phase B active Power
+        unique_id: sigen_plant_phase_b_active_power
+        device_address: 247
+        address: 30017
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant phase C active Power
+        unique_id: sigen_plant_phase_c_active_power
+        device_address: 247
+        address: 30019
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant phase A reactive Power
+        unique_id: sigen_plant_phase_a_reactive_power
+        device_address: 247
+        address: 30021
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant phase B reactive Power
+        unique_id: sigen_plant_phase_b_reactive_power
+        device_address: 247
+        address: 30023
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant phase C reactive Power
+        unique_id: sigen_plant_phase_c_reactive_power
+        device_address: 247
+        address: 30025
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen General Alarm1 code
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
+        unique_id: sigen_general_alarm1_code
+        device_address: 247
+        address: 30027
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen General Alarm2 code
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 3
+        unique_id: sigen_general_alarm2_code
+        device_address: 247
+        address: 30028
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen General Alarm3 code
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 4
+        unique_id: sigen_general_alarm3_code
+        device_address: 247
+        address: 30029
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen General Alarm4 code
+      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 5
+        unique_id: sigen_general_alarm4_code
+        device_address: 247
+        address: 30030
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Plant active power
+        unique_id: sigen_plant_active_power
+        device_address: 247
+        address: 30031
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant reactive power
+        unique_id: sigen_plant_reactive_power
+        device_address: 247
+        address: 30033
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant PV power
+        unique_id: sigen_pv_power
+        device_address: 247
+        address: 30035
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Battery power
+      # <0: discharging
+      # >0: charging
+        unique_id: sigen_battery_power
+        device_address: 247
+        address: 30037
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available max active power
+      # Feed to the ac terminal. Count only the running inverters
+        unique_id: sigen_available_max_active_power
+        device_address: 247
+        address: 30039
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available min active power
+      # Absorb from the ac terminal. Count only the running inverters
+        unique_id: sigen_available_min_active_power
+        device_address: 247
+        address: 30041
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available max reactive power
+      # Feed to the ac terminal. Count only the running inverters
+        unique_id: sigen_available_max_reactive_power
+        device_address: 247
+        address: 30043
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available min reactive power
+      # Absorb from the ac terminal. Count only the running inverters
+        unique_id: sigen_available_min_reactive_power
+        device_address: 247
+        address: 30045
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available max charging power
+        unique_id: sigen_available_max_charging_power
+        device_address: 247
+        address: 30047
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available max discharging power
+        unique_id: sigen_available_max_discharging_power
+        device_address: 247
+        address: 30049
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Plant running state code
+      # Refer to Appendix 1
+        unique_id: sigen_plant_running_state_code
+        device_address: 247
+        address: 30051
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Grid Phase A active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sigen_grid_phase_a_active_power
+        device_address: 247
+        address: 30052
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid Phase B active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sigen_grid_phase_b_active_power
+        device_address: 247
+        address: 30054
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid Phase C active power
+      # Data collected from grid sensor at grid to system checkpoint;
+      # >0 buy from grid;
+      # <0 sell to grid
+        unique_id: sigen_grid_phase_c_active_power
+        device_address: 247
+        address: 30056
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid Phase A reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sigen_grid_phase_a_reactive_power
+        device_address: 247
+        address: 30058
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid Phase B reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sigen_grid_phase_b_reactive_power
+        device_address: 247
+        address: 30060
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Grid Phase C reactive power
+      # Data collected from grid sensor at grid to system checkpoint;
+        unique_id: sigen_grid_phase_c_reactive_power
+        device_address: 247
+        address: 30062
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Available max charging capacity
+      # Count only the running inverters
+        unique_id: sigen_available_max_charging_capacity
+        device_address: 247
+        address: 30064
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        # state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Available max discharging capacity
+      # Count only the running inverters
+        unique_id: sigen_available_max_discharging_capacity
+        device_address: 247
+        address: 30066
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        # state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Rated ESS charging power
+        unique_id: sigen_rated_ess_charging_power
+        device_address: 247
+        address: 30068
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Rated ESS discharging power
+        unique_id: sigen_rated_ess_discharging_power
+        device_address: 247
+        address: 30070
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Type
+        unique_id: sigendev_type
+        device_address: !secret sigenergy_modbus_slave
+        address: 30500
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigen Serial number
+        unique_id: sigendev_serial_number
+        device_address: !secret sigenergy_modbus_slave
+        address: 30515
+        input_type: input
+        data_type: string
+        count: 10
+        scan_interval: 600
+
+      - name: Sigen Firmware version
+        unique_id: sigendev_firmware_version
+        device_address: !secret sigenergy_modbus_slave
+        address: 30525
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigen Rated active power
+        unique_id: sigendev_rated_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30540
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max rated apparent power
+        unique_id: sigendev_max_rated_apparent_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30542
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVA
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max active power
+        unique_id: sigendev_max_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30544
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max absorbtion power
+        unique_id: sigendev_max_absorb_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30546
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Rated Battery capacity
+        unique_id: sigendev_rated_battery_capacity
+        device_address: !secret sigenergy_modbus_slave
+        address: 30548
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Rated charging power
+        unique_id: sigendev_rated_charging_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30550
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Rated discharging power
+        unique_id: sigendev_rated_discharging_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30552
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Daily export energy
+        unique_id: sigendev_daily_export_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30554
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Accumulated export energy
+        unique_id: sigendev_accumulated_export_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30556
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen daily import energy
+        unique_id: sigendev_daily_import_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30560
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Accumulated import energy
+        unique_id: sigendev_accumulated_import_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30562
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Daily charge energy
+        unique_id: sigendev_daily_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30566
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Accumulated charge energy
+        unique_id: sigendev_accumulated_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30568
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Daily discharge energy
+        unique_id: sigendev_daily_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30572
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Accumulated discharge energy
+        unique_id: sigendev_accumulated_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30574
+        input_type: input
+        data_type: uint64
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Running state code
+      # refer to Appendix 1
+        unique_id: sigendev_running_state_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 30578
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Max. active power adjustment value
+        unique_id: sigendev_max_active_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30579
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Min active power adjustment value
+        unique_id: sigendev_min_active_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30581
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max reactive power adjustment value
+        unique_id: sigendev_max_reactive_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30583
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Min reactive power adjustment value absorbed from the ac terminal
+        unique_id: sigendev_min_reactive_power_adjustment_value
+        device_address: !secret sigenergy_modbus_slave
+        address: 30585
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Active power
+        unique_id: sigendev_active_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30587
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Reactive power
+        unique_id: sigendev_reactive_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30589
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen ESS Max. battery charge power
+        unique_id: sigendev_ess_max_battery_charge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30591
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen ESS Max. battery discharge power
+        unique_id: sigendev_ess_max_battery_discharge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30593
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen ESS Available battery charge Energy
+        unique_id: sigendev_ess_available_battery_charge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30595
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen ESS Available battery discharge Energy
+        unique_id: sigendev_ess_available_battery_discharge_energy
+        device_address: !secret sigenergy_modbus_slave
+        address: 30597
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen ESS charge / discharge power
+        unique_id: sigendev_ess_charge_discharge_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 30599
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen ESS SOC
+        unique_id: sigendev_ess_soc
+        device_address: !secret sigenergy_modbus_slave
+        address: 30601
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigen ESS battery SOC
+        unique_id: sigendev_ess_battery_soc
+        device_address: !secret sigenergy_modbus_slave
+        address: 30602
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigen ESS average cell temperature
+        unique_id: sigendev_ess_avg_cell_temperature
+        device_address: !secret sigenergy_modbus_slave
+        address: 30603
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen ESS average cell voltage
+        unique_id: sigendev_ess_avg_cell_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 30604
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Alarm1 code
+      # Refer to Appendix 2
+        unique_id: sigendev_alarm1_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 30605
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm2 code
+      # Refer to Appendix 3
+        unique_id: sigendev_alarm2_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 30606
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm3 code
+      # Refer to Appendix 4
+        unique_id: sigendev_alarm3_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 30607
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm4 code
+      # Refer to Appendix 5
+        unique_id: sigendev_alarm4_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 30608
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+      
+      - name: Sigen Rated grid voltage
+        unique_id: sigendev_rated_grid_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31000
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Rated grid frequency
+        unique_id: sigendev_rated_grid_frequency
+        device_address: !secret sigenergy_modbus_slave
+        address: 31001
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Grid frequency
+        unique_id: sigendev_grid_frequency
+        device_address: !secret sigenergy_modbus_slave
+        address: 31002
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Inverter temperature
+        unique_id: sigendev_inverter_temperature
+        device_address: !secret sigenergy_modbus_slave
+        address: 31003
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen Output type code
+      # 0: L/N
+      # 1: L1/L2/L3
+      # 2: L1/L2/L3/N
+      # 3: L1/L2/N
+        unique_id: sigendev_output_type_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 31004
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen A-B line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_a_b_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31005
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen B-C line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_b_c_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31007
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen C-A line voltage
+      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_c_a_line_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31009
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase A voltage
+        unique_id: sigendev_phase_a_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31011
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase B voltage
+        unique_id: sigendev_phase_b_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31013
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase C voltage
+        unique_id: sigendev_phase_c_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31015
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase A current
+        unique_id: sigendev_phase_a_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31017
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase B current
+        unique_id: sigendev_phase_b_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31019
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Phase C current
+        unique_id: sigendev_phase_c_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31021
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Power factor
+        unique_id: sigendev_power_factor
+        device_address: !secret sigenergy_modbus_slave
+        address: 31023
+        input_type: input
+        data_type: uint16
+        precision: 1
+        device_class: power_factor
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen OACK count
+        unique_id: sigendev_oack_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31024
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen PV string count
+        unique_id: sigendev_pv_string_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31025
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen MPTT count
+        unique_id: sigendev_mptt_count
+        device_address: !secret sigenergy_modbus_slave
+        address: 31026
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen PV1 voltage
+        unique_id: sigendev_pv1_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31027
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV1 current
+        unique_id: sigendev_pv1_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31028
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV2 voltage
+        unique_id: sigendev_pv2_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31029
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV2 current
+        unique_id: sigendev_pv2_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31030
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV3 voltage
+        unique_id: sigendev_pv3_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31031
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV3 current
+        unique_id: sigendev_pv3_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31032
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV4 voltage
+        unique_id: sigendev_pv4_voltage
+        device_address: !secret sigenergy_modbus_slave
+        address: 31033
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV4 current
+        unique_id: sigendev_pv4_current
+        device_address: !secret sigenergy_modbus_slave
+        address: 31034
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV power
+        unique_id: sigendev_pv_power
+        device_address: !secret sigenergy_modbus_slave
+        address: 31035
+        input_type: input
+        data_type: int32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Insulation resistance
+        unique_id: sigendev_insulation_resistance
+        device_address: !secret sigenergy_modbus_slave
+        address: 31037
+        input_type: input
+        data_type: uint16
+        precision: 3
+        unit_of_measurement: "MΩ"
+        # device_class: conductivity
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Startup time
+        unique_id: sigendev_startup_time
+        device_address: !secret sigenergy_modbus_slave
+        address: 31038
+        input_type: input
+        data_type: uint32
+        scan_interval: 10
+        unit_of_measurement: s
+
+      - name: Sigen Shutdown time
+        unique_id: sigendev_shutdown_time
+        device_address: !secret sigenergy_modbus_slave
+        address: 31040
+        input_type: input
+        data_type: uint32
+        scan_interval: 10
+        unit_of_measurement: s
+
+      #  DC Charger doesn't work as documented. Getting "invalid address".
+
+      # - name: Sigen DC Charger - Vehicle battery voltage
+      #   unique_id: sigendev_dc_charger_vehicle_battery_voltage
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31500
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: V
+      #   device_class: voltage
+      #   state_class: measurement
+      #   scale: 0.1
+      #   scan_interval: 10
+
+      # - name: Sigen DC Charger - Charging current
+      #   unique_id: sigendev_dc_charger_charging_current
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31501
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: A
+      #   device_class: current
+      #   state_class: measurement
+      #   scale: 0.1
+      #   scan_interval: 10
+
+      # - name: Sigen DC Charger - Output power
+      #   unique_id: sigendev_dc_charger_output_power
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31502
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   state_class: measurement
+      #   scale: 0.1
+      #   scan_interval: 10
+
+      # - name: Sigen DC Charger - Vehicle battery SOC
+      #   unique_id: sigendev_dc_charger_vehicle_battery_soc
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31504
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: "%"
+      #   device_class: battery
+      #   state_class: measurement
+      #   scale: 0.1
+      #   scan_interval: 10
+
+      # - name: Sigen DC Charger - Current charging capacity
+      #   unique_id: sigendev_dc_charger_current_charging_capacity
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31505
+      #   input_type: input
+      #   data_type: uint32
+      #   precision: 1
+      #   unit_of_measurement: kWh
+      #   device_class: energy
+      #   state_class: total_increasing
+      #   scale: 0.1
+      #   scan_interval: 600
+
+      # - name: Sigen DC Charger - Current charging duration
+      #   unique_id: sigendev_dc_charger_current_charging_duration
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 31507
+      #   input_type: input
+      #   data_type: uint32
+      #   precision: 1
+      #   unit_of_measurement: s
+      #   device_class: duration
+      #   state_class: measurement
+      #   scan_interval: 10
+
+
+################################################
+# Read/Write registers
+################################################
+      - name: Sigen Plant Start/Stop code
+      # 0: Stop
+      # 1: Start
+        unique_id: sigen_start_stop_code
+        device_address: 247
+        address: 40000
+        input_type: holding
+        data_type: uint16
+      
+      - name: Sigen Remote EMS code
+      # 0: disabled
+      # 1: enabled
+      # When needed to control EMS remotely, this register needs to be enabled.
+      # When enabled, the plant’s EMS work mode (30003) will switch to remote EMS.
+        unique_id: sigen_remote_ems_code
+        device_address: 247
+        address: 40029
+        input_type: holding
+        data_type: uint16
+
+      - name: Sigen Remote EMS control mode code
+      # 0: PCS remote control
+      # 1: Standby
+      # 2: Maximum self-consumption
+      # 3: Command charging (consume power from the grid first)
+      # 4: Command charging (consume power from the PV first)
+      # 5: Command discharging (output power from PV first)
+      # 6: Command discharging (output power from the battery first)
+        unique_id: sigen_remote_ems_control_mode_code
+        device_address: 247
+        address: 40031
+        input_type: holding
+        data_type: uint16
+
+################################################
+# Read/Write registers for device
+################################################
+      - name: Sigen Start/Stop code
+      # 0: Stop
+      # 1: Start
+        unique_id: sigendev_start_stop_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 40500
+        input_type: holding
+        data_type: uint16
+
+      - name: Sigen Grid code
+        unique_id: sigendev_grid_code
+        device_address: !secret sigenergy_modbus_slave
+        address: 40501
+        input_type: holding
+        data_type: uint16
+
+      # This returns a very large number (65535). Need to check what it means.
+      # - name: Sigen [DC Charger] Start/Stop
+      # # 0: Stop
+      # # 1: Start
+      #   unique_id: sigendev_dc_charger_start_stop
+      #   device_address: !secret sigenergy_modbus_slave
+      #   address: 41000
+      #   input_type: holding
+      #   data_type: uint16
+
+
+################################################
+# 'virtual' template sensors for better readability
+################################################
+template:
+  - sensor:
+      - name: Sigen EMS working mode
+        unique_id: sigen_ems_working_mode
+        state: >-
+          {% if ((states('sensor.sigen_ems_work_mode_code') |int) == 0) %}
+            Max self-consumption
+          {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 1) %}
+            Sigen Ai
+          {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 2) %}
+            TOU
+          {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 7) %}
+            Remote EMS
+          {% else %}
+            Unknown
+          {% endif %}
+        icon: mdi:eye
+
+      - name: Sigen Grid sensor status
+        unique_id: sigen_grid_sensor_status
+        state: >-
+          {% if ((states('sensor.sigen_grid_sensor_status_code') |int) == 0) %}
+            Not connected
+          {% elif ((states('sensor.sigen_grid_sensor_status_code') |int) == 1) %}
+            Connected
+          {% else %}
+            Unknown
+          {% endif %}
+        icon: mdi:eye
+
+      - name: Sigen On/Off grid status
+        unique_id: sigen_on_off_grid_status
+        state: >-
+          {% if ((states('sensor.sigen_on_off_grid_status_code') |int) == "0") %}
+            On grid
+          {% elif ((states('sensor.sigen_on_off_grid_status_code') |int) == "1") %}
+            Off grid (auto)
+          {% else %}
+            Off grid (manual)
+          {% endif %}
+        icon: mdi:eye
+
+      - name: Sigen General Alarm1
+        unique_id: sigen_general_alarm1
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm1_code') |int) == 1001) %}
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1002) %}
+            Low insulation resistance
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1003) %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1004) %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1005) %}
+            The system grounding is abnormal
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1006) %}
+            PV string voltage is high
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1007) %}
+            PV string reverse connection
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1008) %}
+            PV string back-filling
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1009) %}
+            AFCI fault
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1010) %}
+            Grid outage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1011) %}
+            Grid overvoltage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1012) %}
+            Grid undervoltage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1013) %}
+            Grid overfrequency
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1014) %}
+            Grid underfrequency
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1015) %}
+            Grid voltage imbalance
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1016) %}
+            The DC component of the output current exceeds the limits
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen General Alarm2
+        unique_id: sigen_general_alarm2
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm2_code') |int) == 1017) %}
+            The leakage electricity exceeds the limits
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1018) %}
+            Communication abnormal
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1019) %}
+            System internal protection
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1020) %}
+            AFCI self-test circuit fault
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1021) %}
+            Off-grid protection
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen General Alarm3
+        unique_id: sigen_general_alarm3
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm3_code') |int) == 2001) %}  
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2002) %}
+            The energy storage module has low insulation resistance to grounding
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2003) %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2004) %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2005) %}
+            Below desired temperature
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2008) %}
+            System internal protection
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen General Alarm4
+        unique_id: sigen_general_alarm4
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm4_code') |int) == 3001) %}
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3002) %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3003) %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3004) %}
+            Excessive leakage current in off-grid output
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3005) %}
+            N line grounding fault
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen Alarm1
+        unique_id: sigen_alarm1
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm1_code') |int) == 1001) %}
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1002) %}
+            Low insulation resistance
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1003) %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1004) %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1005) %}
+            The system grounding is abnormal
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1006) %}
+            PV string voltage is high
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1007) %}
+            PV string reverse connection
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1008) %}
+            PV string back-filling
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1009) %}
+            AFCI fault
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1010) %}
+            Grid outage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1011) %}
+            Grid overvoltage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1012) %}
+            Grid undervoltage
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1013) %}
+            Grid overfrequency
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1014) %}
+            Grid underfrequency
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1015) %}
+            Grid voltage imbalance
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1016) %}
+            The DC component of the output current exceeds the limits
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen Alarm2
+        unique_id: sigen_alarm2
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm2_code') |int) == 1017) %}
+            The leakage electricity exceeds the limits
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1018) %}
+            Communication abnormal
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1019) %}
+            System internal protection
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1020) %}
+            AFCI self-test circuit fault
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1021) %}
+            Off-grid protection
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen Alarm3
+        unique_id: sigen_alarm3
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm3_code') |int) == 2001) %}
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2002) %}
+            The energy storage module has low insulation resistance to grounding
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2003) %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2004) %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2005) %}
+            Below desired temperature
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2008) %}
+            System internal protection
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+      - name: Sigen Alarm4
+        unique_id: sigen_alarm4
+        state: >-
+          {% if ((states('sensor.sigen_general_alarm4_code') |int) == "3001") %}
+            Software version mismatch
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3002") %}
+            The temperature is too high
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3003") %}
+            Equipment failure
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3004") %}
+            Excessive leakage current in off-grid output
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3005") %}
+            N line grounding fault
+          {% else %}
+            No Alarm
+          {% endif %}
+        icon: mdi:alert
+
+
+      - name: Sigen Plant Running state
+        unique_id: sigen_plant_running_state
+        state: >-
+          {% if ((states('sensor.sigen_plant_running_state_code') |int) == "0") %}
+            Shutdown
+          {% else %}
+            Enabled
+          {% endif %}
+        icon: mdi:power
+
+      - name: Sigen Running state
+        unique_id: sigen_running_state
+        state: >-
+          {% if ((states('sensor.sigen_running_state_code') |int) == "0") %}
+            Shutdown
+          {% else %}
+            Enabled
+          {% endif %}
+        icon: mdi:power
+
+      - name: Sigen Output type
+        unique_id: sigen_output_type
+        state: >-
+          {% if  ((states('sensor.sigen_output_type_code') |int) == 0) %}
+            L/N
+          {% elif ((states('sensor.sigen_output_type_code') |int) == 1) %}
+            L1/L2/L3
+          {% elif ((states('sensor.sigen_output_type_code') |int) == 2) %}
+            L1/L2/L3/N
+          {% elif ((states('sensor.sigen_output_type_code') |int) == 3) %}
+            L1/L2/N
+          {% else %}
+            Unknown
+          {% endif %}
+        icon: mdi:eye
+
+      - name: Sigen Remote EMS Control mode
+        unique_id: sigen_remote_ems_control_mode
+        state: "{{ states('input_select.set_sigen_remote_ems_control_mode') }}"
+        icon: mdi:battery-unknown
+
+
+
+################################################
+# Create input fields
+################################################
+input_select:
+  set_sigen_plant_run_mode:
+    name: Sigen Plant Run mode
+    options:
+      - "Enabled"
+      - "Shutdown"
+
+  set_sigen_remote_ems:
+    name: Sigen Remote EMS
+    options:
+      - "Disabled (default, uses the app)"
+      - "Enabled (Home Assistant control)"
+    icon: mdi:remote
+
+  set_sigen_remote_ems_control_mode:
+    name: Remote EMS control mode
+    options:
+      - "PCS remote control"
+      - "Standby"
+      - "Maximum self-consumption (default)"
+      - "Command charging (consume power from the grid first)"
+      - "Command charging (consume power from the PV first)"
+      - "Command discharging (output power from PV first)"
+      - "Command discharging (output power from the battery first)"
+    # icon: mdi:remote
+    icon: mdi:battery-unknown
+
+  set_sigen_run_mode:
+    name: Sigen Run mode
+    options:
+      - "Enabled"
+      - "Shutdown"
+
+
+
+  # # get input for battery mode (forced charge/discharge, stop (default) )
+  # set_sg_ems_mode:
+  #   name: EMS mode
+  #   options:
+  #     - "Self-consumption mode (default)"
+  #     - "Forced mode"
+  #     - "External EMS" # required for multiple inverters main /follower?
+  #   # these are commented, because they are rarely used
+  #   #      - "VPP"
+  #   #      - "MicroGrid"
+  #   icon: mdi:battery-unknown
+
+################################################
+# Automations: Write modbus registers on input changes via GUI
+# note: If you change a value by the sliders, it will take up to 60 seconds until the state variables are updated
+# Unfortunately, I could not find a way to "force update" modbus registers, yet...
+################################################
+automation:
+  - id: "automation_sigen_plant_run_mode_input_selector_action"
+    alias: "sigen plant run mode input selector action"
+    description: "Sigen Plant Start/Stop"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.sigen_plant_run_mode
+    condition: []
+    variables:
+      sg_start: 0x0001
+      sg_stop: 0x0000
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40000 # reg 13000
+          value: >
+            {% if is_state('input_select.', "Enabled") %}
+              {{sg_start}}
+            {% else %}
+              {{sg_stop}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_plant_run_mode_input_selector_update"
+    alias: "sigen plant run mode input selector update"
+    description: "Updates enable/ stops input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_start_stop_code
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sigen_plant_run_mode
+        data:
+          option: >
+            {% if is_state('sensor.sigen_start_stop', "0") %}
+              Shutdown
+            {% else %}
+              Enabled
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_remote_ems_input_selector_action"
+    alias: "sigenergy remote EMS input selector action"
+    description: "Enables/ disables remote EMS"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sigen_remote_ems
+    condition: []
+    variables:
+      sg_disable: 0
+      sg_enable: 1
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40029
+          value: >
+            {% if is_state('input_select.set_sigen_remote_ems', "Enabled (Home Assistant control)") %}
+              {{sg_enable}}
+            {% else %}
+              {{sg_disable}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_remote_ems_input_selector_update"
+    alias: "sigenergy remote EMS input selector update"
+    description: "Updates remote EMS input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_remote_ems_code
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_remote_ems_code', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sigen_remote_ems
+        data:
+          option: >
+            {% if is_state('sensor.sigen_remote_ems_code', "0") %}
+              Disabled (default, uses the app)
+            {% else %}
+              Enabled (Home Assistant control)
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_remote_ems_control_mode_input_selector_action"
+    alias: "sigen remote EMS control mode input selector action"
+    description: "Sets the remote EMS control mode"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.set_sigen_remote_ems_control_mode
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40031
+          value: >
+            {% if is_state('input_select.set_sigen_remote_ems_control_mode', "PCS remote control") %} 0
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Standby") %} 1
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Maximum self-consumption (default)") %} 2
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the grid first)") %} 3
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the PV first)") %} 4
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from PV first)") %} 5
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from the battery first)") %} 6
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_remote_ems_control_mode_input_selector_update"
+    alias: "sigenergy remote EMS control mode input selector update"
+    description: "Updates remote EMS control mode input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_remote_ems_control_mode_code
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_remote_ems_control_mode_code', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sigen_remote_ems_control_mode
+        data:
+          option: >
+            {% if is_state('sensor.sigen_remote_ems_control_mode_code', "0") %}
+              PCS remote control
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "1") %}
+              Standby
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "2") %}
+              Maximum self-consumption (default)
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "3") %}
+              Command charging (consume power from the grid first)
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "4") %}
+              Command charging (consume power from the PV first)
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "5") %}
+              Command discharging (output power from PV first)
+            {% elif is_state('sensor.sigen_remote_ems_control_mode_code', "6") %}
+              Command discharging (output power from the battery first)
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_run_mode_input_selector_action"
+    alias: "sigen run mode input selector action"
+    description: "Sigen Start/Stop"
+    trigger:
+      - platform: state
+        entity_id:
+          - input_select.sigen_run_mode
+    condition: []
+    variables:
+      sg_start: 0x0001
+      sg_stop: 0x0000
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: Sigenergy
+          slave: 247
+          address: 40000 # reg 13000
+          value: >
+            {% if is_state('input_select.', "Enabled") %}
+              {{sg_start}}
+            {% else %}
+              {{sg_stop}}
+            {% endif %}
+    mode: single
+
+  - id: "automation_sigen_run_mode_input_selector_update"
+    alias: "sigen run mode input selector update"
+    description: "Updates enable/ stops input selector"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.sigen_start_stop_code
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
+    action:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.set_sigen_run_mode
+        data:
+          option: >
+            {% if is_state('sensor.sigen_start_stop', "0") %}
+              Shutdown
+            {% else %}
+              Enabled
+            {% endif %}
+    mode: single
+
