@@ -651,7 +651,7 @@ modbus:
         address: 30554
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
@@ -677,7 +677,7 @@ modbus:
         address: 30560
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
@@ -703,7 +703,7 @@ modbus:
         address: 30566
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
@@ -729,7 +729,7 @@ modbus:
         address: 30572
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total_increasing
@@ -871,7 +871,7 @@ modbus:
         precision: 1
         unit_of_measurement: kWh
         device_class: energy
-        state_class: total_increasing
+        state_class: measurement
         scale: 0.01
         scan_interval: 600
 
@@ -884,7 +884,7 @@ modbus:
         precision: 1
         unit_of_measurement: kWh
         device_class: energy
-        state_class: total_increasing
+        state_class: measurement
         scale: 0.01
         scan_interval: 600
 
@@ -1215,11 +1215,11 @@ modbus:
         address: 31027
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 0
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 10
 
       - name: Sigen PV1 current
@@ -1228,7 +1228,7 @@ modbus:
         address: 31028
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1241,11 +1241,11 @@ modbus:
         address: 31029
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 0
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 10
 
       - name: Sigen PV2 current
@@ -1254,7 +1254,7 @@ modbus:
         address: 31030
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1267,11 +1267,11 @@ modbus:
         address: 31031
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 0
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 10
 
       - name: Sigen PV3 current
@@ -1280,7 +1280,7 @@ modbus:
         address: 31032
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1293,11 +1293,11 @@ modbus:
         address: 31033
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 0
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 10
 
       - name: Sigen PV4 current
@@ -1306,7 +1306,7 @@ modbus:
         address: 31034
         input_type: input
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1420,7 +1420,7 @@ modbus:
       #   precision: 1
       #   unit_of_measurement: kWh
       #   device_class: energy
-      #   state_class: total_increasing
+      #   state_class: measurement
       #   scale: 0.1
       #   scan_interval: 600
 
@@ -2091,7 +2091,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ (states('sensor.sigendev_pv1_voltage') | float * states('sensor.sigendev_pv1_current') | float) |int }}"
+        state: "{{ ((states('sensor.sigendev_pv1_voltage') | float * states('sensor.sigendev_pv1_current') | float) * 0.001) | round(2) }}"
         icon: mdi:solar-power
 
       - name: Sigen PV2 power
@@ -2099,7 +2099,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ (states('sensor.sigendev_pv2_voltage') | float * states('sensor.sigendev_pv2_current') | float) |int }}"
+        state: "{{ ((states('sensor.sigendev_pv2_voltage') | float * states('sensor.sigendev_pv2_current') | float) * 0.001) | round(2) }}"
         icon: mdi:solar-power
 
       - name: Sigen PV3 power
@@ -2107,7 +2107,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ (states('sensor.sigendev_pv3_voltage') | float * states('sensor.sigendev_pv3_current') | float) |int }}"
+        state: "{{ ((states('sensor.sigendev_pv3_voltage') | float * states('sensor.sigendev_pv3_current') | float) * 0.001) | round(2) }}"
         icon: mdi:solar-power
 
       - name: Sigen PV4 power
@@ -2115,7 +2115,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ (states('sensor.sigendev_pv4_voltage') | float * states('sensor.sigendev_pv4_current') | float) |int }}"
+        state: "{{ ((states('sensor.sigendev_pv4_voltage') | float * states('sensor.sigendev_pv4_current') | float) * 0.001) | round(2) }}"
         icon: mdi:solar-power
 
 ################################################
