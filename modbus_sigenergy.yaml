@@ -2072,11 +2072,12 @@ template:
 
       - name: Sigen Daily energy production
         unique_id: sigen_daily_energy_production
-        state: "{{ ((states('sensor.sigendev_daily_export_energy') | float + states('sensor.sigendev_daily_charge_energy') | float - states('sensor.sigendev_daily_discharge_energy') | float - states('sensor.sigendev_daily_import_energy') | float) | round(1)) | int }}"
+        state: "{{ ((states('sensor.sigendev_daily_export_energy') | float + states('sensor.sigendev_daily_charge_energy') | float - states('sensor.sigendev_daily_discharge_energy') | float - states('sensor.sigendev_daily_import_energy') | float) | round(2)) }}"
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
         icon: mdi:power
+        
 
       # - Sigen Plant active power calculation
       #   unique_id: sigen_plant_active_power_calculation
@@ -2117,6 +2118,50 @@ template:
         state_class: measurement
         state: "{{ ((states('sensor.sigendev_pv4_voltage') | float * states('sensor.sigendev_pv4_current') | float) * 0.001) | round(2) }}"
         icon: mdi:solar-power
+
+      - name: Sigen Used power
+        unique_id: sigen_used_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: "{{ ((states('sensor.sigen_plant_active_power') | float + states('sensor.sigen_grid_sensor_active_power') | float) | round(1)) }}"
+
+################################################
+# Create total power sensor
+################################################
+sensor:
+  - platform: integration
+    name: Sigen Accumulated energy consumption
+    unique_id: sigen_accumulated_energy_consumption
+    source: sensor.sigen_used_power
+    round: 2
+
+  - platform: integration
+    name: Sigen Accumulated PV energy production
+    unique_id: sigen_accumulated_pv_energy_production
+    source: sensor.sigen_pv_power
+    round: 2
+
+utility_meter:
+  sigen_daily_energy_consumption:
+    name: Sigen Daily Energy consumption
+    unique_id: sigen_daily_energy_consumption
+    source: sensor.sigen_accumulated_energy_consumption
+    cycle: daily
+  sigen_daily_pv_energy_production:
+    name: Sigen Daily PV Energy production
+    unique_id: sigen_daily_pv_energy_production
+    source: sensor.sigen_accumulated_pv_energy_production
+    cycle: daily
+    
+
+  # - platform: integration
+  #   name: Sigen Daily energy consumption
+  #   source: sensor.sigen_used_power
+  #   unique_id: sigen_daily_energy_consumption
+  #   round: 2
+    
+
 
 ################################################
 # Create input option selectors
