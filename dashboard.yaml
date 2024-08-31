@@ -51,10 +51,10 @@ views:
             name: 'Daily Energy import to Grid '
             secondary_info: last-updated
             icon: mdi:transmission-tower-export
-          - entity: sensor.sigendev_daily_charge_energy
+          - entity: sensor.sigen_daily_charge_energy
             name: Daily battery charge
             icon: mdi:battery-positive
-          - entity: sensor.sigendev_daily_discharge_energy
+          - entity: sensor.sigen_daily_discharge_energy
             secondary_info: last-updated
             icon: mdi:battery-negative
             name: Daily battery discharge
@@ -77,47 +77,36 @@ views:
             name: 'Energy import to Grid '
             secondary_info: last-updated
             icon: mdi:transmission-tower-export
-          - entity: sensor.sigenstor_accumulated_charge_energy
+          - entity: sensor.sigen_accumulated_charge_energy
             name: Battery charged
             icon: mdi:battery-positive
             secondary_info: last-updated
-          - entity: sensor.sigenstor_accumulated_discharge_energy
+          - entity: sensor.sigen_accumulated_discharge_energy
             name: Battery discharged
             icon: mdi:battery-negative
             secondary_info: last-updated
+          - entity: sensor.sigen_accumulated_charge_energy
         title: Total Energy
-      - type: gauge
-        entity: sensor.sigen_energy_storage_system_soc
-        min: 0
-        max: 100
-        severity:
-          green: 70
-          yellow: 40
-          red: 20
-        name: Battery
-      - show_name: true
-        show_icon: true
-        show_state: true
-        type: glance
-        entities:
-          - entity: sun.sun
-          - entity: binary_sensor.sigen_pv_generating
-            name: PV Generating
-          - entity: binary_sensor.sigen_battery_charging
-            name: Battery charging
-          - entity: binary_sensor.sigen_battery_discharging
-            name: Battery discharging
-          - entity: binary_sensor.sigen_exporting_to_grid
-            name: Exporting to grid
-          - entity: binary_sensor.sigen_importing_from_grid
-            name: Importing from grid
-          - entity: sensor.sigenstor_inverter_temperature
-            name: Inverter temp.
-          - entity: sensor.sigenstor_ess_average_cell_temperature
-            name: Battery temp.
-        title: Status
-        columns: 3
-        state_color: true
+      - type: vertical-stack
+        cards:
+          - type: gauge
+            entity: sensor.sigen_energy_storage_system_soc
+            min: 0
+            max: 100
+            severity:
+              green: 70
+              yellow: 40
+              red: 20
+            name: Battery
+          - type: entities
+            entities:
+              - entity: sensor.sigen_ess_charge_discharge_power
+              - entity: sensor.sigen_ess_average_cell_temperature
+                name: Average cell temperature
+                secondary_info: none
+              - entity: sensor.sigen_inverter_temperature
+                name: Inverter temperature
+                secondary_info: none
       - chart_type: line
         period: 5minute
         type: statistics-graph
@@ -140,19 +129,33 @@ views:
         days_to_show: 1
       - type: entities
         entities:
-          - entity: sensor.sigenstor_ess_soc
-          - entity: sensor.sigen_ess_charge_discharge_power
-        title: Battery
-      - type: entities
-        entities:
           - entity: input_select.set_sigen_plant_run_mode
           - entity: sensor.sigen_plant_running_state
           - entity: sensor.sigen_running_state
           - entity: sensor.sigen_ems_working_mode
-          - entity: sensor.sigen_remote_ems_control_mode_2
+          - entity: sensor.sigen_remote_ems_control_mode
           - entity: input_select.set_sigen_remote_ems
           - entity: input_select.set_sigen_remote_ems_control_mode
           - entity: sensor.sigen_remote_ems_control_mode_code
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: glance
+        entities:
+          - entity: sun.sun
+          - entity: binary_sensor.sigen_pv_generating
+            name: PV Generating
+          - entity: binary_sensor.sigen_battery_charging
+            name: Battery charging
+          - entity: binary_sensor.sigen_battery_discharging
+            name: Battery discharging
+          - entity: binary_sensor.sigen_exporting_to_grid
+            name: Exporting to grid
+          - entity: binary_sensor.sigen_importing_from_grid
+            name: Importing from grid
+        title: Status
+        columns: 3
+        state_color: true
   - title: Detailed Info
     icon: mdi:solar-power-variant-outline
     cards:
@@ -512,10 +515,4 @@ views:
           - sensor.sigen_daily_pv_energy_production
           - sensor.sigen_daily_pv_energy_production_left
           - sensor.sigen_daily_pv_energy_production_right
-      - type: entities
-        entities:
-          - entity: sensor.sigen_test_daily_energy_consumption_left_recalc3109
-          - entity: sensor.sigen_test_daily_energy_consumption_right_recalc3109
-          - entity: sensor.sigen_test_daily_energy_consumption_recalc3109
-        title: Ta bort 0,13 från daily enery consumption
 title: PV System

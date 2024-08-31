@@ -2112,10 +2112,10 @@ template:
         unique_id: sigen_daily_energy_production
         state: >-
           {{
-            states('sensor.sigendev_daily_export_energy') | float
-            + states('sensor.sigendev_daily_charge_energy') | float
-            - states('sensor.sigendev_daily_discharge_energy') | float
-            - states('sensor.sigendev_daily_import_energy') | float
+            states('sensor.sigen_daily_export_energy') | float
+            + states('sensor.sigen_daily_charge_energy') | float
+            - states('sensor.sigen_daily_discharge_energy') | float
+            - states('sensor.sigen_daily_import_energy') | float
           }}
         unit_of_measurement: kW
         device_class: power
@@ -2166,8 +2166,8 @@ template:
           {{
             (
               (
-                states('sensor.sigendev_pv1_voltage') | float 
-                * states('sensor.sigendev_pv1_current') | float
+                states('sensor.sigen_pv1_voltage') | float 
+                * states('sensor.sigen_pv1_current') | float
               ) * 0.001
             ) | round(2)
           }}
@@ -2182,8 +2182,8 @@ template:
           {{
             (
               (
-                states('sensor.sigendev_pv2_voltage') | float 
-                * states('sensor.sigendev_pv2_current') | float
+                states('sensor.sigen_pv2_voltage') | float 
+                * states('sensor.sigen_pv2_current') | float
               ) * 0.001
             ) | round(2)
           }}
@@ -2198,8 +2198,8 @@ template:
           {{
             (
               (
-                states('sensor.sigendev_pv3_voltage') | float 
-                * states('sensor.sigendev_pv3_current') | float
+                states('sensor.sigen_pv3_voltage') | float 
+                * states('sensor.sigen_pv3_current') | float
               ) * 0.001
             ) | round(2)
           }}
@@ -2214,8 +2214,8 @@ template:
           {{
             (
               (
-                states('sensor.sigendev_pv4_voltage') | float 
-                * states('sensor.sigendev_pv4_current') | float
+                states('sensor.sigen_pv4_voltage') | float 
+                * states('sensor.sigen_pv4_current') | float
               ) * 0.001
             ) | round(2)
           }}
@@ -2234,50 +2234,6 @@ template:
             ) | round(1)
           }}
 
-      - name: sigen_test_daily_energy_consumption_left_recalc3109
-        unique_id: sigen_test_daily_energy_consumption_left_recalc3109
-        unit_of_measurement: kWh
-        device_class: power
-        state_class: total
-        state: >-
-          {% if states('sensor.sigen_daily_energy_consumption_left')|is_number %}
-            {{
-              states('sensor.sigen_daily_energy_consumption_left') | float
-              + 3.64
-            }}
-          {% else %}
-            0
-          {% endif %}
-
-      - name: sigen_test_daily_energy_consumption_right_recalc3109
-        unique_id: sigen_test_daily_energy_consumption_right_recalc3109
-        unit_of_measurement: kWh
-        device_class: power
-        state_class: total
-        state: >-
-          {% if states('sensor.sigen_daily_energy_consumption_right')|is_number %}
-            {{
-              states('sensor.sigen_daily_energy_consumption_right') | float
-              + 3.64
-            }}
-          {% else %}
-            0
-          {% endif %}
-
-      - name: sigen_test_daily_energy_consumption_recalc3109
-        unique_id: sigen_test_daily_energy_consumption_recalc3109
-        unit_of_measurement: kWh
-        device_class: power
-        state_class: total
-        state: >-
-          {% if states('sensor.sigen_daily_energy_consumption')|is_number %}
-            {{
-              states('sensor.sigen_daily_energy_consumption') | float
-              + 4.63
-            }}
-          {% else %}
-            0
-          {% endif %}
 
 ################################################
 # 'virtual' template binary sensors
