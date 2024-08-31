@@ -2050,13 +2050,46 @@ template:
           {% endif %}
         icon: mdi:eye
 
-      - name: Sigen Description Set Unlimited
-        unique_id: sigen_description_set_unlimited
-        state: To set the value to unlimited, set the value to -0.
-  
+      - name: Sigen Battery charging power
+        unique_id: sigen_battery_charging_power
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_battery_power', 'unavailable') 
+          and not is_state('sensor.sigen_battery_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_battery_power')|int > 0 %}
+            {{ states('sensor.sigen_battery_power') }}
+          {% else %} 
+            0 
+          {% endif %}
+
+      - name: Sigen Battery discharging power
+        unique_id: sigen_battery_discharging_power
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_battery_power', 'unavailable') 
+          and not is_state('sensor.sigen_battery_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_battery_power')|int < 0 %}
+            {{ states('sensor.sigen_battery_power') * -1 }}
+          {% else %} 
+            0 
+          {% endif %}
+
+
+################################################
+# 'virtual' template sensors for calculations
+################################################
       - name: Sigen Grid active power
         unique_id: sigen_grid_active_power
-        state: "{{ states('sensor.sigen_grid_phase_a_active_power') | float + states('sensor.sigen_grid_phase_b_active_power') | float + states('sensor.sigen_grid_phase_c_active_power') | float |int }}"
+        state: >-
+          {{
+            states('sensor.sigen_grid_phase_a_active_power') | float
+            + states('sensor.sigen_grid_phase_b_active_power') | float
+            + states('sensor.sigen_grid_phase_c_active_power') | float
+          }}
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -2064,7 +2097,12 @@ template:
 
       - name: Sigen Grid reactive power
         unique_id: sigen_grid_reactive_power
-        state: "{{ states('sensor.sigen_grid_phase_a_reactive_power') | float + states('sensor.sigen_grid_phase_b_reactive_power') | float + states('sensor.sigen_grid_phase_c_reactive_power') | float |int }}"
+        state: >-
+          {{
+            states('sensor.sigen_grid_phase_a_reactive_power') | float
+            + states('sensor.sigen_grid_phase_b_reactive_power') | float
+            + states('sensor.sigen_grid_phase_c_reactive_power') | float
+          }}
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -2072,7 +2110,39 @@ template:
 
       - name: Sigen Daily energy production
         unique_id: sigen_daily_energy_production
-        state: "{{ ((states('sensor.sigendev_daily_export_energy') | float + states('sensor.sigendev_daily_charge_energy') | float - states('sensor.sigendev_daily_discharge_energy') | float - states('sensor.sigendev_daily_import_energy') | float) | round(2)) }}"
+        state: >-
+          {{
+            states('sensor.sigendev_daily_export_energy') | float
+            + states('sensor.sigendev_daily_charge_energy') | float
+            - states('sensor.sigendev_daily_discharge_energy') | float
+            - states('sensor.sigendev_daily_import_energy') | float
+          }}
+        unit_of_measurement: kW
+        device_class: power
+        state_class: total
+        icon: mdi:power
+
+      - name: Sigen Grid Sensor import power
+        unique_id: sigen_grid_sensor_import_power
+        state: >-
+          {{
+            states('sensor.sigen_grid_sensor_active_power') | float
+            if states('sensor.sigen_grid_sensor_active_power') | float > 0
+            else 0
+          }}
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        icon: mdi:power
+
+      - name: Sigen Grid Sensor export power
+        unique_id: sigen_grid_sensor_export_power
+        state: >-
+          {{
+            states('sensor.sigen_grid_sensor_active_power') | float *-1
+            if states('sensor.sigen_grid_sensor_active_power') | float < 0
+            else 0
+          }}
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -2092,7 +2162,15 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ ((states('sensor.sigendev_pv1_voltage') | float * states('sensor.sigendev_pv1_current') | float) * 0.001) | round(2) }}"
+        state:  >-
+          {{
+            (
+              (
+                states('sensor.sigendev_pv1_voltage') | float 
+                * states('sensor.sigendev_pv1_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
         icon: mdi:solar-power
 
       - name: Sigen PV2 power
@@ -2100,7 +2178,15 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ ((states('sensor.sigendev_pv2_voltage') | float * states('sensor.sigendev_pv2_current') | float) * 0.001) | round(2) }}"
+        state:  >-
+          {{
+            (
+              (
+                states('sensor.sigendev_pv2_voltage') | float 
+                * states('sensor.sigendev_pv2_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
         icon: mdi:solar-power
 
       - name: Sigen PV3 power
@@ -2108,7 +2194,15 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ ((states('sensor.sigendev_pv3_voltage') | float * states('sensor.sigendev_pv3_current') | float) * 0.001) | round(2) }}"
+        state:  >-
+          {{
+            (
+              (
+                states('sensor.sigendev_pv3_voltage') | float 
+                * states('sensor.sigendev_pv3_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
         icon: mdi:solar-power
 
       - name: Sigen PV4 power
@@ -2116,15 +2210,152 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ ((states('sensor.sigendev_pv4_voltage') | float * states('sensor.sigendev_pv4_current') | float) * 0.001) | round(2) }}"
+        state:  >-
+          {{
+            (
+              (
+                states('sensor.sigendev_pv4_voltage') | float 
+                * states('sensor.sigendev_pv4_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
         icon: mdi:solar-power
 
-      - name: Sigen Used power
-        unique_id: sigen_used_power
+      - name: Sigen Consumed power
+        unique_id: sigen_consumed_power
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state: "{{ ((states('sensor.sigen_plant_active_power') | float + states('sensor.sigen_grid_sensor_active_power') | float) | round(1)) }}"
+        state: >-
+          {{
+            (
+              states('sensor.sigen_plant_active_power') | float
+              + states('sensor.sigen_grid_sensor_active_power') | float
+            ) | round(1)
+          }}
+
+      - name: sigen_test_daily_energy_consumption_left_recalc3109
+        unique_id: sigen_test_daily_energy_consumption_left_recalc3109
+        unit_of_measurement: kWh
+        device_class: power
+        state_class: total
+        state: >-
+          {% if states('sensor.sigen_daily_energy_consumption_left')|is_number %}
+            {{
+              states('sensor.sigen_daily_energy_consumption_left') | float
+              + 3.64
+            }}
+          {% else %}
+            0
+          {% endif %}
+
+      - name: sigen_test_daily_energy_consumption_right_recalc3109
+        unique_id: sigen_test_daily_energy_consumption_right_recalc3109
+        unit_of_measurement: kWh
+        device_class: power
+        state_class: total
+        state: >-
+          {% if states('sensor.sigen_daily_energy_consumption_right')|is_number %}
+            {{
+              states('sensor.sigen_daily_energy_consumption_right') | float
+              + 3.64
+            }}
+          {% else %}
+            0
+          {% endif %}
+
+      - name: sigen_test_daily_energy_consumption_recalc3109
+        unique_id: sigen_test_daily_energy_consumption_recalc3109
+        unit_of_measurement: kWh
+        device_class: power
+        state_class: total
+        state: >-
+          {% if states('sensor.sigen_daily_energy_consumption')|is_number %}
+            {{
+              states('sensor.sigen_daily_energy_consumption') | float
+              + 4.63
+            }}
+          {% else %}
+            0
+          {% endif %}
+
+################################################
+# 'virtual' template binary sensors
+################################################
+  - binary_sensor:
+      - name: Sigen PV generating
+        unique_id: sigen_pv_generating
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_pv_power', 'unavailable') 
+          and not is_state('sensor.sigen_pv_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_pv_power')|int > 0 %}
+            1
+          {% else %} 
+            0 
+          {% endif %}
+
+  - binary_sensor:
+      - name: Sigen Battery charging
+        unique_id: sigen_battery_charging
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_battery_power', 'unavailable') 
+          and not is_state('sensor.sigen_battery_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_battery_power')|int > 0 %}
+            1
+          {% else %} 
+            0 
+          {% endif %}
+
+  - binary_sensor:
+      - name: Sigen Battery discharging
+        unique_id: sigen_battery_discharging
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_battery_power', 'unavailable') 
+          and not is_state('sensor.sigen_battery_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_battery_power')|int < 0 %}
+            1
+          {% else %} 
+            0 
+          {% endif %}
+
+  - binary_sensor:
+      - name: Sigen Importing from grid
+        unique_id: sigen_importing_from_grid
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
+          and not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_grid_sensor_active_power')|int > 0 %}
+            1
+          {% else %} 
+            0 
+          {% endif %}
+
+  - binary_sensor:
+      - name: Sigen Exporting to grid
+        unique_id: sigen_exporting_to_grid
+        availability: >-
+          {{ 
+          not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
+          and not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
+          }}
+        state: >-
+          {% if states('sensor.sigen_grid_sensor_active_power')|int < 0 %}
+            1
+          {% else %} 
+            0 
+          {% endif %}
 
 ################################################
 # Create total power sensor
@@ -2133,7 +2364,7 @@ sensor:
   - platform: integration
     name: Sigen Accumulated energy consumption
     unique_id: sigen_accumulated_energy_consumption
-    source: sensor.sigen_used_power
+    source: sensor.sigen_consumed_power
     round: 2
 
   - platform: integration
@@ -2142,25 +2373,101 @@ sensor:
     source: sensor.sigen_pv_power
     round: 2
 
+  - platform: integration
+    name: Sigen Accumulated Grid energy export
+    unique_id: sigen_accumulated_grid_energy_export
+    source: sensor.sigen_grid_sensor_export_power
+    round: 2
+
+  - platform: integration
+    name: Sigen Accumulated Grid energy import
+    unique_id: sigen_accumulated_grid_energy_import
+    source: sensor.sigen_grid_sensor_import_power
+    round: 2
+
+  # For testing purposes
+  - platform: integration
+    name: Sigen Accumulated PV energy production left
+    unique_id: sigen_accumulated_pv_energy_production_left
+    source: sensor.sigen_pv_power
+    round: 2
+    method: left
+
+  - platform: integration
+    name: Sigen Accumulated PV energy production right
+    unique_id: sigen_accumulated_pv_energy_production_right
+    source: sensor.sigen_pv_power
+    round: 2
+    method: right
+
+  - platform: integration
+    name: Sigen Accumulated energy consumption left
+    unique_id: sigen_accumulated_energy_consumption_left
+    source: sensor.sigen_consumed_power
+    round: 2
+    method: left
+
+  - platform: integration
+    name: Sigen Accumulated energy consumption right
+    unique_id: sigen_accumulated_energy_consumption_right
+    source: sensor.sigen_consumed_power
+    round: 2
+    method: right
+  # End of testing purposes
+
 utility_meter:
   sigen_daily_energy_consumption:
     name: Sigen Daily Energy consumption
     unique_id: sigen_daily_energy_consumption
     source: sensor.sigen_accumulated_energy_consumption
     cycle: daily
+    
   sigen_daily_pv_energy_production:
     name: Sigen Daily PV Energy production
     unique_id: sigen_daily_pv_energy_production
     source: sensor.sigen_accumulated_pv_energy_production
     cycle: daily
-    
 
-  # - platform: integration
-  #   name: Sigen Daily energy consumption
-  #   source: sensor.sigen_used_power
-  #   unique_id: sigen_daily_energy_consumption
-  #   round: 2
+  sigen_daily_grid_energy_export:
+    name: Sigen Daily Grid Energy export
+    unique_id: sigen_daily_grid_energy_export
+    source: sensor.sigen_accumulated_grid_energy_export
+    cycle: daily
+
+  sigen_daily_grid_energy_import:
+    name: Sigen Daily Grid Energy import
+    unique_id: sigen_daily_grid_energy_import
+    source: sensor.sigen_accumulated_grid_energy_import
+    cycle: daily
     
+  
+  # # For testing purposes
+  sigen_daily_energy_consumption_left:
+    name: Sigen Daily Energy consumption left
+    unique_id: sigen_daily_energy_consumption_left
+    source: sensor.sigen_accumulated_energy_consumption_left
+    cycle: daily
+
+  sigen_daily_pv_energy_production_left:
+    name: Sigen Daily PV Energy production left
+    unique_id: sigen_daily_pv_energy_production_left
+    source: sensor.sigen_accumulated_pv_energy_production_left
+    cycle: daily
+
+  sigen_daily_energy_consumption_right:
+    name: Sigen Daily Energy consumption right
+    unique_id: sigen_daily_energy_consumption_right
+    source: sensor.sigen_accumulated_energy_consumption_right
+    cycle: daily
+
+  sigen_daily_pv_energy_production_right:
+    name: Sigen Daily PV Energy production right
+    unique_id: sigen_daily_pv_energy_production_right
+    source: sensor.sigen_accumulated_pv_energy_production_right
+    cycle: daily
+
+
+# End of testing purposes
 
 
 ################################################
