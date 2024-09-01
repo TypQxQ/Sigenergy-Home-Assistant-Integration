@@ -1,6 +1,6 @@
-# !!! This is a work in progress !!!
-modbus_sigenergy.yaml works but not all values are shifted yet so the decimal point might be wrong.
-Will post more after testing.
+# !!! This is still a work in progress !!!
+Documentation is not reviewd.
+Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
 
 An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC charger for Home Assistant. 
 
