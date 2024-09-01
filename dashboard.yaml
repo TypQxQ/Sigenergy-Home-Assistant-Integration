@@ -211,7 +211,7 @@ views:
           - entity: input_text.set_sigen_ess_max_charging_limit
           - entity: input_text.set_sigen_ess_max_discharging_limit
           - entity: input_text.set_sigen_pv_max_power_limit
-        title: Configurable EMS settings
+        title: Configurable EMS values
       - type: entities
         entities:
           - entity: input_select.set_sigen_run_mode
@@ -219,7 +219,7 @@ views:
       - type: entities
         entities:
           - sensor.sigen_grid_code
-        title: Potential configurable device settings
+        title: Configurable device values only read
       - type: entities
         entities:
           - entity: sensor.sigen_active_power_fixed_adjustment_target_value
@@ -242,7 +242,7 @@ views:
           - entity: sensor.sigen_phase_a_q_s_adjustment_target_value
           - entity: sensor.sigen_phase_b_q_s_adjustment_target_value
           - entity: sensor.sigen_phase_c_q_s_adjustment_target_value
-        title: Potential configurable EMS settings
+        title: Configurable EMS settings only read
       - type: entities
         entities:
           - entity: sensor.sigen_plant_running_state
@@ -378,7 +378,7 @@ views:
           - entity: sensor.sigen_battery_discharging_power
           - entity: sensor.sigen_8kwh_battery_waranty_life_spent
           - entity: sensor.sigen_battery_usable_capacity
-        title: Battery
+        title: Calculated Battery values
       - type: entities
         entities:
           - entity: sensor.sigen_grid_active_power
@@ -391,7 +391,7 @@ views:
           - entity: sensor.sigen_pv3_power
           - entity: sensor.sigen_pv4_power
           - entity: sensor.sigen_consumed_power
-        title: Power
+        title: Calculated Power values
       - type: entities
         entities:
           - entity: binary_sensor.sigen_pv_generating
@@ -399,20 +399,21 @@ views:
           - entity: binary_sensor.sigen_battery_discharging
           - entity: binary_sensor.sigen_importing_from_grid
           - entity: binary_sensor.sigen_exporting_to_grid
+        title: Calculated states
       - type: entities
         entities:
           - entity: sensor.sigen_accumulated_energy_consumption
           - entity: sensor.sigen_accumulated_pv_energy_production
           - entity: sensor.sigen_accumulated_grid_energy_export
           - entity: sensor.sigen_accumulated_grid_energy_import
-        title: Daily Energy
+        title: Calculated Daily Energy values
       - type: entities
         entities:
           - entity: sensor.sigen_daily_energy_consumption
           - entity: sensor.sigen_daily_pv_energy_production
           - entity: sensor.sigen_daily_grid_energy_export
           - entity: sensor.sigen_daily_grid_energy_import
-        title: Daily Energy
+        title: Calculated Daily Energy values
       - type: gauge
         entity: sensor.sigen_battery_usable_capacity
         severity:
@@ -441,7 +442,7 @@ views:
         entities:
           - sensor.sigen_ess_soc
         title: Battery SoC last 30 days
-        hide_legend: false
+        hide_legend: true
         logarithmic_scale: false
         stat_types:
           - min
@@ -466,5 +467,5 @@ views:
           - entity: input_text.set_sigen_ess_max_charging_limit
           - entity: input_text.set_sigen_ess_max_discharging_limit
           - entity: input_text.set_sigen_pv_max_power_limit
-        title: Configurable EMS settings
+        title: Advanced EMS settings (-0.0 is default)
 title: PV System
