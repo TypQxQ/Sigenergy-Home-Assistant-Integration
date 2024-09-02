@@ -111,9 +111,9 @@ views:
             min: 0
             max: 100
             severity:
-              green: 70
-              yellow: 40
-              red: 20
+              green: 75
+              yellow: 20
+              red: 0
             name: Battery
           - type: entities
             entities:

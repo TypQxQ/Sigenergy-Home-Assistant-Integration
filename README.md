@@ -1,5 +1,5 @@
 # !!! This is still a work in progress !!!
-Documentation is not reviewd.
+Documentation is not reviewed.
 Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
 
 An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC charger for Home Assistant. 
