@@ -27,7 +27,7 @@ This integration lets you gather sensor data and control the EMS (Energy Managem
 
 The documentation covers following topics:
 
-[Installation/ Configuration](wiki/FAQ:-How-to-install)
+[Installation/ Configuration](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/wiki/FAQ:%E2%80%90How%E2%80%90to%E2%80%90install)
 
 [Dashboard Setup](wiki/How-to-configure-the-dashboards)
 
