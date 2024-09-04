@@ -33,7 +33,7 @@ The documentation covers following topics:
 
 [Dashboard Setup](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/wiki/3.-How-to-configure-the-dashboards)
 
-[Usage Instructions](wiki/FAQ:-How-to-use)
+[Usage Instructions](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/wiki/4.-How-to-use)
 
 [Wiki: FAQ, Troubleshooting, Known Issues](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/wiki/)
 
