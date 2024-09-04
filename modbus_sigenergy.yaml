@@ -2334,7 +2334,7 @@ template:
           and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
-          {% if states('sensor.sigen_battery_power')|float > -0.01 %}
+          {% if states('sensor.sigen_battery_power')|float > 0.01 %}
             1
           {% else %} 
             0 
@@ -2349,7 +2349,7 @@ template:
           and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
-          {% if states('sensor.sigen_battery_power')|float < -0.001 %}
+          {% if states('sensor.sigen_battery_power')|float < -0.01 %}
             1
           {% else %} 
             0 
