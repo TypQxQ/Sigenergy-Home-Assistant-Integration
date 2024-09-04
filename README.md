@@ -1,17 +1,8 @@
-# !!! This is still a work in progress !!!
-Documentation is not reviewed.
-Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
-
 An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC charger for Home Assistant. 
 
 # Contents
 - [1. Overview](#1-overview)
 - [2. Documentation](#2-documentation)
-    - [Installation/ Configuration](wiki/FAQ:-How-to-install)
-    - [Dashboard Setup](wiki/How-to-configure-the-dashboards)
-    - [Usage Instructions](wiki/FAQ:-How-to-use)
-    - [FAQ, Troubleshooting, Known Issues](wiki/FAQ:-Problems-with-the-connection)
-    - [Roadmap](doc/issues_roadmap.md)
 - [3. Support](#3-support)
 - [4. Visual impressions](#4-visual-impressions)
 - [5. Tested configurations](#5-tested-configurations)
@@ -41,9 +32,9 @@ The documentation covers following topics:
 
 If you any kind of assistance, you have three options:
 
-a) Use the [github discussion](../../discussions) 
+a) Use the [github discussion](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/discussions) 
 
-b) Only if code-related (bugs / contributions): Open an  [github issue](../../issue) or isse a pullrequest
+b) Only if code-related (bugs / contributions): Open an  [github issue](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/issues) or isse a pullrequest
 
 ## 4. Visual impressions
 
@@ -51,20 +42,23 @@ Home Asisstants built-in Energy Dashboard
 
 <img src="doc/images/HA_Energy_Dashboard.png" width="600">
 
+Default dashboard tab "Overview"
 
-Default dashboard tab "overview"
+<img src="dashboards/_plain_dashboard_TypQxQ/dashboard_overview.png" width="600">
 
-<img src="doc/images/Dashboard_Overview.png" width="600">
+Default dashboard tab "ModBus values"
+
+<img src="dashboards/_plain_dashboard_TypQxQ/dashboard_modbus.png" width="600">
 
 
-Default dashboard tab "Detail"
+Default dashboard tab "Calculated values"
 
-<img src="doc/images/Dashboard_Detail.png" width="600">
+<img src="dashboards/_plain_dashboard_TypQxQ/dashboard_calculated.png" width="600">
 
 
 Default dashboard tab "EMS"
 
-<img src="doc/images/Dashboard_EMS.png" width="600">
+<img src="dashboards/_plain_dashboard_TypQxQ/dashboard_EMS.png" width="600">
 
 
 ## 5. Tested configurations
@@ -81,8 +75,8 @@ Release date: 2024-04-09
 ```
 
 ## 6. Status and future work 
-1. ReadOnly parameters are read.
-2. 
+1. Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
+2. Nicer dashboard integrated with Nordpol.
 
 
 ## 7. Contribution
