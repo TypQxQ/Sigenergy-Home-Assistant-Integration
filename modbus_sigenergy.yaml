@@ -1807,6 +1807,8 @@ template:
             Sigen Ai
           {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 2) %}
             TOU
+          {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 5) %}
+            Fully Feed-in to Grid
           {% elif ((states('sensor.sigen_ems_work_mode_code') |int) == 7) %}
             Remote EMS
           {% else %}
