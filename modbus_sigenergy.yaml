@@ -902,8 +902,8 @@ modbus:
         scale: 0.001
         scan_interval: 10
 
-      - name: Sigen ESS SOC
-        unique_id: sigendev_ess_soc
+      - name: Sigen ESS battery SOC
+        unique_id: sigendev_ess_battery_soc
         device_address: !secret sigen_modbus_slave
         address: 30601
         input_type: input
@@ -915,8 +915,8 @@ modbus:
         scale: 0.1
         scan_interval: 60
 
-      - name: Sigen ESS battery SOC
-        unique_id: sigendev_ess_battery_soc
+      - name: Sigen ESS battery SOH
+        unique_id: sigendev_ess_battery_soh
         device_address: !secret sigen_modbus_slave
         address: 30602
         input_type: input
