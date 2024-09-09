@@ -2092,8 +2092,8 @@ template:
           and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
-          {% if states('sensor.sigen_battery_power')|int > 0 %}
-            {{ states('sensor.sigen_battery_power') }}
+          {% if states('sensor.sigen_battery_power')|float > 0 %}
+            {{ states('sensor.sigen_battery_power')|float }}
           {% else %} 
             0 
           {% endif %}
@@ -2106,8 +2106,8 @@ template:
           and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
-          {% if states('sensor.sigen_battery_power')|int < 0 %}
-            {{ states('sensor.sigen_battery_power') * -1 }}
+          {% if states('sensor.sigen_battery_power')|float < 0 %}
+            {{ states('sensor.sigen_battery_power')|float * -1 }}
           {% else %} 
             0 
           {% endif %}
