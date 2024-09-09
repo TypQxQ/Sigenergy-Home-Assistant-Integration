@@ -1,0 +1,127 @@
+- name: Sigen AC Charger 1 - System state code
+  unique_id: sigen_ac_charger_1_system_state_code
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32000
+  input_type: input
+  data_type: uint16
+  precision: 1
+  scan_interval: 10
+
+- name: Sigen AC Charger 1 - Total energy consumed
+  unique_id: sigen_ac_charger_1_total_energy_consumed
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32001
+  input_type: input
+  data_type: uint32
+  precision: 1
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen AC Charger 1 - Charging power
+  unique_id: sigen_ac_charger_1_charging_power
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32003
+  input_type: input
+  data_type: int32
+  precision: 1
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen AC Charger 1 - Rated power
+  unique_id: sigen_ac_charger_1_rated_power
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32005
+  input_type: input
+  data_type: uint32
+  precision: 1
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen AC Charger 1 - Rated current
+  unique_id: sigen_ac_charger_1_rated_current
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32007
+  input_type: input
+  data_type: int32
+  precision: 1
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 600
+
+- name: Sigen AC Charger 1 - Rated voltage
+  unique_id: sigen_ac_charger_1_rated_voltage
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32009
+  input_type: input
+  data_type: uint16
+  precision: 1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 600
+
+- name: Sigen AC Charger 1 - AC-Charger input breaker
+  unique_id: sigen_ac_charger_1_input_breaker
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32010
+  input_type: input
+  data_type: int32
+  precision: 1
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 600
+
+# Alarm names based on details from: https://sss-support.sigenergy.com/sigen/exam/speech/197/03-Alarm%20list_EN.pdf
+# See template.yaml for the corresponding template sensors.
+- name: Sigen AC Charger 1 - Equipment protection fault
+  unique_id: sigen_ac_charger_1_alarm1_code
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32012
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen AC Charger 1 - Equipment fault
+  unique_id: sigen_ac_charger_1_alarm2_code
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32013
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen AC Charger 1 - Other fault
+  unique_id: sigen_ac_charger_1_alarm3_code
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 32014
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen AC Charger 1 - Charger output current
+# Writeable
+# [6, X] X is the smaller value between the rated current and the AC-Charger input breaker rated current.
+  unique_id: sigen_ac_charger_1_charger_output_current
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 42001
+  input_type: holding
+  data_type: uint32
+  precision: 1
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10

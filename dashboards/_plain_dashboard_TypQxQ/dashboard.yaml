@@ -232,7 +232,7 @@ views:
             name: Upper discharging limit
           - type: section
             label: >-
-              This values are updatedonce every 10s by default. Deselect textbox
+              This values are updated once every 10s by default. Deselect textbox
               after changing the value to send it. If invalid value entered then
               it will not be shown in applied.
           - type: section
@@ -293,7 +293,7 @@ views:
         entities:
           - entity: input_select.set_sigen_plant_run_mode
           - entity: input_select.set_sigen_remote_ems
-          - entity: input_select.set_sigen_indenpendent_phase_power_control
+          - entity: input_select.set_sigen_independent_phase_power_control
           - entity: input_select.set_sigen_remote_ems_control_mode
           - entity: input_text.set_sigen_ess_max_charging_limit
           - entity: input_text.set_sigen_ess_max_discharging_limit
@@ -344,17 +344,17 @@ views:
           - entity: sensor.sigen_available_max_reactive_power
           - entity: sensor.sigen_available_min_active_power
           - entity: sensor.sigen_available_min_reactive_power
-        title: Energy Mangement System (EMS)
+        title: Energy Management System (EMS)
       - type: entities
         entities:
-          - entity: sensor.sigen_type
+          - entity: sensor.sigen_inverter1_model_type
           - entity: sensor.sigen_running_state
           - entity: sensor.sigen_serial_number
           - entity: sensor.sigen_firmware_version
           - entity: sensor.sigen_rated_active_power
           - entity: sensor.sigen_max_rated_apparent_power
           - entity: sensor.sigen_max_active_power
-          - entity: sensor.sigen_max_absorbtion_power
+          - entity: sensor.sigen_max_absorption_power
           - entity: sensor.sigen_rated_battery_capacity
           - entity: sensor.sigen_rated_charging_power
           - entity: sensor.sigen_rated_ess_discharging_power
@@ -388,7 +388,7 @@ views:
           - entity: sensor.sigen_phase_b_current
           - entity: sensor.sigen_phase_c_current
           - entity: sensor.sigen_power_factor
-          - entity: sensor.sigen_oack_count
+          - entity: sensor.sigen_pack_count
         title: Sigenergy Device
       - type: entities
         entities:
@@ -433,13 +433,13 @@ views:
           - sensor.sigen_general_alarm2
           - sensor.sigen_general_alarm3
           - sensor.sigen_general_alarm4
-        title: Alam
+        title: Alarm
       - type: entities
         entities:
           - entity: sensor.sigen_plant_pv_power
           - entity: sensor.sigen_pv_power
           - entity: sensor.sigen_pv_string_count
-          - entity: sensor.sigen_mptt_count
+          - entity: sensor.sigen_mppt_count
           - entity: sensor.sigen_pv1_voltage
           - entity: sensor.sigen_pv1_current
           - entity: sensor.sigen_pv2_voltage
@@ -460,7 +460,7 @@ views:
         entities:
           - entity: sensor.sigen_battery_charging_power
           - entity: sensor.sigen_battery_discharging_power
-          - entity: sensor.sigen_8kwh_battery_waranty_life_spent
+          - entity: sensor.sigen_8kwh_battery_warranty_life_spent
           - entity: sensor.sigen_battery_usable_capacity
         title: Calculated Battery values
       - type: entities
@@ -505,7 +505,7 @@ views:
           yellow: 70
           red: 0
       - type: gauge
-        entity: sensor.sigen_8kwh_battery_waranty_life_spent
+        entity: sensor.sigen_8kwh_battery_warranty_life_spent
         needle: false
         severity:
           green: 0

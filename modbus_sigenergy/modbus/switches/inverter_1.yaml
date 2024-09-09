@@ -1,0 +1,7 @@
+- name: Sigen Inverter 1 - Start/Stop
+  unique_id: sigen_inverter_1_start_stop
+  device_address: !secret sigen_modbus_inverter_1
+  address: 40500
+  write_type: holding
+  command_on: 1 # Start
+  command_off: 0 # Stop

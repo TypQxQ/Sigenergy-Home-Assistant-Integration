@@ -1,0 +1,840 @@
+- name: Sigen Plant - System time
+  unique_id: sigen_plant_system_time
+  device_address: 247
+  address: 30000
+  input_type: input
+  data_type: uint32
+  unit_of_measurement: s
+  scan_interval: 60
+
+- name: Sigen Plant - System time zone
+  unique_id: sigen_plant_system_time_zone
+  device_address: 247
+  address: 30002
+  input_type: input
+  data_type: int16
+  unit_of_measurement: min
+  scan_interval: 60
+
+- name: Sigen Plant - EMS work mode code
+  # 0: Max self consumption
+  # 1: Sigen AI Mode
+  # 2: Time-based Control (TOU aka Time of Use)
+  # 5: Fully Feed-in to Grid - not in Modbus documentation
+  # 7: Remote EMS mode
+  unique_id: sigen_plant_ems_work_mode_code
+  device_address: 247
+  address: 30003
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - Grid sensor status code
+  # (gateway or meter connection status)
+  # 0: not connected
+  # 1: connected
+  unique_id: sigen_plant_grid_sensor_status_code
+  device_address: 247
+  address: 30004
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - Grid sensor active power
+  # Data collected from grid sensor at grid to system checkpoint
+  # > 0: power from grid to system
+  # < 0: power from system to grid
+  unique_id: sigen_plant_grid_sensor_active_power
+  device_address: 247
+  address: 30005
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - Grid sensor reactive power
+  # Data collected from grid sensor at grid to system checkpoint
+  unique_id: sigen_plant_grid_sensor_reactive_power
+  device_address: 247
+  address: 30007
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - On/Off grid status code
+  # 0: on grid
+  # 1: off grid (auto)
+  # 2: off grid (manual)
+  unique_id: sigen_plant_on_off_grid_status_code
+  device_address: 247
+  address: 30009
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - Max active power
+  # This should be the base value of all active power
+  unique_id: sigen_plant_max_active_power
+  device_address: 247
+  address: 30010
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Max apparent power
+  # This is should be the base value of all reactive power adjustment actions
+  unique_id: sigen_plant_max_apparent_power
+  device_address: 247
+  address: 30012
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Energy storage system SOC
+  unique_id: sigen_plant_energy_storage_system_soc
+  device_address: 247
+  address: 30014
+  input_type: input
+  data_type: uint16
+  precision: 1
+  unit_of_measurement: "%"
+  device_class: battery
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 60
+
+- name: Sigen Plant - Phase A active Power
+  unique_id: sigen_plant_phase_a_active_power
+  device_address: 247
+  address: 30015
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Phase B active Power
+  unique_id: sigen_plant_phase_b_active_power
+  device_address: 247
+  address: 30017
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Phase C active Power
+  unique_id: sigen_plant_phase_c_active_power
+  device_address: 247
+  address: 30019
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Phase A reactive Power
+  unique_id: sigen_plant_phase_a_reactive_power
+  device_address: 247
+  address: 30021
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Phase B reactive Power
+  unique_id: sigen_plant_phase_b_reactive_power
+  device_address: 247
+  address: 30023
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Phase C reactive Power
+  unique_id: sigen_plant_phase_c_reactive_power
+  device_address: 247
+  address: 30025
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - General Alarm1 code
+  # If any hybrid inverter has alarm, then this alarm will be set accordingly. Refer to Appendix 2
+  unique_id: sigen_plant_general_alarm1_code
+  device_address: 247
+  address: 30027
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - General Alarm2 code
+  # If any hybrid inverter has alarm, then this alarm will be set accordingly. Refer to Appendix 3
+  unique_id: sigen_plant_general_alarm2_code
+  device_address: 247
+  address: 30028
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - General Alarm3 code
+  # If any hybrid inverter has alarm, then this alarm will be set accordingly. Refer to Appendix 4
+  unique_id: sigen_plant_general_alarm3_code
+  device_address: 247
+  address: 30029
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - General Alarm4 code
+  # If any hybrid inverter has alarm, then this alarm will be set accordingly. Refer to Appendix 5
+  unique_id: sigen_plant_general_alarm4_code
+  device_address: 247
+  address: 30030
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - Active power
+  unique_id: sigen_plant_active_power
+  device_address: 247
+  address: 30031
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - Reactive power
+  unique_id: sigen_plant_reactive_power
+  device_address: 247
+  address: 30033
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - PV power
+  unique_id: sigen_plant_pv_power
+  device_address: 247
+  address: 30035
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - Battery power
+  # <0: discharging
+  # >0: charging
+  unique_id: sigen_plant_battery_power
+  device_address: 247
+  address: 30037
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Plant - Available max active power
+  # Feed to the ac terminal. Count only the running inverters
+  unique_id: sigen_plant_available_max_active_power
+  device_address: 247
+  address: 30039
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Available min active power
+  # Absorb from the ac terminal. Count only the running inverters
+  unique_id: sigen_plant_available_min_active_power
+  device_address: 247
+  address: 30041
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Available max reactive power
+  # Feed to the ac terminal. Count only the running inverters
+  unique_id: sigen_plant_available_max_reactive_power
+  device_address: 247
+  address: 30043
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Available min reactive power
+  # Absorb from the ac terminal. Count only the running inverters
+  unique_id: sigen_plant_available_min_reactive_power
+  device_address: 247
+  address: 30045
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Available max charging power
+  # Count only the running inverters
+  unique_id: sigen_plant_available_max_charging_power
+  device_address: 247
+  address: 30047
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Available max discharging power
+  # Count only the running inverters
+  unique_id: sigen_plant_available_max_discharging_power
+  device_address: 247
+  address: 30049
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Running state code
+  # Refer to Appendix 1
+  unique_id: sigen_plant_running_state_code
+  device_address: 247
+  address: 30051
+  input_type: input
+  data_type: uint16
+  scan_interval: 5
+
+- name: Sigen Plant - Grid Phase A active power
+  # Data collected from grid sensor at grid to system checkpoint
+  # >0 buy from grid
+  # <0 sell to grid
+  unique_id: sigen_plant_grid_phase_a_active_power
+  device_address: 247
+  address: 30052
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Grid Phase B active power
+  # Data collected from grid sensor at grid to system checkpoint
+  # >0 buy from grid
+  # <0 sell to grid
+  unique_id: sigen_plant_grid_phase_b_active_power
+  device_address: 247
+  address: 30054
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Grid Phase C active power
+  # Data collected from grid sensor at grid to system checkpoint
+  # >0 buy from grid
+  # <0 sell to grid
+  unique_id: sigen_plant_grid_phase_c_active_power
+  device_address: 247
+  address: 30056
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Grid Phase A reactive power
+  # Data collected from grid sensor at grid to system checkpoint
+  unique_id: sigen_plant_grid_phase_a_reactive_power
+  device_address: 247
+  address: 30058
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Grid Phase B reactive power
+  # Data collected from grid sensor at grid to system checkpoint
+  unique_id: sigen_plant_grid_phase_b_reactive_power
+  device_address: 247
+  address: 30060
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Grid Phase C reactive power
+  # Data collected from grid sensor at grid to system checkpoint
+  unique_id: sigen_plant_grid_phase_c_reactive_power
+  device_address: 247
+  address: 30062
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - Available max charging capacity
+  # Count only the running inverters
+  unique_id: sigen_plant_available_max_charging_capacity
+  device_address: 247
+  address: 30064
+  input_type: input
+  data_type: uint32
+  precision: 1
+  unit_of_measurement: kWh
+  device_class: energy
+  # state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Available max discharging capacity
+  # Count only the running inverters
+  unique_id: sigen_plant_available_max_discharging_capacity
+  device_address: 247
+  address: 30066
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  # state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Rated ESS charging power
+  unique_id: sigen_plant_rated_ess_charging_power
+  device_address: 247
+  address: 30068
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Plant - Rated ESS discharging power
+  unique_id: sigen_plant_rated_ess_discharging_power
+  device_address: 247
+  address: 30070
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+################################################
+# Read/Write registers
+################################################
+
+- name: Sigen Plant - Active power fixed adjustment target value
+  unique_id: sigen_plant_active_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40001
+  input_type: holding
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Reactive power fixed adjustment target value
+  unique_id: sigen_plant_reactive_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40003
+  input_type: holding
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAR
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Active power percentage adjustment target value
+  # Range:[-100.00,100.00]
+  unique_id: sigen_plant_active_power_percentage_adjustment_target_value
+  device_address: 247
+  address: 40005
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Q/S adjustment target value
+  # Range:[-60.00,60.00]
+  unique_id: sigen_plant_q_s_adjustment_target_value
+  device_address: 247
+  address: 40006
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Power factor adjustment target value
+  # Range: (-1, -0.8] U [0.8, 1]
+  unique_id: sigen_plant_power_factor_adjustment_target_value
+  device_address: 247
+  address: 40007
+  input_type: holding
+  data_type: int16
+  precision: 3
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase A active power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_a_active_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40008
+  input_type: holding
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase B active power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_b_active_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40010
+  input_type: holding
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase C active power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_c_active_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40012
+  input_type: holding
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase A reactive power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_a_reactive_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40014
+  input_type: holding
+  data_type: int32
+  precision: 2
+  unit_of_measurement: kVAR
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase B reactive power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_b_reactive_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40016
+  input_type: holding
+  data_type: int32
+  precision: 2
+  unit_of_measurement: kVAR
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase C reactive power fixed adjustment target value
+  # Valid only when output type is L1/L2/L3/N.
+  unique_id: sigen_plant_phase_c_reactive_power_fixed_adjustment_target_value
+  device_address: 247
+  address: 40018
+  input_type: holding
+  data_type: int32
+  precision: 2
+  unit_of_measurement: kVAR
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Plant - Phase A active power percentage adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+  unique_id: sigen_plant_phase_a_active_power_percentage_adjustment_target_value
+  device_address: 247
+  address: 40020
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Phase B active power percentage adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+  unique_id: sigen_plant_phase_b_active_power_percentage_adjustment_target_value
+  device_address: 247
+  address: 40021
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Phase C active power percentage adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+  unique_id: sigen_plant_phase_c_active_power_percentage_adjustment_target_value
+  device_address: 247
+  address: 40022
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Phase A Q/S adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+  unique_id: sigen_plant_phase_a_q_s_adjustment_target_value
+  device_address: 247
+  address: 40023
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Phase B Q/S adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+  unique_id: sigen_plant_phase_b_q_s_adjustment_target_value
+  device_address: 247
+  address: 40024
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Plant - Phase C Q/S adjustment target value
+  # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+  unique_id: sigen_plant_phase_c_q_s_adjustment_target_value
+  device_address: 247
+  address: 40025
+  input_type: holding
+  data_type: int16
+  precision: 2
+  unit_of_measurement: "%"
+  scale: 0.01
+  scan_interval: 60
+
+# These two registers are documented but fail with illegal data address.
+# - name: Sigen Plant - Active power fixed adjustment upper limit
+#   # The actual power adjustment value will be the lesser of this register and register 40001.
+#   unique_id: sigen_plant_active_power_fixed_adjustment_upper_limit
+#   device_address: 247
+#   address: 40026
+#   input_type: holding
+#   data_type: int32
+#   precision: 3
+#   unit_of_measurement: kW
+#   device_class: power
+#   scale: 0.001
+#   scan_interval: 60
+#
+# - name: Sigen Plant - Active power percentage adjustment upper limit
+#   # The actual power adjustment value will be the lesser of this register and register 40005.
+#   unique_id: sigen_plant_active_power_percentage_adjustment_upper_limit
+#   device_address: 247
+#   address: 40028
+#   input_type: holding
+#   data_type: int16
+#   precision: 2
+#   unit_of_measurement: "%"
+#   scale: 0.01
+#   scan_interval: 60
+
+- name: Sigen Plant - Remote EMS code
+  # 0: disabled
+  # 1: enabled
+  # When needed to control EMS remotely, this register needs to be enabled.
+  # When enabled, the plant’s EMS work mode (30003) will switch to remote EMS.
+  unique_id: sigen_plant_remote_ems_code
+  device_address: 247
+  address: 40029
+  input_type: holding
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Plant - Independent phase power control code
+  # Valid only when output type is L1/L2/L3/N. To enable independent phase control, this parameter must be enabled.
+  # 0: disabled
+  # 1: enabled
+  unique_id: sigen_plant_independent_phase_power_control_code
+  device_address: 247
+  address: 40030
+  input_type: holding
+  data_type: uint16
+  scan_interval: 60
+
+- name: Sigen Plant - Remote EMS control mode code
+  # 0: PCS remote control
+  # 1: Standby
+  # 2: Maximum self-consumption
+  # 3: Command charging (consume power from the grid first)
+  # 4: Command charging (consume power from the PV first)
+  # 5: Command discharging (output power from PV first)
+  # 6: Command discharging (output power from the battery first)
+  unique_id: sigen_plant_remote_ems_control_mode_code
+  device_address: 247
+  address: 40031
+  input_type: holding
+  data_type: uint16
+  scan_interval: 60
+
+- name: Sigen Plant - ESS max charging limit
+  # [0, Rated ESS charging power]. This register will take effect when Remote EMS control mode (40031) is 3 or 4.
+  unique_id: sigen_plant_ess_max_charging_limit
+  device_address: 247
+  address: 40032
+  input_type: holding
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - ESS max discharging limit
+  # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
+  unique_id: sigen_plant_ess_max_discharging_limit
+  device_address: 247
+  address: 40034
+  input_type: holding
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Plant - PV max power limit
+  # This register will take effect when Remote EMS control mode (40031) is 3, 4, 5 or 6.
+  unique_id: sigen_plant_pv_max_power_limit
+  device_address: 247
+  address: 40036
+  input_type: holding
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  scale: 0.001
+  scan_interval: 10

@@ -1,0 +1,25 @@
+set_sigen_plant_remote_ems:
+  name: Set Sigen Plant Remote EMS
+  options:
+    - "Disabled (default, uses the app)"
+    - "Enabled (Home Assistant control)"
+  icon: mdi:remote
+
+set_sigen_plant_remote_ems_control_mode:
+  name: Set Sigen Plant Remote EMS control mode
+  options:
+    - "PCS remote control"
+    - "Standby"
+    - "Maximum self-consumption (default)"
+    - "Command charging (consume power from the grid first)"
+    - "Command charging (consume power from the PV first)"
+    - "Command discharging (output power from PV first)"
+    - "Command discharging (output power from the battery first)"
+  # icon: mdi:remote
+  icon: mdi:battery-unknown
+
+set_sigen_plant_independent_phase_power_control:
+  name: Set Sigen Plant Independent phase power control
+  options:
+    - "Disabled"
+    - "Enabled"

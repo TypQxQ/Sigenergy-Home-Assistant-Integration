@@ -1,0 +1,278 @@
+################################################
+# Automations: Write modbus registers on input changes via GUI
+# note: If you change a value by the sliders, it will take up to 60 seconds until the state variables are updated
+# Unfortunately, I could not find a way to "force update" modbus registers, yet...
+################################################
+
+- id: "automation_sigen_plant_remote_ems_input_selector_action"
+  alias: "Sigen Plant - Remote EMS input selector action"
+  description: "Enables / disables the Sigen Plant remote EMS"
+  triggers:
+    - trigger: state
+      entity_id: input_select.set_sigen_plant_remote_ems
+  condition: []
+  variables:
+    sg_disable: 0
+    sg_enable: 1
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40029
+        value: >
+          {% if is_state('input_select.set_sigen_plant_remote_ems', "Enabled (Home Assistant control)") %}
+            {{sg_enable}}
+          {% else %}
+            {{sg_disable}}
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_remote_ems_input_selector_update"
+  alias: "Sigen Plant - Remote EMS input selector update"
+  description: "Updates the Sigen Plant remote EMS input selector"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_remote_ems_code
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_remote_ems_code', 'unavailable') }}"
+  action:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.set_sigen_plant_remote_ems
+      data:
+        option: >
+          {% if is_state('sensor.sigen_plant_remote_ems_code', "0") %}
+            Disabled (default, uses the app)
+          {% else %}
+            Enabled (Home Assistant control)
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_remote_ems_control_mode_input_selector_action"
+  alias: "Sigen Plant - Remote EMS control mode input selector action"
+  description: "Sets the Sigen Plant remote EMS control mode"
+  triggers:
+    - trigger: state
+      entity_id:
+        - input_select.set_sigen_plant_remote_ems_control_mode
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40031
+        value: >
+          {% if is_state('input_select.set_sigen_plant_remote_ems_control_mode', "PCS remote control") %} 0
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Standby") %} 1
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Maximum self-consumption (default)") %} 2
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Command charging (consume power from the grid first)") %} 3
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Command charging (consume power from the PV first)") %} 4
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Command discharging (output power from PV first)") %} 5
+          {% elif is_state('input_select.set_sigen_plant_remote_ems_control_mode', "Command discharging (output power from the battery first)") %} 6
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_remote_ems_control_mode_input_selector_update"
+  alias: "Sigen Plant - Remote EMS control mode input selector update"
+  description: "Updates the Sigen Plant remote EMS control mode selector"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_remote_ems_control_mode_code
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_remote_ems_control_mode_code', 'unavailable') }}"
+  action:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.set_sigen_plant_remote_ems_control_mode
+      data:
+        option: >
+          {% if is_state('sensor.sigen_plant_remote_ems_control_mode_code', "0") %}
+            PCS remote control
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "1") %}
+            Standby
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "2") %}
+            Maximum self-consumption (default)
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "3") %}
+            Command charging (consume power from the grid first)
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "4") %}
+            Command charging (consume power from the PV first)
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "5") %}
+            Command discharging (output power from PV first)
+          {% elif is_state('sensor.sigen_plant_remote_ems_control_mode_code', "6") %}
+            Command discharging (output power from the battery first)
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_independent_phase_power_control_input_selector_action"
+  alias: "Sigen Plant - Independent phase power control input selector action"
+  description: "Sets the Sigen Plant independent phase power control"
+  triggers:
+    - trigger: state
+      entity_id: input_select.set_sigen_plant_independent_phase_power_control
+  variables:
+    sg_disable: 0
+    sg_enable: 1
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40030
+        value: >
+          {% if is_state('input_select.set_sigen_plant_independent_phase_power_control', "Enabled") %}
+            {{sg_enable}}
+          {% else %}
+            {{sg_disable}}
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_independent_phase_power_control_input_selector_update"
+  alias: "Sigen Plant - Independent phase power control input selector update"
+  description: "Updates the Sigen Plant independent phase power control selector"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_independent_phase_power_control_code
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_independent_phase_power_control_code', 'unavailable') }}"
+  action:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.set_sigen_plant_independent_phase_power_control
+      data:
+        option: >
+          {% if is_state('sensor.sigen_plant_independent_phase_power_control_code', "0") %}
+            Disabled
+          {% else %}
+            Enabled
+          {% endif %}
+  mode: single
+
+- id: "automation_sigen_plant_ess_max_charging_limit_input_text_action"
+  alias: "Sigen Plant - ESS max charging limit input text action"
+  description: "Sets the Sigen Plant ESS max charging limit"
+  triggers:
+    - trigger: state
+      entity_id: input_text.set_sigen_plant_ess_max_charging_limit
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40032
+        value:
+          - >-
+            {{ (states('input_text.set_sigen_plant_ess_max_charging_limit')| float * 1000) |
+            round(0) | int // 2**16 }}
+          - >-
+            {{ (states('input_text.set_sigen_plant_ess_max_charging_limit')| float * 1000) |
+            round(0) | int % 2**16 }}
+  mode: single
+
+- id: "automation_sigen_plant_ess_max_charging_limit_input_text_update"
+  alias: "Sigen Plant - ESS max charging limit input text update"
+  description: "Updates the Sigen Plant ESS max charging limit text"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_ess_max_charging_limit
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_ess_max_charging_limit', 'unavailable') }}"
+  action:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.set_sigen_plant_ess_max_charging_limit
+      data:
+        value: "{{ states('sensor.sigen_plant_ess_max_charging_limit') }}"
+  mode: single
+
+- id: "automation_sigen_plant_ess_max_discharging_limit_input_text_action"
+  alias: "Sigen Plant - ESS max discharging limit input text action"
+  description: "Sets the Sigen Plant ESS max discharging limit"
+  triggers:
+    - trigger: state
+      entity_id: input_text.set_sigen_plant_ess_max_discharging_limit
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40034
+        value:
+          - >-
+            {{ (states('input_text.set_sigen_plant_ess_max_discharging_limit')| float * 1000) |
+            round(0) | int // 2**16 }}
+          - >-
+            {{ (states('input_text.set_sigen_plant_ess_max_discharging_limit')| float * 1000) |
+            round(0) | int % 2**16 }}
+  mode: single
+
+- id: "automation_sigen_plant_ess_max_discharging_limit_input_text_update"
+  alias: "Sigen Plant - ESS max discharging limit input text update"
+  description: "Updates Sigen Plant ESS max discharging limit input text"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_ess_max_discharging_limit
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_ess_max_discharging_limit', 'unavailable') }}"
+  action:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.set_sigen_plant_ess_max_discharging_limit
+      data:
+        value: "{{ states('sensor.sigen_plant_ess_max_discharging_limit') }}"
+  mode: single
+
+- id: "automation_sigen_pv_max_power_limit_input_text_action"
+  alias: "Sigen Plant - PV max power limit input text action"
+  description: "Sets the Sigen Plant PV max power limit"
+  triggers:
+    - trigger: state
+      entity_id: input_text.set_sigen_plant_pv_max_power_limit
+  action:
+    - action: modbus.write_register
+      data_template:
+        hub: Sigen
+        slave: 247
+        address: 40036
+        value:
+          - >-
+            {{ (states('input_text.set_sigen_plant_pv_max_power_limit')| float * 1000) |
+            round(0) | int // 2**16 }}
+          - >-
+            {{ (states('input_text.set_sigen_plant_pv_max_power_limit')| float * 1000) |
+            round(0) | int % 2**16 }}
+  mode: single
+
+- id: "automation_sigen_pv_max_power_limit_input_text_update"
+  alias: "Sigen Plant - PV max power limit input text update"
+  description: "Updates Sigen Plant PV max power limit input text"
+  triggers:
+    - trigger: state
+      entity_id: sensor.sigen_plant_pv_max_power_limit
+    - trigger: homeassistant
+      event: start
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('sensor.sigen_plant_pv_max_power_limit', 'unavailable') }}"
+  action:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.set_sigen_plant_pv_max_power_limit
+      data:
+        value: "{{ states('sensor.sigen_plant_pv_max_power_limit') }}"
+  mode: single

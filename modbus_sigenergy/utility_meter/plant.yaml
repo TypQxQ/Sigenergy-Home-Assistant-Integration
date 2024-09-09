@@ -1,0 +1,23 @@
+sigen_daily_energy_consumption:
+  name: Sigen Plant - Daily Energy consumption
+  unique_id: sigen_daily_energy_consumption
+  source: sensor.sigen_accumulated_energy_consumption
+  cycle: daily
+
+sigen_daily_pv_energy_production:
+  name: Sigen Plant - Daily PV Energy production
+  unique_id: sigen_daily_pv_energy_production
+  source: sensor.sigen_accumulated_pv_energy_production
+  cycle: daily
+
+sigen_daily_grid_energy_export:
+  name: Sigen Plant - Daily Grid Energy export
+  unique_id: sigen_daily_grid_energy_export
+  source: sensor.sigen_accumulated_grid_energy_export
+  cycle: daily
+
+sigen_daily_grid_energy_import:
+  name: Sigen Plant - Daily Grid Energy import
+  unique_id: sigen_daily_grid_energy_import
+  source: sensor.sigen_accumulated_grid_energy_import
+  cycle: daily

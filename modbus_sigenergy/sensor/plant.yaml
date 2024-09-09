@@ -1,0 +1,44 @@
+- platform: integration
+  name: Sigen Plant - Accumulated energy consumption
+  unique_id: sigen_plant_accumulated_energy_consumption
+  source: sensor.sigen_plant_consumed_power
+  method: trapezoidal
+  round: 2
+  max_sub_interval:
+    seconds: 5
+
+- platform: integration
+  name: Sigen Plant - Accumulated PV energy production
+  unique_id: sigen_plant_accumulated_pv_energy_production
+  source: sensor.sigen_plant_pv_power
+  method: trapezoidal
+  round: 2
+  max_sub_interval:
+    seconds: 5
+
+- platform: integration
+  name: Sigen Plant - Accumulated Grid energy export
+  unique_id: sigen_plant_accumulated_grid_energy_export
+  source: sensor.sigen_plant_grid_sensor_export_power
+  method: trapezoidal
+  round: 2
+  max_sub_interval:
+    seconds: 5
+
+- platform: integration
+  name: Sigen Plant - Accumulated Grid energy import
+  unique_id: sigen_plant_accumulated_grid_energy_import
+  source: sensor.sigen_plant_grid_sensor_import_power
+  method: trapezoidal
+  round: 2
+  max_sub_interval:
+    seconds: 5
+
+- platform: integration
+  name: Sigen Plant - Accumulated Inverter energy usage
+  unique_id: sigen_plant_accumulated_inverter_energy_usage
+  source: sensor.sigen_plant_inverter_power_usage
+  method: trapezoidal
+  round: 2
+  max_sub_interval:
+    seconds: 5

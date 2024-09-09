@@ -1,0 +1,45 @@
+# Home Assistant Sigenergy inverter integration
+# https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
+# by Andrei Ignat (TypQxQ)
+# last update: 2025-02-07
+#
+# Adapted from Sungrow SHx Inverter Modbus Home Assistant
+# https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
+# by Martin Kaiser
+#
+# Note: This YAML file will only work with Home Assistant >= 2024.10
+
+# Useful definitions:
+# * EMS - Energy Management System
+# * ESS - Energy Storage System
+# * SOC - State of Charge
+# * PCS - Power Conversion System
+# * TOU - Time of Use
+# * AI - Artificial Intelligence
+# * PV - Photovoltaic (solar panels)
+# * AFCI - Arc Fault Circuit Interrupter
+# * EVSE - Electric Vehicle Supply Equipment
+
+# This implements all the registers from:
+# Sigen Modbus Protocol v1.8 released 2024-07-24
+# As of creation 2024-02-10 the following registers don't work so are commented out:
+# - Sigen Plant - Active power fixed adjustment upper limit
+# - Sigen Plant - Active power percentage adjustment upper limit
+# - AC Charger - ALL
+
+modbus:
+  - name: Sigen
+    type: tcp
+    host: !secret sigen_modbus_host_ip
+    port: !secret sigen_modbus_port
+    timeout: 30
+
+    switches: !include_dir_merge_list ../modbus_sigenergy/modbus/switches
+    sensors: !include_dir_merge_list ../modbus_sigenergy/modbus/sensors
+
+template: !include_dir_merge_list ../modbus_sigenergy/template
+sensor: !include_dir_merge_list ../modbus_sigenergy/sensor
+utility_meter: !include_dir_merge_named ../modbus_sigenergy/utility_meter
+input_select: !include_dir_merge_named ../modbus_sigenergy/input_select
+input_text: !include_dir_merge_named ../modbus_sigenergy/input_text
+automation: !include_dir_merge_list ../modbus_sigenergy/automation

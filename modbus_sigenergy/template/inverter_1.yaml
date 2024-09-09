@@ -1,0 +1,171 @@
+# Sigen Inverter 1 template configuration
+#
+# This is used for Sigen Hybrid, Sigen PV Max and SigenStor EC inverters.
+
+- sensor:
+    - name: Sigen Inverter 1 - PV1 power
+      unique_id: sigen_inverter_1_pv1_power
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_pv1_voltage') | float
+              * states('sensor.sigen_inverter_1_pv1_current') | float
+            ) * 0.001
+          ) | round(2)
+        }}
+      icon: mdi:solar-power
+
+    - name: Sigen Inverter 1 - PV2 power
+      unique_id: sigen_inverter_1_pv2_power
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_pv2_voltage') | float
+              * states('sensor.sigen_inverter_1_pv2_current') | float
+            ) * 0.001
+          ) | round(2)
+        }}
+      icon: mdi:solar-power
+
+    - name: Sigen Inverter 1 - PV3 power
+      unique_id: sigen_inverter_1_pv3_power
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_pv3_voltage') | float
+              * states('sensor.sigen_inverter_1_pv3_current') | float
+            ) * 0.001
+          ) | round(2)
+        }}
+      icon: mdi:solar-power
+
+    - name: Sigen Inverter 1 - PV4 power
+      unique_id: sigen_inverter_1_pv4_power
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_pv4_voltage') | float
+              * states('sensor.sigen_inverter_1_pv4_current') | float
+            ) * 0.001
+          ) | round(2)
+        }}
+      icon: mdi:solar-power
+
+    - name: Sigen Inverter 1 - Output type
+      unique_id: sigen_inverter_1_output_type
+      state: >-
+        {% if  ((states('sensor.sigen_inverter_1_output_type_code') |int) == 0) %}
+          L/N
+        {% elif ((states('sensor.sigen_inverter_1_output_type_code') |int) == 1) %}
+          L1/L2/L3
+        {% elif ((states('sensor.sigen_inverter_1_output_type_code') |int) == 2) %}
+          L1/L2/L3/N
+        {% elif ((states('sensor.sigen_inverter_1_output_type_code') |int) == 3) %}
+          L1/L2/N
+        {% else %}
+          Unknown
+        {% endif %}
+      icon: mdi:eye
+
+    # Assuming 5kWh batteries that have a Minimum Through Output Energy of 15.85 MWh according to warranty.
+    - name: Sigen Inverter 1 - 5kWh Battery warranty life spent
+      unique_id: sigen_inverter_1_5kwh_battery_warranty_life_spent
+      unit_of_measurement: "%"
+      state_class: total
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_accumulated_discharge_energy') | float
+            )
+            /
+            (
+              states('sensor.sigen_inverter_1_rated_battery_capacity') | float / 5 * 15850
+            ) * 100
+          ) | round(1)
+        }}
+
+    # Assuming 8kWh batteries that have a Minimum Through Output Energy of 23.77 MWh according to warranty.
+    - name: Sigen Inverter 1 - 8kWh Battery warranty life spent
+      unique_id: sigen_inverter_1_8kwh_battery_warranty_life_spent
+      unit_of_measurement: "%"
+      state_class: total
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_inverter_1_accumulated_discharge_energy') | float
+            )
+            /
+            (
+              states('sensor.sigen_inverter_1_rated_battery_capacity') | float / 8 * 23770
+            ) * 100
+          ) | round(1)
+        }}
+
+    # Assuming 8kWh batteries that have 7.8kWh usable capacity.
+    # Warranty of at least 70% after 10 years or Minimum Throughput Energy.
+    - name: Sigen Inverter 1 - Battery Usable capacity
+      unique_id: sigen_inverter_1_battery_usable_capacity
+      unit_of_measurement: "%"
+      state_class: total
+      state: >-
+        {{
+          (
+            (
+              states('sensor.sigen_plant_available_max_charging_capacity') | float
+              + states('sensor.sigen_plant_available_max_discharging_capacity') | float
+            )
+            /
+            (
+              states('sensor.sigen_inverter_1_rated_battery_capacity') | float
+              * 0.9689
+            ) * 100
+          ) | round(1)
+        }}
+
+    - name: Sigen Inverter 1 - Running state
+      unique_id: sigen_inverter_1_running_state
+      state: >-
+        {% if ((states('sensor.sigen_inverter_1_running_state_code') |int) == 0) %}
+          Standby
+        {% elif ((states('sensor.sigen_inverter_1_running_state_code') |int) == 1) %}
+          Running
+        {% elif ((states('sensor.sigen_inverter_1_running_state_code') |int) == 2) %}
+          Fault
+        {% elif ((states('sensor.sigen_inverter_1_running_state_code') |int) == 3) %}
+          Shutdown
+        {% else %}
+          Unknown code: {{ states('sensor.sigen_inverter_1_running_state_code') }}
+        {% endif %}
+      icon: mdi:power
+
+- binary_sensor:
+    - name: Sigen Inverter 1 - PV generating
+      unique_id: sigen_inverter_1_pv_generating
+      availability: >-
+        {{
+        not is_state('sensor.sigen_inverter_1_pv_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_inverter_1_pv_power')|round(0,"ceil") > 0 %}
+          1
+        {% else %}
+          0
+        {% endif %}
