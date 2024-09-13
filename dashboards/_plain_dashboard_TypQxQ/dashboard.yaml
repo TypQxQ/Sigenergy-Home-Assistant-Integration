@@ -43,6 +43,28 @@ views:
             name: Export to Grid
             icon: mdi:transmission-tower-import
         title: Power
+      - type: vertical-stack
+        cards:
+          - type: gauge
+            entity: sensor.sigen_energy_storage_system_soc
+            min: 0
+            max: 100
+            severity:
+              green: 30
+              yellow: 10
+              red: 0
+            name: Battery
+          - type: entities
+            entities:
+              - entity: sensor.sigen_ess_charge_discharge_power
+                icon: mdi:battery-charging
+              - entity: sensor.sigen_ess_average_cell_temperature
+                name: Average cell temperature
+                secondary_info: none
+                icon: ''
+              - entity: sensor.sigen_inverter_temperature
+                name: Inverter temperature
+                secondary_info: none
       - type: entities
         entities:
           - entity: sensor.sigen_daily_energy_consumption
@@ -105,28 +127,6 @@ views:
         hide_legend: false
         logarithmic_scale: false
         days_to_show: 1
-      - type: vertical-stack
-        cards:
-          - type: gauge
-            entity: sensor.sigen_energy_storage_system_soc
-            min: 0
-            max: 100
-            severity:
-              green: 75
-              yellow: 20
-              red: 0
-            name: Battery
-          - type: entities
-            entities:
-              - entity: sensor.sigen_ess_charge_discharge_power
-                icon: mdi:battery-charging
-              - entity: sensor.sigen_ess_average_cell_temperature
-                name: Average cell temperature
-                secondary_info: none
-                icon: ''
-              - entity: sensor.sigen_inverter_temperature
-                name: Inverter temperature
-                secondary_info: none
       - chart_type: line
         period: hour
         type: statistics-graph
@@ -200,6 +200,66 @@ views:
           - condition: state
             entity: sensor.sigen_alarm4
             state_not: No Alarm
+  - title: EMS Control
+    icon: mdi:solar-power
+    cards:
+      - type: entities
+        entities:
+          - entity: input_select.set_sigen_plant_run_mode
+          - type: divider
+          - entity: input_select.set_sigen_remote_ems
+          - entity: input_select.set_sigen_remote_ems_control_mode
+        title: Configurable EMS settings
+      - chart_type: line
+        period: hour
+        type: statistics-graph
+        entities:
+          - sensor.sigen_ess_soc
+        title: Battery SoC last 7 days
+        hide_legend: true
+        logarithmic_scale: false
+        stat_types:
+          - min
+          - max
+        days_to_show: 7
+      - chart_type: line
+        period: hour
+        type: statistics-graph
+        entities:
+          - sensor.sigen_pv_power
+          - sensor.sigen_pv1_power
+          - sensor.sigen_pv3_power
+          - sensor.sigen_pv2_power
+          - sensor.sigen_pv4_power
+        stat_types:
+          - mean
+        days_to_show: 7
+        title: Solar production last 7 days
+        logarithmic_scale: false
+      - type: entities
+        entities:
+          - type: section
+            label: EMS must be set in Remote mode before changing values.
+          - type: section
+            label: (0.0 is unlimited)
+          - type: divider
+          - entity: sensor.sigen_rated_ess_charging_power
+            name: Upper limit of "Set Sigen ESS max charging limit"
+            icon: mdi:car-speed-limiter
+          - entity: input_text.set_sigen_ess_max_charging_limit
+          - type: divider
+          - entity: sensor.sigen_rated_discharging_power
+            icon: mdi:car-speed-limiter
+            name: Upper limit of "Set Sigen ESS max discharging limit"
+          - entity: input_text.set_sigen_ess_max_discharging_limit
+        title: ESS limits
+      - type: entities
+        entities:
+          - type: section
+            label: EMS must be set in Remote mode before changing values.
+          - type: divider
+          - entity: input_text.set_sigen_pv_max_power_limit
+        title: Solar production limit (kW)
   - title: All Sigenergy provided parameters
     icon: mdi:solar-power-variant-outline
     cards:
@@ -322,8 +382,8 @@ views:
           - entity: sensor.sigen_ess_available_battery_charge_energy
           - entity: sensor.sigen_ess_available_battery_discharge_energy
           - entity: sensor.sigen_ess_charge_discharge_power
-          - entity: sensor.sigen_ess_soc
           - entity: sensor.sigen_ess_battery_soc
+          - entity: sensor.sigen_ess_battery_soh
           - entity: sensor.sigen_ess_average_cell_temperature
           - entity: sensor.sigen_ess_average_cell_voltage
         title: Energy Storage System (ESS)
@@ -412,6 +472,8 @@ views:
         entities:
           - entity: sensor.sigen_daily_energy_consumption
           - entity: sensor.sigen_daily_pv_energy_production
+          - entity: sensor.sigen_daily_energy_production
+            icon: mdi:counter
           - entity: sensor.sigen_daily_grid_energy_export
           - entity: sensor.sigen_daily_grid_energy_import
         title: Calculated Daily Energy values
@@ -428,45 +490,4 @@ views:
           green: 0
           yellow: 80
           red: 90
-  - title: EMS Control
-    icon: mdi:solar-power
-    cards:
-      - type: entities
-        entities:
-          - entity: input_select.set_sigen_plant_run_mode
-          - entity: input_select.set_sigen_remote_ems
-          - entity: input_select.set_sigen_remote_ems_control_mode
-        title: Configurable EMS settings
-      - chart_type: line
-        period: hour
-        type: statistics-graph
-        entities:
-          - sensor.sigen_ess_soc
-        title: Battery SoC last 30 days
-        hide_legend: true
-        logarithmic_scale: false
-        stat_types:
-          - min
-          - max
-        days_to_show: 30
-      - chart_type: line
-        period: hour
-        type: statistics-graph
-        entities:
-          - sensor.sigen_pv_power
-          - sensor.sigen_pv1_power
-          - sensor.sigen_pv3_power
-          - sensor.sigen_pv2_power
-          - sensor.sigen_pv4_power
-        stat_types:
-          - mean
-        days_to_show: 30
-        title: Solar production last 30 days
-        logarithmic_scale: false
-      - type: entities
-        entities:
-          - entity: input_text.set_sigen_ess_max_charging_limit
-          - entity: input_text.set_sigen_ess_max_discharging_limit
-          - entity: input_text.set_sigen_pv_max_power_limit
-        title: Advanced EMS settings (-0.0 is default)
 title: PV System

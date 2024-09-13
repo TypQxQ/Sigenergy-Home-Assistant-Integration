@@ -62,16 +62,15 @@ Default dashboard tab "EMS"
 
 
 ## 5. Tested configurations
-I have a **Sigenergy SigenStor EC 15.0 TP** Inverter and **2 8kWh batteries** updating frequently to the latest **Home Assistant** (> 2023.3). I try to thoroughly test features before releasing them, but I cannot test everything (e.g., backup capabilities, DO-related, ...)
+I have a **Sigenergy SigenStor EC 15.0 TP** Inverter and **2 8kWh batteries** updating frequently to the latest **Home Assistant** (> 2024.9). I try to thoroughly test features before releasing them, but I cannot test everything (e.g., backup capabilities, DO-related, ...)
 
 The Modbus register mapping is based on two documents I found online. I am not sure if I am allowed to share the files, but you can search for them using their names. 
 Let me know in the github discussions, if there are newer versions available.
 
 ```
 Sigenergy Modbus Protocol
-Version: V1.7
-Release date: 2024-04-09
-483828-sigenergy-modbus-protocol-20240409-pdf
+Version: V1.8
+Release date: 2024-07-24
 ```
 
 ## 6. Status and future work 

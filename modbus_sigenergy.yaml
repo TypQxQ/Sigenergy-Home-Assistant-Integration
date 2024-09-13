@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-08-28
+# last update: 2024-09-13
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -91,7 +91,7 @@ modbus:
         address: 30010
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -105,7 +105,7 @@ modbus:
         address: 30012
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVar
         # device_class: power
         state_class: measurement
@@ -245,7 +245,7 @@ modbus:
         address: 30031
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -258,7 +258,7 @@ modbus:
         address: 30033
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -271,7 +271,7 @@ modbus:
         address: 30035
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -286,7 +286,7 @@ modbus:
         address: 30037
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -300,7 +300,7 @@ modbus:
         address: 30039
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -314,7 +314,7 @@ modbus:
         address: 30041
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -328,7 +328,7 @@ modbus:
         address: 30043
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -342,7 +342,7 @@ modbus:
         address: 30045
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -355,7 +355,7 @@ modbus:
         address: 30047
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -368,7 +368,7 @@ modbus:
         address: 30049
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -495,7 +495,7 @@ modbus:
         address: 30066
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         # state_class: measurement
@@ -508,7 +508,7 @@ modbus:
         address: 30068
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -521,7 +521,7 @@ modbus:
         address: 30070
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -561,7 +561,7 @@ modbus:
         address: 30540
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -574,7 +574,7 @@ modbus:
         address: 30542
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVA
         # device_class: power
         state_class: measurement
@@ -587,7 +587,7 @@ modbus:
         address: 30544
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -600,7 +600,7 @@ modbus:
         address: 30546
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -613,7 +613,7 @@ modbus:
         address: 30548
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
@@ -626,7 +626,7 @@ modbus:
         address: 30550
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -639,7 +639,7 @@ modbus:
         address: 30552
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -665,7 +665,7 @@ modbus:
         address: 30556
         input_type: input
         data_type: uint64
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
@@ -691,7 +691,7 @@ modbus:
         address: 30562
         input_type: input
         data_type: uint64
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
@@ -717,7 +717,7 @@ modbus:
         address: 30568
         input_type: input
         data_type: uint64
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
@@ -743,7 +743,7 @@ modbus:
         address: 30574
         input_type: input
         data_type: uint64
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         state_class: total
@@ -765,7 +765,7 @@ modbus:
         address: 30579
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -778,7 +778,7 @@ modbus:
         address: 30581
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -791,7 +791,7 @@ modbus:
         address: 30583
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -804,7 +804,7 @@ modbus:
         address: 30585
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -817,7 +817,7 @@ modbus:
         address: 30587
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -830,7 +830,7 @@ modbus:
         address: 30589
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         # device_class: power
         state_class: measurement
@@ -843,7 +843,7 @@ modbus:
         address: 30591
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -856,7 +856,7 @@ modbus:
         address: 30593
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -869,7 +869,7 @@ modbus:
         address: 30595
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         # state_class: measurement
@@ -882,7 +882,7 @@ modbus:
         address: 30597
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: kWh
         device_class: energy
         # state_class: measurement
@@ -895,7 +895,7 @@ modbus:
         address: 30599
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -947,7 +947,7 @@ modbus:
         address: 30604
         input_type: input
         data_type: uint16
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -996,7 +996,7 @@ modbus:
         address: 31000
         input_type: input
         data_type: uint16
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1009,7 +1009,7 @@ modbus:
         address: 31001
         input_type: input
         data_type: uint16
-        precision: 1
+        precision: 2
         unit_of_measurement: Hz
         device_class: frequency
         state_class: measurement
@@ -1022,7 +1022,7 @@ modbus:
         address: 31002
         input_type: input
         data_type: uint16
-        precision: 1
+        precision: 2
         unit_of_measurement: Hz
         device_class: frequency
         state_class: measurement
@@ -1061,7 +1061,7 @@ modbus:
         address: 31005
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1075,7 +1075,7 @@ modbus:
         address: 31007
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1089,7 +1089,7 @@ modbus:
         address: 31009
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1102,7 +1102,7 @@ modbus:
         address: 31011
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1115,7 +1115,7 @@ modbus:
         address: 31013
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1128,7 +1128,7 @@ modbus:
         address: 31015
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1141,7 +1141,7 @@ modbus:
         address: 31017
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1154,7 +1154,7 @@ modbus:
         address: 31019
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1167,7 +1167,7 @@ modbus:
         address: 31021
         input_type: input
         data_type: uint32
-        precision: 1
+        precision: 2
         unit_of_measurement: A
         device_class: current
         state_class: measurement
@@ -1180,7 +1180,7 @@ modbus:
         address: 31023
         input_type: input
         data_type: uint16
-        precision: 1
+        precision: 2
         device_class: power_factor
         state_class: measurement
         scale: 0.01
@@ -1216,7 +1216,7 @@ modbus:
         address: 31027
         input_type: input
         data_type: int16
-        precision: 0
+        precision: 1
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1242,7 +1242,7 @@ modbus:
         address: 31029
         input_type: input
         data_type: int16
-        precision: 0
+        precision: 1
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1268,7 +1268,7 @@ modbus:
         address: 31031
         input_type: input
         data_type: int16
-        precision: 0
+        precision: 1
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1294,7 +1294,7 @@ modbus:
         address: 31033
         input_type: input
         data_type: int16
-        precision: 0
+        precision: 1
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
@@ -1320,7 +1320,7 @@ modbus:
         address: 31035
         input_type: input
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
@@ -1457,7 +1457,7 @@ modbus:
         address: 40001
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1469,7 +1469,7 @@ modbus:
         address: 40003
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kVAr
         scale: 0.001
         scan_interval: 60
@@ -1481,7 +1481,7 @@ modbus:
         address: 40005
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1493,7 +1493,7 @@ modbus:
         address: 40006
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1505,7 +1505,7 @@ modbus:
         address: 40007
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 3
         scale: 0.001
         scan_interval: 60
 
@@ -1516,7 +1516,7 @@ modbus:
         address: 40008
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1529,7 +1529,7 @@ modbus:
         address: 40010
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1542,7 +1542,7 @@ modbus:
         address: 40012
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1555,7 +1555,7 @@ modbus:
         address: 40014
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 2
         unit_of_measurement: kVar
         scale: 0.01
         scan_interval: 60
@@ -1567,7 +1567,7 @@ modbus:
         address: 40016
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 2
         unit_of_measurement: kVar
         scale: 0.01
         scan_interval: 60
@@ -1579,7 +1579,7 @@ modbus:
         address: 40018
         input_type: holding
         data_type: int32
-        precision: 1
+        precision: 2
         unit_of_measurement: kVar
         scale: 0.01
         scan_interval: 60
@@ -1591,7 +1591,7 @@ modbus:
         address: 40020
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1603,7 +1603,7 @@ modbus:
         address: 40021
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1615,7 +1615,7 @@ modbus:
         address: 40022
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1627,7 +1627,7 @@ modbus:
         address: 40023
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1639,7 +1639,7 @@ modbus:
         address: 40024
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1651,7 +1651,7 @@ modbus:
         address: 40025
         input_type: holding
         data_type: int16
-        precision: 1
+        precision: 2
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
@@ -1664,7 +1664,7 @@ modbus:
       #   address: 40026
       #   input_type: holding
       #   data_type: int32
-      #   precision: 1
+      #   precision: 3
       #   unit_of_measurement: kW
       #   device_class: power
       #   scale: 0.001
@@ -1677,7 +1677,7 @@ modbus:
       #   address: 40028
       #   input_type: holding
       #   data_type: int16
-      #   precision: 1
+      #   precision: 2
       #   unit_of_measurement: "%"
       #   scale: 0.01
       #   scan_interval: 60
@@ -1726,8 +1726,8 @@ modbus:
         device_address: 247
         address: 40032
         input_type: holding
-        data_type: int32
-        precision: 1
+        data_type: uint32
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1739,8 +1739,8 @@ modbus:
         device_address: 247
         address: 40034
         input_type: holding
-        data_type: int32
-        precision: 1
+        data_type: uint32
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -1752,8 +1752,8 @@ modbus:
         device_address: 247
         address: 40036
         input_type: holding
-        data_type: int32
-        precision: 1
+        data_type: uint32
+        precision: 3
         unit_of_measurement: kW
         device_class: power
         scale: 0.001
@@ -2182,15 +2182,6 @@ template:
         state_class: measurement
         icon: mdi:power
         
-
-      # - Sigen Plant active power calculation
-      #   unique_id: sigen_plant_active_power_calculation
-      #   state: "{{ states('sensor.sigen_plant_phase_a_active_power') | float + states('sensor.sigen_plant_phase_b_active_power') | float + states('sensor.sigen_plant_phase_c_active_power') | float |int }}"
-      #   unit_of_measurement: kW
-      #   device_class: power
-      #   state_class: measurement
-      #   icon: mdi:power
-
       - name: Sigen PV1 power
         unique_id: sigendev_pv1_power
         unit_of_measurement: kW
@@ -2488,17 +2479,17 @@ input_select:
 input_text:
   set_sigen_ess_max_charging_limit:
     name: Set Sigen ESS max charging limit
-    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
+    pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:battery-positive
 
   set_sigen_ess_max_discharging_limit:
     name: Set Sigen ESS max discharging limit
-    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
+    pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:battery-negative
 
   set_sigen_pv_max_power_limit:
     name: Set Sigen PV max power limit
-    pattern: "^(?:-0|[1-9]\\d*|0)(\\.\\d+)?$"
+    pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:solar-power
 
   
@@ -2796,7 +2787,13 @@ automation:
           hub: Sigen
           slave: 247
           address: 40032
-          value: "{{ states('input_text.set_sigen_ess_max_charging_limit') |float |int }}"
+          value:
+            - >-
+              {{ (states('input_text.set_sigen_ess_max_charging_limit')| float * 1000) |
+              round(0) | int // 2**16 }}
+            - >-
+              {{ (states('input_text.set_sigen_ess_max_charging_limit')| float * 1000) |
+              round(0) | int % 2**16 }}
     mode: single
 
   - id: "automation_sigen_ess_max_charging_limit_input_text_update"
@@ -2833,7 +2830,13 @@ automation:
           hub: Sigen
           slave: 247
           address: 40034
-          value: "{{ states('input_text.set_sigen_ess_max_discharging_limit') |float |int }}"
+          value:
+            - >-
+              {{ (states('input_text.set_sigen_ess_max_discharging_limit')| float * 1000) |
+              round(0) | int // 2**16 }}
+            - >-
+              {{ (states('input_text.set_sigen_ess_max_discharging_limit')| float * 1000) |
+              round(0) | int % 2**16 }}
     mode: single
 
   - id: "automation_sigen_ess_max_discharging_limit_input_text_update"
@@ -2870,7 +2873,13 @@ automation:
           hub: Sigen
           slave: 247
           address: 40036
-          value: "{{ states('input_text.set_sigen_pv_max_power_limit') |float |int }}"
+          value:
+            - >-
+              {{ (states('input_text.set_sigen_pv_max_power_limit')| float * 1000) |
+              round(0) | int // 2**16 }}
+            - >-
+              {{ (states('input_text.set_sigen_pv_max_power_limit')| float * 1000) |
+              round(0) | int % 2**16 }}
     mode: single
     
   - id: "automation_sigen_pv_max_power_limit_input_text_update"
