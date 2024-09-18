@@ -1831,9 +1831,9 @@ template:
       - name: Sigen On/Off grid status
         unique_id: sigen_on_off_grid_status
         state: >-
-          {% if ((states('sensor.sigen_on_off_grid_status_code') |int) == "0") %}
+          {% if ((states('sensor.sigen_on_off_grid_status_code') |int) == 0) %}
             On grid
-          {% elif ((states('sensor.sigen_on_off_grid_status_code') |int) == "1") %}
+          {% elif ((states('sensor.sigen_on_off_grid_status_code') |int) == 1) %}
             Off grid (auto)
           {% else %}
             Off grid (manual)
@@ -2017,15 +2017,15 @@ template:
       - name: Sigen Alarm4
         unique_id: sigen_alarm4
         state: >-
-          {% if ((states('sensor.sigen_general_alarm4_code') |int) == "3001") %}
+          {% if ((states('sensor.sigen_general_alarm4_code') |int) == 3001) %}
             Software version mismatch
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3002") %}
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3002) %}
             The temperature is too high
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3003") %}
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3003) %}
             Equipment failure
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3004") %}
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3004) %}
             Excessive leakage current in off-grid output
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == "3005") %}
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3005) %}
             N line grounding fault
           {% else %}
             No Alarm
@@ -2036,7 +2036,7 @@ template:
       - name: Sigen Plant Running state
         unique_id: sigen_plant_running_state
         state: >-
-          {% if ((states('sensor.sigen_plant_running_state_code') |int) == "0") %}
+          {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
             Shutdown
           {% else %}
             Enabled
@@ -2046,7 +2046,7 @@ template:
       - name: Sigen Running state
         unique_id: sigen_running_state
         state: >-
-          {% if ((states('sensor.sigen_running_state_code') |int) == "0") %}
+          {% if ((states('sensor.sigen_running_state_code') |int) == 0) %}
             Shutdown
           {% else %}
             Enabled
@@ -2077,7 +2077,7 @@ template:
       - name: Sigen Independent phase power control
         unique_id: sigen_independent_phase_power_control
         state: >-
-          {% if ((states('sensor.sigen_independent_phase_power_control_code') |int) == "0") %}
+          {% if ((states('sensor.sigen_independent_phase_power_control_code') |int) == 0) %}
             Disabled
           {% else %}
             Enabled
