@@ -214,7 +214,7 @@ views:
         period: hour
         type: statistics-graph
         entities:
-          - sensor.sigen_ess_soc
+          - sensor.sigen_ess_battery_soc
         title: Battery SoC last 7 days
         hide_legend: true
         logarithmic_scale: false
