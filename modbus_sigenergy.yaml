@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-09-13
+# last update: 2024-09-19
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -1843,7 +1843,9 @@ template:
       - name: Sigen General Alarm1
         unique_id: sigen_general_alarm1
         state: >-
-          {% if ((states('sensor.sigen_general_alarm1_code') |int) == 1001) %}
+          {% if ((states('sensor.sigen_general_alarm1_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1001) %}
             Software version mismatch
           {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1002) %}
             Low insulation resistance
@@ -1876,14 +1878,16 @@ template:
           {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1016) %}
             The DC component of the output current exceeds the limits
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_general_alarm1_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen General Alarm2
         unique_id: sigen_general_alarm2
         state: >-
-          {% if ((states('sensor.sigen_general_alarm2_code') |int) == 1017) %}
+          {% if ((states('sensor.sigen_general_alarm2_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1017) %}
             The leakage electricity exceeds the limits
           {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1018) %}
             Communication abnormal
@@ -1894,14 +1898,16 @@ template:
           {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1021) %}
             Off-grid protection
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_general_alarm2_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen General Alarm3
         unique_id: sigen_general_alarm3
         state: >-
-          {% if ((states('sensor.sigen_general_alarm3_code') |int) == 2001) %}  
+          {% if ((states('sensor.sigen_general_alarm3_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2001) %}  
             Software version mismatch
           {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2002) %}
             The energy storage module has low insulation resistance to grounding
@@ -1914,14 +1920,16 @@ template:
           {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2008) %}
             System internal protection
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_general_alarm3_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen General Alarm4
         unique_id: sigen_general_alarm4
         state: >-
-          {% if ((states('sensor.sigen_general_alarm4_code') |int) == 3001) %}
+          {% if ((states('sensor.sigen_general_alarm4_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3001) %}
             Software version mismatch
           {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3002) %}
             The temperature is too high
@@ -1932,103 +1940,111 @@ template:
           {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3005) %}
             N line grounding fault
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_general_alarm4_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen Alarm1
         unique_id: sigen_alarm1
         state: >-
-          {% if ((states('sensor.sigen_general_alarm1_code') |int) == 1001) %}
+          {% if ((states('sensor.sigen_alarm1_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1001) %}
             Software version mismatch
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1002) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1002) %}
             Low insulation resistance
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1003) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1003) %}
             The temperature is too high
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1004) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1004) %}
             Equipment failure
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1005) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1005) %}
             The system grounding is abnormal
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1006) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1006) %}
             PV string voltage is high
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1007) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1007) %}
             PV string reverse connection
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1008) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1008) %}
             PV string back-filling
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1009) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1009) %}
             AFCI fault
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1010) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1010) %}
             Grid outage
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1011) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1011) %}
             Grid overvoltage
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1012) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1012) %}
             Grid undervoltage
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1013) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1013) %}
             Grid overfrequency
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1014) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1014) %}
             Grid underfrequency
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1015) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1015) %}
             Grid voltage imbalance
-          {% elif ((states('sensor.sigen_general_alarm1_code') |int) == 1016) %}
+          {% elif ((states('sensor.sigen_alarm1_code') |int) == 1016) %}
             The DC component of the output current exceeds the limits
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_alarm1_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen Alarm2
         unique_id: sigen_alarm2
         state: >-
-          {% if ((states('sensor.sigen_general_alarm2_code') |int) == 1017) %}
+          {% if ((states('sensor.sigen_alarm2_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_alarm2_code') |int) == 1017) %}
             The leakage electricity exceeds the limits
-          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1018) %}
+          {% elif ((states('sensor.sigen_alarm2_code') |int) == 1018) %}
             Communication abnormal
-          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1019) %}
+          {% elif ((states('sensor.sigen_alarm2_code') |int) == 1019) %}
             System internal protection
-          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1020) %}
+          {% elif ((states('sensor.sigen_alarm2_code') |int) == 1020) %}
             AFCI self-test circuit fault
-          {% elif ((states('sensor.sigen_general_alarm2_code') |int) == 1021) %}
+          {% elif ((states('sensor.sigen_alarm2_code') |int) == 1021) %}
             Off-grid protection
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_alarm2_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen Alarm3
         unique_id: sigen_alarm3
         state: >-
-          {% if ((states('sensor.sigen_general_alarm3_code') |int) == 2001) %}
+          {% if ((states('sensor.sigen_alarm3_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2001) %}
             Software version mismatch
-          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2002) %}
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2002) %}
             The energy storage module has low insulation resistance to grounding
-          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2003) %}
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2003) %}
             The temperature is too high
-          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2004) %}
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2004) %}
             Equipment failure
-          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2005) %}
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2005) %}
             Below desired temperature
-          {% elif ((states('sensor.sigen_general_alarm3_code') |int) == 2008) %}
+          {% elif ((states('sensor.sigen_alarm3_code') |int) == 2008) %}
             System internal protection
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_alarm3_code') }}
           {% endif %}
         icon: mdi:alert
 
       - name: Sigen Alarm4
         unique_id: sigen_alarm4
         state: >-
-          {% if ((states('sensor.sigen_general_alarm4_code') |int) == 3001) %}
+          {% if ((states('sensor.sigen_alarm4_code') |int) == 0) %}
+            No Alarm
+          {% elif ((states('sensor.sigen_alarm4_code') |int) == 3001) %}
             Software version mismatch
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3002) %}
+          {% elif ((states('sensor.sigen_alarm4_code') |int) == 3002) %}
             The temperature is too high
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3003) %}
+          {% elif ((states('sensor.sigen_alarm4_code') |int) == 3003) %}
             Equipment failure
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3004) %}
+          {% elif ((states('sensor.sigen_alarm4_code') |int) == 3004) %}
             Excessive leakage current in off-grid output
-          {% elif ((states('sensor.sigen_general_alarm4_code') |int) == 3005) %}
+          {% elif ((states('sensor.sigen_alarm4_code') |int) == 3005) %}
             N line grounding fault
           {% else %}
-            No Alarm
+            Alarm code: {{ states('sensor.sigen_alarm4_code') }}
           {% endif %}
         icon: mdi:alert
 
