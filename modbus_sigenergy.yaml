@@ -2158,20 +2158,6 @@ template:
         state_class: measurement
         icon: mdi:power
 
-      - name: Sigen Daily energy production
-        unique_id: sigen_daily_energy_production
-        state: >-
-          {{
-            states('sensor.sigen_daily_export_energy') | float
-            + states('sensor.sigen_daily_charge_energy') | float
-            - states('sensor.sigen_daily_discharge_energy') | float
-            - states('sensor.sigen_daily_import_energy') | float
-          }}
-        unit_of_measurement: kW
-        device_class: power
-        # state_class: total
-        icon: mdi:power
-
       - name: Sigen Grid Sensor import power
         unique_id: sigen_grid_sensor_import_power
         state: >-
@@ -2272,7 +2258,7 @@ template:
             (
               states('sensor.sigen_plant_active_power') | float
               + states('sensor.sigen_grid_sensor_active_power') | float
-            ) | round(1)
+            ) | round(3)
           }}
 
       # Assuming 8kWh batteries that have a Minimum Through Output Energy of 23.77 MWh according to waranty.
