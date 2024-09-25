@@ -2272,9 +2272,9 @@ template:
         state: >-
           {{
             (
-              states('sensor.sigen_plant_active_power') | float(0)
-              + states('sensor.sigen_grid_sensor_active_power') | float(0)
-              - states('sensor.sigen_consumed_power') | float(0)
+              states('sensor.sigen_consumed_power') | float(0)
+              - states('sensor.sigen_plant_active_power') | float(0)
+              - states('sensor.sigen_grid_sensor_active_power') | float(0)
             ) | round(3)
           }}
 
@@ -2422,6 +2422,12 @@ sensor:
     name: Sigen Accumulated Grid energy import
     unique_id: sigen_accumulated_grid_energy_import
     source: sensor.sigen_grid_sensor_import_power
+    round: 2
+
+  - platform: integration
+    name: Sigen Accumulated Inverter energy usage
+    unique_id: sigen_accumulated_inverter_energy_usage
+    source: sensor.sigen_inverter_power_usage
     round: 2
 
 utility_meter:
