@@ -2256,8 +2256,25 @@ template:
         state: >-
           {{
             (
-              states('sensor.sigen_plant_active_power') | float
-              + states('sensor.sigen_grid_sensor_active_power') | float
+              states('sensor.sigen_pv_power') | float(0)
+              + states('sensor.sigen_battery_discharging_power') | float(0)
+              + states('sensor.sigen_grid_sensor_import_power') | float(0)
+              - states('sensor.sigen_battery_charging_power') | float(0)
+              - states('sensor.sigen_grid_sensor_export_power') | float(0)
+            ) | round(3)
+          }}
+
+      - name: Sigen inverter power usage
+        unique_id: sigen_inverter_power_usage
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {{
+            (
+              states('sensor.sigen_plant_active_power') | float(0)
+              + states('sensor.sigen_grid_sensor_active_power') | float(0)
+              - states('sensor.sigen_consumed_power') | float(0)
             ) | round(3)
           }}
 
