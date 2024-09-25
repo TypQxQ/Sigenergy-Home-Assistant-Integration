@@ -163,7 +163,7 @@ card:
         });
     - entity: sensor.nordpool
       name: Price now
-      color: blue
+      color: orange
       type: column
       show:
         in_chart: false
