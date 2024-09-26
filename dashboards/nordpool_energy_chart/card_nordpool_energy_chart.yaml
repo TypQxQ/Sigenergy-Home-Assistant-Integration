@@ -1,10 +1,10 @@
 # This code should be copy-pasted into a lovelace card.
 # Requires the custom:config-template-card, custom:apexcharts-card, custom:nordpool-card and custom:congif-template-card to be installed. 
 
-type: custom:config-template-card
+type: 'custom:config-template-card'
 variables:
   currency: '''öre'''
-  chart_cutoff: 70
+  chart_cutoff: -5
   grid_import_sensor: '''sensor.sigen_accumulated_grid_energy_import'''
   chart_title: '''Electricity prices today'''  
   total_purchease_price_text: '''Total purchease price'''
@@ -16,16 +16,26 @@ variables:
   nordpool_sensor: '''sensor.nordpool'''
   decimals_in_prices: 0
   decimals_in_energy: 3
-  hours: '`${states[''input_number.total_nordpool_hours_available''].state}h`'
-    
+  total_max_nordpool_price: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.max(a, b), -Infinity) }`'
+  total_min_nordpool_price: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.min(a, b), Infinity) }`'
+  total_nordpool_prices: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => a + b, 0) }`'
+
+  setchart_cutoff: |
+    min_max_price => {
+      if (min_max_price[0] <= 0) {
+          return "auto";
+      }
+      return min_max_price[1] - min_max_price[0] + (min_max_price[0] * 0,75)
+    }
+
 entities:
   - input_number.total_nordpool_hours_available
 card:
   type: custom:apexcharts-card
-  graph_span: ${hours}
+  graph_span: "${ states['sensor.nordpool'].attributes.raw_today.length + states['sensor.nordpool'].attributes.raw_tomorrow.length + 'h' }"
   yaxis:
     - id: y1
-      min: ${chart_cutoff}
+      min: ${setchart_cutoff([total_min_nordpool_price,total_max_nordpool_price])}
       max: auto
       apex_config:
         opposite: false
@@ -34,7 +44,7 @@ card:
         labels:
           formatter: |
             EVAL:function(value) {
-              return value.toFixed(0) +" öre";
+              return value.toFixed(0) + " öre";
             }
     - id: y2
       min: 0
@@ -167,7 +177,7 @@ card:
       color: '#dc3545'
       float_precision: ${decimals_in_prices}
       stroke_width: 2
-      name: ${highest_price_text}
+      name: "${ states[nordpool_sensor].attributes.raw_today.concat(states[nordpool_sensor].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.max(a, b), -Infinity) +' '}"
       show:
         in_chart: false
         legend_value: false
