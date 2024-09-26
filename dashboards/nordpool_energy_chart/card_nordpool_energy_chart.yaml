@@ -1,41 +1,64 @@
 # This code should be copy-pasted into a lovelace card.
 # Requires the custom:config-template-card, custom:apexcharts-card, custom:nordpool-card and custom:congif-template-card to be installed. 
 
-type: 'custom:config-template-card'
+type: custom:config-template-card
 variables:
-  currency: '''öre'''
-  chart_cutoff: -5
+  nordpool_sensor: '''sensor.nordpool'''
   grid_import_sensor: '''sensor.sigen_accumulated_grid_energy_import'''
-  chart_title: '''Electricity prices today'''  
+  currency: '''öre'''
+  decimals_in_prices: 0
+  decimals_in_energy: 3
+  chart_price_cutoff_coerficient: 0.1
+  chart_title: '''Electricity prices today'''
   total_purchease_price_text: '''Total purchease price'''
   grid_import_text: '''Grid Import'''
   lowest_price_text: '''Lowest to come'''
   highest_price_text: '''Highest to come'''
   price_now_text: '''Price now'''
   now_text: '''Now'''
-  nordpool_sensor: '''sensor.nordpool'''
-  decimals_in_prices: 0
-  decimals_in_energy: 3
-  total_max_nordpool_price: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.max(a, b), -Infinity) }`'
-  total_min_nordpool_price: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.min(a, b), Infinity) }`'
-  total_nordpool_prices: '`${ states[''sensor.nordpool''].attributes.raw_today.concat(states[''sensor.nordpool''].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => a + b, 0) }`'
-
-  setchart_cutoff: |
-    min_max_price => {
-      if (min_max_price[0] <= 0) {
+  set_chart_cutoff: |
+    values => {
+      if (values[0] <= 0) {
           return "auto";
       }
-      return min_max_price[1] - min_max_price[0] + (min_max_price[0] * 0,75)
+      return values[0] - (values[0] * values[1])
     }
-
+  get_total_max_nordpool_price: |
+    nordpool_sensor => {
+      return states[nordpool_sensor].attributes.raw_today.concat(states[nordpool_sensor].attributes.raw_tomorrow).map(data=> data.value).reduce((a, b) => Math.max(a, b), -Infinity)
+    }
+  get_total_min_nordpool_price: |
+    nordpool_sensor => {
+      return states[nordpool_sensor].attributes.raw_today.concat(states[nordpool_sensor].attributes.raw_tomorrow).map(data=> data.value).reduce((a, b) => Math.min(a, b), Infinity)
+    }
+  set_low_bottom_threshold_nordpool_price: |
+    values_min_max => {
+      return parseFloat(values_min_max[0]) + parseFloat(((values_min_max[1]) - parseFloat(values_min_max[0])) /10)
+    }
+  set_low_threshold_nordpool_price: |
+    values_min_max => {
+      return parseFloat(values_min_max[0]) + parseFloat(((values_min_max[1]) - parseFloat(values_min_max[0])) /3)
+    }
+  set_high_threshold_nordpool_price: |
+    values_min_max => {
+      return parseFloat(values_min_max[0]) 
+      + (( parseFloat(values_min_max[1]) - parseFloat(values_min_max[0]) ) /3) * 2
+    }
+  set_high_top_threshold_nordpool_price: |
+    values_min_max => {
+      return parseFloat(values_min_max[0]) + parseFloat(((values_min_max[1]) - parseFloat(values_min_max[0])) /10)*9
+    }
 entities:
-  - input_number.total_nordpool_hours_available
+  - ${nordpool_sensor]
 card:
   type: custom:apexcharts-card
-  graph_span: "${ states['sensor.nordpool'].attributes.raw_today.length + states['sensor.nordpool'].attributes.raw_tomorrow.length + 'h' }"
+  graph_span: >-
+    ${ states[nordpool_sensor].attributes.raw_today.length +
+    states[nordpool_sensor].attributes.raw_tomorrow.length + 'h' }
   yaxis:
     - id: y1
-      min: ${setchart_cutoff([total_min_nordpool_price,total_max_nordpool_price])}
+      min: >-
+        ${set_chart_cutoff([get_total_min_nordpool_price(nordpool_sensor),chart_price_cutoff_coerficient])}
       max: auto
       apex_config:
         opposite: false
@@ -43,9 +66,7 @@ card:
         decimalsInFloat: ${decimals_in_prices}
         labels:
           formatter: |
-            EVAL:function(value) {
-              return value.toFixed(0) + " öre";
-            }
+            EVAL:function(value) {return value.toFixed(0) + ' öre'}
     - id: y2
       min: 0
       max: auto
@@ -110,26 +131,17 @@ card:
       color_threshold:
         - value: -1000
           color: '#30c752'
-          opacity: 1
         - value: >-
-            `${
-            parseFloat(states['input_number.low_threshold_nordpool_price_bottom'].state)
-            }`
+            ${set_low_bottom_threshold_nordpool_price([get_total_min_nordpool_price(nordpool_sensor),get_total_max_nordpool_price(nordpool_sensor)])}
+          color: '#28a745'
         - value: >-
-            `${
-            parseFloat(states['input_number.low_threshold_nordpool_price'].state)
-            }`
+            ${set_low_threshold_nordpool_price([get_total_min_nordpool_price(nordpool_sensor),get_total_max_nordpool_price(nordpool_sensor)])}
           color: '#ffed4a'
-          opacity: 1
         - value: >-
-            `${
-            parseFloat(states['input_number.high_threshold_nordpool_price'].state)
-            }`
+            ${set_high_threshold_nordpool_price([get_total_min_nordpool_price(nordpool_sensor),get_total_max_nordpool_price(nordpool_sensor)])}
           color: '#fd7e14'
         - value: >-
-            `${
-            parseFloat(states['input_number.high_threshold_nordpool_price_top'].state)
-            }`
+            ${set_high_top_threshold_nordpool_price([get_total_min_nordpool_price(nordpool_sensor),get_total_max_nordpool_price(nordpool_sensor)])}
           color: '#dc3545'
     - entity: ${grid_import_sensor}
       yaxis_id: y2
@@ -186,7 +198,11 @@ card:
         duration: 2d
       data_generator: >
         const now = new Date().getTime(); 
-        const futureData = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data => new Date(data.start).getTime() >= now); 
+
+        const futureData =
+        entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data
+        => new Date(data.start).getTime() >= now); 
+
         return futureData.map((data, index) => {
           return [new Date(data.start).getTime(), futureData[index].value];
         });

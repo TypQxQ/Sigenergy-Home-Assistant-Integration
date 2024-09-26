@@ -20,7 +20,6 @@ This has not been tested on HA earlier than 2024.9 and requires the following HA
 The Nordpool entity should be changed from the default name to just "nordpool" as per the components installation instructions.
 
 # Installation
-- Add the `nordpool_energy_chart.yaml` file to Home Assistant's packages folder for inclusion in Home Assistant. See here for example: [Installation of Sigenergy integration](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/wiki/2.-How%E2%80%90to%E2%80%90install)
 - Copy - paste the raw card codefrom `card_nordpool_energy_chart.yaml` to your a new card on you lovelace dashboard. Add any card and replace the raw code that you can edit by clicking on the *SHOW CODE EDITOR* in the bottom left.
 
 
@@ -30,11 +29,12 @@ Configure your Nordpool integration.
 
 In the chart-card you should change the following variables to suit your needs:
 
-  - Check the `nordpool_sensor` name is correct.
-  - The Grid import sensor name: `grid_import_sensor`
-  - `chart_cutoff` to what you want the minimum in the chart to be. I have to pay at least 0.7 SEK in grid transfer fee.
-  - `currency` to whatever currency you want.
+  - Check so the `nordpool_sensor:` name is correct.
+  - The Grid import sensor name: `grid_import_sensor:`
+  - Change `currency` if needed, (this is not working right now)
+  - `chart_price_cutoff_coerficient` from 0 to 1 to show more or less barheight under the minimum value.
   - `decimals_in_prices` and `decimals_in_energy` to indicate how many decimals to show.
+  - And any of the texts below.
 
 If you use anything elsse than a Sigenergy system then change all values strating with sigen to suit your needs.
 
