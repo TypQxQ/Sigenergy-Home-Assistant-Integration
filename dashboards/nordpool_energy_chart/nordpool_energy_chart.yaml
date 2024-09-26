@@ -1,7 +1,7 @@
 # Home Assistant Nordpool Energy Chart helpers
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-09-25
+# last update: 2024-09-26
 #
 # Note: This YAML is only tested with Home Assistant >= 2024.9
 ##############################################################################################
@@ -42,6 +42,14 @@ input_number:
 
   low_threshold_nordpool_price:
     name: Low Threshold Nordpool Price
+    min: 0
+    max: 100000
+    step: 0.01
+    mode: box
+    icon: mdi:currency-eur
+
+  low_threshold_nordpool_price_bottom:
+    name: Low Threshold Nordpool Price Bottom
     min: 0
     max: 100000
     step: 0.01
@@ -135,6 +143,18 @@ automation:
       - service: input_number.set_value
         metadata: {}
         target: 
+          entity_id: input_number.low_threshold_nordpool_price_bottom
+        data:
+          value: >-
+            {{ (states('input_number.total_min_nordpool_price') | float
+              + 1 * (states('input_number.total_max_nordpool_price') | float
+                - states('input_number.total_min_nordpool_price') | float
+                ) / 10
+              ) | round(2) 
+            }}
+      - service: input_number.set_value
+        metadata: {}
+        target: 
           entity_id: input_number.high_threshold_nordpool_price
         data:
           value: >-
@@ -156,173 +176,3 @@ automation:
                 ) / 10
               ) | round(2) 
             }}
-
-
-##############################################################################################
-# Apexcharts Card to paste in lovelace
-##############################################################################################
-
-# type: custom:config-template-card
-# variables:
-#   hours: '`${states[''input_number.total_nordpool_hours_available''].state}h`'
-# entities:
-#   - input_number.total_nordpool_hours_available
-# card:
-#   type: custom:apexcharts-card
-#   graph_span: ${hours}
-#   yaxis:
-#     - id: y1
-#       min: 70
-#       max: auto
-#       apex_config:
-#         opposite: false
-#         forceNiceScale: true
-#         decimalsInFloat: 0
-#         labels:
-#           formatter: |
-#             EVAL:function(value) {
-#               return value.toFixed(0) +" öre";
-#             }
-#     - id: y2
-#       min: 0
-#       max: auto
-#       apex_config:
-#         opposite: true
-#         forceNiceScale: true
-#         decimalsInFloat: 2
-#         labels:
-#           formatter: |
-#             EVAL:function(value) {
-#               return value.toFixed(1) +" kWh";
-#             }
-#   apex_config:
-#     chart:
-#       height: 340px
-#     legend:
-#       show: false
-#     title:
-#       floating: false
-#       align: center
-#       style:
-#         fontSize: 20px
-#         fontWeight: bold
-#     xaxis:
-#       labels:
-#         datetimeFormatter:
-#           hour: HH:mm
-#   show:
-#     last_updated: true
-#   experimental:
-#     color_threshold: true
-#   header:
-#     title: Electricity prices today
-#     show: true
-#     show_states: true
-#     colorize_states: true
-#   span:
-#     start: day
-#   now:
-#     show: true
-#     label: Now
-#   series:
-#     - entity: sensor.nordpool
-#       yaxis_id: y1
-#       name: Total purchease price
-#       float_precision: 0
-#       show:
-#         extremas: true
-#         in_header: false
-#         header_color_threshold: true
-#       type: column
-#       data_generator: >
-#         return (entity.attributes.raw_today.map((start, index) => {
-#           return [new Date(start["start"]).getTime(), entity.attributes.raw_today[index]["value"]];
-#         })).concat(entity.attributes.raw_tomorrow.map((start, index) => {
-
-#         return [new Date(start["start"]).getTime(),
-#         entity.attributes.raw_tomorrow[index]["value"]];
-
-#         }));
-#       color_threshold:
-#         - value: 0
-#           color: '#007bff'
-#           opacity: 1
-#         - value: 70
-#           color: '#28a745'
-#           opacity: 1
-#         - value: >-
-#             `${
-#             parseFloat(states['input_number.low_threshold_nordpool_price'].state)
-#             }`
-#           color: '#ffed4a'
-#           opacity: 1
-#         - value: >-
-#             `${
-#             parseFloat(states['input_number.high_threshold_nordpool_price'].state)
-#             }`
-#           color: '#fd7e14'
-#         - value: >-
-#             `${
-#             parseFloat(states['input_number.high_threshold_nordpool_price_top'].state)
-#             }`
-#           color: '#dc3545'
-#     - entity: sensor.sigen_accumulated_grid_energy_import
-#       yaxis_id: y2
-#       name: Grid Import
-#       color: blue
-#       float_precision: 3
-#       show:
-#         extremas: false
-#         in_header: false
-#         header_color_threshold: true
-#       type: line
-#       stroke_width: 2
-#       extend_to: false
-#       group_by:
-#         func: delta
-#         duration: 1h
-#     - entity: sensor.nordpool
-#       type: column
-#       color: '#28a745'
-#       float_precision: 2
-#       stroke_width: 2
-#       name: Lowest to come
-#       show:
-#         in_chart: false
-#         legend_value: false
-#       group_by:
-#         func: min
-#         duration: 1d
-#       data_generator: >
-#         const now = new Date().getTime(); const futureData =
-#         entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data
-#         => new Date(data.start).getTime() >= now); return futureData.map((data,
-#         index) => {
-#           return [new Date(data.start).getTime(), futureData[index].value];
-#         });
-#     - entity: sensor.nordpool
-#       name: Price now
-#       color: blue
-#       type: column
-#       show:
-#         in_chart: false
-#       float_precision: 2
-#     - entity: sensor.nordpool
-#       type: column
-#       color: '#dc3545'
-#       float_precision: 0
-#       stroke_width: 2
-#       name: Highest to come
-#       show:
-#         in_chart: false
-#         legend_value: false
-#       group_by:
-#         func: max
-#         duration: 1d
-#       data_generator: >
-#         const now = new Date().getTime(); const futureData =
-#         entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data
-#         => new Date(data.start).getTime() >= now); return futureData.map((data,
-#         index) => {
-#           return [new Date(data.start).getTime(), futureData[index].value];
-#         });
