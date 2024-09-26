@@ -66,7 +66,7 @@ card:
         decimalsInFloat: ${decimals_in_prices}
         labels:
           formatter: |
-            EVAL:function(value) {return value.toFixed(0) + ' öre'}
+            ${"EVAL:function(value) {return value.toFixed(0) + '" + currency + "'}"
     - id: y2
       min: 0
       max: auto

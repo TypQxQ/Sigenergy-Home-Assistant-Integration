@@ -31,7 +31,7 @@ In the chart-card you should change the following variables to suit your needs:
 
   - Check so the `nordpool_sensor:` name is correct.
   - The Grid import sensor name: `grid_import_sensor:`
-  - Change `currency` if needed, (this is not working right now)
+  - Change `currency` if needed.
   - `chart_price_cutoff_coerficient` from 0 to 1 to show more or less barheight under the minimum value.
   - `decimals_in_prices` and `decimals_in_energy` to indicate how many decimals to show.
   - And any of the texts below.
