@@ -157,7 +157,7 @@ card:
         legend_value: false
       group_by:
         func: min
-        duration: 1d
+        duration: 2d
       data_generator: >
         const now = new Date().getTime(); const futureData =
         entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data
@@ -177,18 +177,17 @@ card:
       color: '#dc3545'
       float_precision: ${decimals_in_prices}
       stroke_width: 2
-      name: "${ states[nordpool_sensor].attributes.raw_today.concat(states[nordpool_sensor].attributes.raw_tomorrow).map(data => data.value).reduce((a, b) => Math.max(a, b), -Infinity) +' '}"
+      name: ${highest_price_text}
       show:
         in_chart: false
         legend_value: false
       group_by:
         func: max
-        duration: 1d
+        duration: 2d
       data_generator: >
-        const now = new Date().getTime(); const futureData =
-        entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data
-        => new Date(data.start).getTime() >= now); return futureData.map((data,
-        index) => {
+        const now = new Date().getTime(); 
+        const futureData = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data => new Date(data.start).getTime() >= now); 
+        return futureData.map((data, index) => {
           return [new Date(data.start).getTime(), futureData[index].value];
         });
 layout_options:
