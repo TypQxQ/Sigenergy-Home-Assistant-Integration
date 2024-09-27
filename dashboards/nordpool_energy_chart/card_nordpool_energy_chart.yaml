@@ -54,11 +54,20 @@ variables:
       return parseFloat(_min) + parseFloat(((_max) - parseFloat(_min)) /10)*9
     }
   get_total_prices: |
-    cost_template => {
+    _cost_template => {
       return "return (entity.attributes.raw_today.map((start, index) => {return [new Date(start['start']).getTime(), entity.attributes.raw_today[index]['value']"
-      + cost_template
+      + _cost_template
       + "];})).concat(entity.attributes.raw_tomorrow.map((start, index) => {return [new Date(start['start']).getTime(),entity.attributes.raw_tomorrow[index]['value'] "
-      + cost_template + "];}));"
+      + _cost_template + "];}));"
+    }
+  get_future_total_prices: |
+    _cost_template => {
+      return "const now = new Date().getTime();"
+      + "const futureData = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).filter(data"
+      + " => new Date(data.start).getTime() >= now);"
+      + "return futureData.map((data, index) => {"
+      + "return [new Date(data.start).getTime(), futureData[index].value"
+      + _cost_template + "];});"
     }
 entities:
   - ${nordpool_sensor]
@@ -78,8 +87,7 @@ card:
         decimalsInFloat: ${decimals_in_prices}
         labels:
           formatter: >
-            ${"EVAL:function(value) {return value.toFixed("
-            + decimals_in_prices
+            ${"EVAL:function(value) {return value.toFixed(" + decimals_in_prices
             + ") + ' " + price_y_axis_unit + "' }"
     - id: y-energy
       min: 0
@@ -142,16 +150,21 @@ card:
         - value: -1000
           color: '#00f738'
         - value: >-
-            ${get_low_bottom_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor, additional_cost_template), get_total_max_nordpool_price(nordpool_sensor, additional_cost_template) )}
+            ${get_low_bottom_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template),
+            get_total_max_nordpool_price(nordpool_sensor,additional_cost_template) )}
           color: '#28a745'
         - value: >-
-            ${get_low_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template), get_total_max_nordpool_price(nordpool_sensor, additional_cost_template))}
+            ${get_low_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template),
+            get_total_max_nordpool_price(nordpool_sensor,additional_cost_template))}
           color: '#ffed4a'
         - value: >-
-            ${get_high_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template), get_total_max_nordpool_price(nordpool_sensor, additional_cost_template))}
+            ${get_high_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template),
+            get_total_max_nordpool_price(nordpool_sensor,
+            additional_cost_template))}
           color: '#fd7e14'
         - value: >-
-            ${get_high_top_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template),get_total_max_nordpool_price(nordpool_sensor, additional_cost_template))}
+            ${get_high_top_threshold_nordpool_price(get_total_min_nordpool_price(nordpool_sensor,additional_cost_template),
+            get_total_max_nordpool_price(nordpool_sensor,additional_cost_template))}
           color: '#dc3545'
     - entity: ${grid_import_sensor}
       yaxis_id: y-energy
@@ -198,7 +211,7 @@ card:
       group_by:
         func: min
         duration: 2d
-      data_generator: ${get_total_prices(additional_cost_template)}
+      data_generator: ${get_future_total_prices(additional_cost_template)}
     - entity: ${nordpool_sensor}
       name: ${price_now_text}
       color: orange
@@ -207,7 +220,7 @@ card:
       show:
         in_chart: false
       float_precision: ${decimals_in_prices}
-      data_generator: ${get_total_prices(additional_cost_template)}
+      data_generator: ${get_future_total_prices(additional_cost_template)}
     - entity: ${nordpool_sensor}
       type: column
       color: '#dc3545'
@@ -221,6 +234,6 @@ card:
       group_by:
         func: max
         duration: 2d
-      data_generator: ${get_total_prices(additional_cost_template)}
+      data_generator: ${get_future_total_prices(additional_cost_template)}
 layout_options:
   grid_columns: full
