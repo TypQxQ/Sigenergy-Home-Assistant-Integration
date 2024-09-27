@@ -162,7 +162,7 @@ card:
         extremas: false
         in_header: true
         header_color_threshold: true
-      type: area
+      type: line
       stroke_width: 1
       opacity: 0.2
       extend_to: false
@@ -179,7 +179,7 @@ card:
     #     extremas: false
     #     in_header: true
     #     header_color_threshold: true
-    #   type: area
+    #   type: line
     #   stroke_width: 1
     #   opacity: 0.4
     #   extend_to: false
