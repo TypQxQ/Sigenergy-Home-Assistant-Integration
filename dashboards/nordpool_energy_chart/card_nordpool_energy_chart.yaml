@@ -9,7 +9,7 @@ variables:
   price_y_axis_unit: '''öre'''
   energy_y_axis_unit: '''kWh'''
   price_overview_unit: '''öre/kWh'''
-  additional_cost_template: '''* 100 +5'''
+  additional_cost_template: '''* 1'''
   decimals_in_prices: 0
   decimals_in_energy: 1
   chart_price_cutoff_coerficient: 0.1
