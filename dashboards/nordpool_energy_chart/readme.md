@@ -30,13 +30,57 @@ Configure your Nordpool integration.
 In the chart-card you should change the following variables to suit your needs:
 
   - Check so the `nordpool_sensor:` name is correct.
-  - The Grid import sensor name: `grid_import_sensor:`
+  - The Grid import sensor name: `grid_import_sensor:` should be changed if not using Sigenergy system.
+  - The 
   - Change `currency` if needed.
   - `chart_price_cutoff_coerficient` from 0 to 1 to show more or less barheight under the minimum value.
   - `decimals_in_prices` and `decimals_in_energy` to indicate how many decimals to show.
-  - And any of the texts below.
+  - `additional_cost_template` is used for adding extra costs if not added by nordpol sensor. It should be empty or start with a arithmetic operator.
+    - Example:
+    - additional_cost_template: '''*1.25 +(27.2 + 42.8 + 3.04 + 2.19 + 1.4) *1.25'''
+    - Ads 25% taxes and then other costs as specified by the grid operator with more taxes.
+  - Change the Now text to any label you want to apear `now_text: '''Now'''` besides the line showing current time in the chart.
+  - And any of the texts below to suit your language or prefferences.
 
-If you use anything elsse than a Sigenergy system then change all values strating with sigen to suit your needs.
+# Disable the Grid or Battery chart
+
+## Disable the Grid chart
+
+1. Comment out the update entity:
+    ```
+    entities:
+     - ${nordpool_sensor}
+     - ${battery_soc_sensor}
+     # - ${grid_import_sensor}
+   ```
+
+2. Delete the rows starting with  ```- entity: ${grid_import_sensor}``` and all rows under it until the next ```- entity:```. There are currently two such sections.
+
+## Disable the Battery SOC
+
+1. Comment out the update entity:
+    ```
+    entities:
+     - ${nordpool_sensor}
+     # - ${battery_soc_sensor}
+     - ${grid_import_sensor}
+   ```
+
+2. Delete the row starting with  ```- entity: ${battery_soc_sensor}``` and all rows under it until the next ```- entity:```. There is currently only one such section.
+
+
+# Performance concerns
+
+Most of the calculations are done serverside so it's important to have a good computer.
+
+If the chart flickers and takes long time to load, deactivate updating the chart with each change of battery charge and grid consumption:
+```
+entities:
+  - ${nordpool_sensor}
+  # - ${battery_soc_sensor}
+  # - ${grid_import_sensor}
+```
+
 
 --
 
