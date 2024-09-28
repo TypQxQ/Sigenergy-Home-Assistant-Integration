@@ -70,7 +70,9 @@ variables:
       + _cost_template + "];});"
     }
 entities:
-  - ${nordpool_sensor]
+  - ${nordpool_sensor}
+  # - ${battery_soc_sensor}
+  # - ${grid_import_sensor}
 card:
   type: custom:apexcharts-card
   graph_span: >-
@@ -191,7 +193,7 @@ card:
       float_precision: 0
       show:
         extremas: false
-        in_header: true
+        in_header: raw
         header_color_threshold: true
       type: line
       stroke_width: 3
