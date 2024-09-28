@@ -1,13 +1,15 @@
 An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC charger for Home Assistant. 
 
 # Contents
+- [Contents](#contents)
 - [1. Overview](#1-overview)
-- [2. Documentation](#2-documentation)
-- [3. Support](#3-support)
-- [4. Visual impressions](#4-visual-impressions)
-- [5. Tested configurations](#5-tested-configurations)
-- [6. Status and future work](#6-status-and-future-work)
-- [7. Contribution](#7-contribution)
+  - [2. Documentation](#2-documentation)
+  - [3. Support](#3-support)
+  - [4. Addons](#4-addons)
+  - [5. Visual impressions](#5-visual-impressions)
+  - [6. Tested configurations](#6-tested-configurations)
+  - [7. Status and future work](#7-status-and-future-work)
+  - [8. Contribution](#8-contribution)
 
 
 # 1. Overview
@@ -36,15 +38,20 @@ a) Use the [github discussion](https://github.com/TypQxQ/Sigenergy-Home-Assistan
 
 b) Only if code-related (bugs / contributions): Open an  [github issue](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/issues) or isse a pullrequest
 
-## 4. Visual impressions
+## 4. Addons
 
-Home Asisstants built-in Energy Dashboard
+- ApexChart card displaying Energy Prices with Grid import and Battery charge over time: [Link](dashboards/nordpool_energy_chart/readme.md)
 
-<img src="doc/images/HA_Energy_Dashboard.png" width="600">
+## 5. Visual impressions
+
 
 Default dashboard tab "Overview"
 
 <img src="dashboards/_plain_dashboard_TypQxQ/dashboard_overview.png" width="600">
+
+Custom Enegy prices with Battery charge and Grid import:
+
+<img src="dashboards/nordpool_energy_chart/HA_energy_chart.jpg" width="600">
 
 Default dashboard tab "ModBus values"
 
@@ -60,8 +67,11 @@ Default dashboard tab "EMS"
 
 <img src="dashboards/_plain_dashboard_TypQxQ/dashboard_EMS.png" width="600">
 
+Home Asisstants built-in Energy Dashboard
 
-## 5. Tested configurations
+<img src="doc/images/HA_Energy_Dashboard.png" width="600">
+
+## 6. Tested configurations
 I have a **Sigenergy SigenStor EC 15.0 TP** Inverter and **2 8kWh batteries** updating frequently to the latest **Home Assistant** (> 2024.9). I try to thoroughly test features before releasing them, but I cannot test everything (e.g., backup capabilities, DO-related, ...)
 
 The Modbus register mapping is based on two documents I found online. I am not sure if I am allowed to share the files, but you can search for them using their names. 
@@ -73,12 +83,12 @@ Version: V1.8
 Release date: 2024-07-24
 ```
 
-## 6. Status and future work 
+## 7. Status and future work 
 1. Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
 2. Nicer dashboard integrated with Nordpol.
 
 
-## 7. Contribution
+## 8. Contribution
 We are happy to share our experiences - feel encouraged to share yours with us, too! 
 
 If you have any questions, feature requests, found any bugs or have some hints how to update the documentation, just ask on Github Discutions.
