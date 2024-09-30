@@ -6,13 +6,13 @@ variables:
   nordpool_sensor: '''sensor.nordpool'''
   grid_import_sensor: '''sensor.sigen_daily_grid_energy_import'''
   battery_soc_sensor: '''sensor.sigen_energy_storage_system_soc'''
-  price_y_axis_unit: '''öre'''
-  energy_y_axis_unit: '''kWh'''
-  price_overview_unit: '''öre/kWh'''
-  additional_cost_template: '''*1'''
+  additional_cost_template: ''' *1 '''
   decimals_in_prices: 0
   decimals_in_energy: 1
   chart_price_cutoff_coerficient: 0.1
+  price_y_axis_unit: '''öre'''
+  energy_y_axis_unit: '''kWh'''
+  price_overview_unit: '''öre/kWh'''
   chart_title: '''Electricity prices today'''
   total_purchease_price_text: '''Total purchease price'''
   grid_import_text: '''Grid Import today'''
@@ -171,7 +171,7 @@ card:
     - entity: ${grid_import_sensor}
       yaxis_id: y-energy
       name: Grid import Chart
-      color: '#007bff'
+      color: '#FF4646'
       float_precision: ${decimals_in_energy}
       show:
         extremas: false
@@ -186,7 +186,7 @@ card:
         duration: 1h
     - entity: ${grid_import_sensor}
       name: ${grid_import_text}
-      color: '#007bff'
+      color: '#FF4646'
       float_precision: ${decimals_in_energy}
       show:
         in_chart: false
@@ -195,7 +195,7 @@ card:
     - entity: ${battery_soc_sensor}
       yaxis_id: y-SOC
       name: ${battery_soc_text}
-      color: '#ff00fa'
+      color: '#7a50d9'
       float_precision: 0
       show:
         extremas: false
