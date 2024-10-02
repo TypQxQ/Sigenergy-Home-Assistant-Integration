@@ -216,14 +216,25 @@ views:
             label: EMS must be set in Remote mode before changing values.
           - type: divider
           - entity: input_text.set_sigen_ess_max_charging_limit
+          - entity: sensor.sigen_ess_max_charging_limit
+            name: Applied ESS max charging limit
+            icon: mdi:battery-positive
           - entity: sensor.sigen_rated_ess_charging_power
             name: Upper charging limit
             icon: mdi:car-speed-limiter
           - type: divider
           - entity: input_text.set_sigen_ess_max_discharging_limit
+          - entity: sensor.sigen_ess_max_discharging_limit
+            name: Applied ESS max discharging limit
+            icon: mdi:battery-positive
           - entity: sensor.sigen_rated_discharging_power
             icon: mdi:car-speed-limiter
             name: Upper discharging limit
+          - type: section
+            label: >-
+              This values are updatedonce every 10s by default. Deselect textbox
+              after changing the value to send it. If invalid value entered then
+              it will not be shown in applied.
         title: ESS limits
       - chart_type: line
         period: hour
