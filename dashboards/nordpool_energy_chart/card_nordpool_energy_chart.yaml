@@ -172,6 +172,7 @@ card:
       yaxis_id: y-energy
       name: Grid import Chart
       color: '#FF4646'
+      curve: stepline
       float_precision: ${decimals_in_energy}
       show:
         extremas: false
