@@ -1,0 +1,538 @@
+views:
+  - title: Overview
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - show_name: false
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: sun.sun
+              - entity: binary_sensor.sigen_pv_generating
+                name: PV Generating
+                icon: mdi:solar-power
+              - entity: binary_sensor.sigen_battery_charging
+                name: Battery charging
+                icon: mdi:battery-positive
+              - entity: binary_sensor.sigen_battery_discharging
+                name: Battery discharging
+                icon: mdi:battery-negative
+              - entity: binary_sensor.sigen_exporting_to_grid
+                name: Exporting to grid
+                icon: mdi:transmission-tower-import
+              - entity: binary_sensor.sigen_importing_from_grid
+                name: Importing from grid
+                icon: mdi:transmission-tower-export
+            columns: 6
+            state_color: true
+          - type: entities
+            entities:
+              - entity: sensor.sigen_consumed_power
+                icon: mdi:home-lightning-bolt-outline
+                name: Consumed power
+              - entity: sensor.sigen_pv_power
+                icon: mdi:solar-power
+                name: Solar power production
+              - entity: sensor.sigen_ess_charge_discharge_power
+                name: Battery charge / discharge
+                icon: mdi:battery-charging
+              - entity: sensor.sigen_grid_sensor_import_power
+                name: Import from Grid
+                icon: mdi:transmission-tower-export
+              - entity: sensor.sigen_grid_sensor_export_power
+                name: Export to Grid
+                icon: mdi:transmission-tower-import
+            title: Power
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities:
+              - entity: sensor.sigen_pv_power
+                name: Solar
+              - entity: sensor.sigen_battery_power
+                name: Battery
+              - entity: sensor.sigen_grid_sensor_import_power
+                name: Import
+              - entity: sensor.sigen_grid_sensor_export_power
+                name: Export
+              - entity: sensor.sigen_consumed_power
+                name: Consumption
+            stat_types:
+              - mean
+            title: Power distribution last 24 hours
+            hide_legend: false
+            logarithmic_scale: false
+            days_to_show: 1
+      - type: grid
+        cards:
+          - type: gauge
+            entity: sensor.sigen_energy_storage_system_soc
+            min: 0
+            max: 100
+            severity:
+              green: 30
+              yellow: 10
+              red: 0
+            name: Battery
+          - type: entities
+            entities:
+              - entity: sensor.sigen_ess_charge_discharge_power
+                icon: mdi:battery-charging
+              - entity: sensor.sigen_ess_average_cell_temperature
+                name: Average cell temperature
+                secondary_info: none
+                icon: ''
+              - entity: sensor.sigen_inverter_temperature
+                name: Inverter temperature
+                secondary_info: none
+          - type: entities
+            entities:
+              - entity: sensor.sigen_accumulated_energy_consumption
+                name: Energy consumption
+                icon: mdi:home-lightning-bolt-outline
+              - entity: sensor.sigen_accumulated_pv_energy_production
+                name: Solar production
+                icon: mdi:solar-power
+              - entity: sensor.sigen_accumulated_charge_energy
+                name: Battery charged
+                icon: mdi:battery-positive
+              - entity: sensor.sigen_accumulated_discharge_energy
+                name: Battery discharged
+                icon: mdi:battery-negative
+              - entity: sensor.sigen_accumulated_grid_energy_import
+                name: 'Energy import from Grid '
+                icon: mdi:transmission-tower-export
+              - entity: sensor.sigen_accumulated_grid_energy_export
+                name: 'Energy export to Grid '
+                icon: mdi:transmission-tower-import
+            title: Total Energy
+          - type: energy-distribution
+            link_dashboard: true
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.sigen_daily_energy_consumption
+                name: Daily energy consumption
+                icon: mdi:home-lightning-bolt-outline
+              - entity: sensor.sigen_daily_pv_energy_production
+                name: Daily solar production
+                icon: mdi:solar-power
+              - entity: sensor.sigen_daily_charge_energy
+                name: Daily battery charge
+                icon: mdi:battery-positive
+              - entity: sensor.sigen_daily_discharge_energy
+                icon: mdi:battery-negative
+                name: Daily battery discharge
+              - entity: sensor.sigen_daily_grid_energy_import
+                name: 'Daily Energy import from Grid '
+                icon: mdi:transmission-tower-export
+              - entity: sensor.sigen_daily_grid_energy_export
+                name: 'Daily Energy export to Grid '
+                icon: mdi:transmission-tower-import
+            title: Daily Energy
+          - chart_type: line
+            period: hour
+            type: statistics-graph
+            entities:
+              - sensor.sigen_pv_power
+              - sensor.sigen_pv1_power
+              - sensor.sigen_pv3_power
+              - sensor.sigen_pv2_power
+              - sensor.sigen_pv4_power
+            stat_types:
+              - mean
+            days_to_show: 2
+            title: Solar production last 48h
+            logarithmic_scale: false
+    max_columns: 4
+    icon: mdi:sun-compass
+    cards: []
+    badges:
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_general_alarm1
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_general_alarm1
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_general_alarm2
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_general_alarm2
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_general_alarm3
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_general_alarm3
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_general_alarm4
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_general_alarm4
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_alarm1
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_alarm1
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_alarm2
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_alarm2
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_alarm3
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_alarm3
+            state_not: No Alarm
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sigen_alarm4
+        color: red
+        visibility:
+          - condition: state
+            entity: sensor.sigen_alarm4
+            state_not: No Alarm
+  - title: EMS Control
+    path: ems-control
+    icon: mdi:solar-power
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: input_select.set_sigen_plant_run_mode
+              - type: divider
+              - entity: input_select.set_sigen_remote_ems
+              - entity: input_select.set_sigen_remote_ems_control_mode
+            title: Configurable EMS settings
+          - chart_type: line
+            period: hour
+            type: statistics-graph
+            entities:
+              - sensor.sigen_pv_power
+              - sensor.sigen_pv1_power
+              - sensor.sigen_pv3_power
+              - sensor.sigen_pv2_power
+              - sensor.sigen_pv4_power
+            stat_types:
+              - mean
+            days_to_show: 7
+            title: Solar production last 7 days
+            logarithmic_scale: false
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - type: section
+                label: EMS must be set in Remote mode before changing values.
+              - type: divider
+              - entity: input_text.set_sigen_ess_max_charging_limit
+              - entity: sensor.sigen_rated_ess_charging_power
+                name: Upper charging limit
+                icon: mdi:car-speed-limiter
+              - type: divider
+              - entity: input_text.set_sigen_ess_max_discharging_limit
+              - entity: sensor.sigen_rated_discharging_power
+                icon: mdi:car-speed-limiter
+                name: Upper discharging limit
+            title: ESS limits
+      - type: grid
+        cards:
+          - chart_type: line
+            period: hour
+            type: statistics-graph
+            entities:
+              - sensor.sigen_ess_battery_soc
+            title: Battery SoC last 7 days
+            hide_legend: true
+            logarithmic_scale: false
+            stat_types:
+              - min
+              - max
+            days_to_show: 7
+          - type: entities
+            entities:
+              - type: section
+                label: EMS must be set in Remote mode before changing values.
+              - type: divider
+              - entity: input_text.set_sigen_pv_max_power_limit
+            title: Solar production limit (kW)
+  - title: All Sigenergy provided parameters
+    path: all-sigenergy-provided-parameters
+    icon: mdi:solar-power-variant-outline
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: input_select.set_sigen_plant_run_mode
+              - entity: input_select.set_sigen_remote_ems
+              - entity: input_select.set_sigen_indenpendent_phase_power_control
+              - entity: input_select.set_sigen_remote_ems_control_mode
+              - entity: input_text.set_sigen_ess_max_charging_limit
+              - entity: input_text.set_sigen_ess_max_discharging_limit
+              - entity: input_text.set_sigen_pv_max_power_limit
+            title: Configurable EMS values
+          - type: entities
+            entities:
+              - entity: sensor.sigen_type
+              - entity: sensor.sigen_running_state
+              - entity: sensor.sigen_serial_number
+              - entity: sensor.sigen_firmware_version
+              - entity: sensor.sigen_rated_active_power
+              - entity: sensor.sigen_max_rated_apparent_power
+              - entity: sensor.sigen_max_active_power
+              - entity: sensor.sigen_max_absorbtion_power
+              - entity: sensor.sigen_rated_battery_capacity
+              - entity: sensor.sigen_rated_charging_power
+              - entity: sensor.sigen_rated_ess_discharging_power
+              - entity: sensor.sigen_daily_export_energy
+              - entity: sensor.sigen_accumulated_export_energy
+              - entity: sensor.sigen_daily_import_energy
+              - entity: sensor.sigen_accumulated_import_energy
+              - entity: sensor.sigen_daily_charge_energy
+              - entity: sensor.sigen_daily_discharge_energy
+              - entity: sensor.sigen_accumulated_charge_energy
+              - entity: sensor.sigen_accumulated_discharge_energy
+              - entity: sensor.sigen_max_active_power_adjustment_value
+              - entity: sensor.sigen_min_active_power_adjustment_value
+              - entity: sensor.sigen_max_reactive_power_adjustment_value
+              - entity: >-
+                  sensor.sigen_min_reactive_power_adjustment_value_absorbed_from_the_ac_terminal
+              - entity: sensor.sigen_active_power
+              - entity: sensor.sigen_reactive_power
+              - entity: sensor.sigen_rated_grid_frequency
+              - entity: sensor.sigen_grid_frequency
+              - entity: sensor.sigen_inverter_temperature
+              - entity: sensor.sigen_output_type
+              - entity: sensor.sigen_a_b_line_voltage
+              - entity: sensor.sigen_b_c_line_voltage
+              - entity: sensor.sigen_c_a_line_voltage
+              - entity: sensor.sigen_phase_a_voltage
+              - entity: sensor.sigen_phase_b_voltage
+              - entity: sensor.sigen_phase_c_voltage
+              - entity: sensor.sigen_phase_a_current
+              - entity: sensor.sigen_phase_b_current
+              - entity: sensor.sigen_phase_c_current
+              - entity: sensor.sigen_power_factor
+              - entity: sensor.sigen_oack_count
+            title: Sigenergy Device
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: input_select.set_sigen_run_mode
+            title: Configurable device settings
+          - type: entities
+            entities:
+              - sensor.sigen_grid_code
+            title: Configurable device values only read
+          - type: entities
+            entities:
+              - entity: sensor.sigen_plant_running_state
+              - entity: sensor.sigen_ems_working_mode
+              - entity: sensor.sigen_plant_active_power
+              - entity: sensor.sigen_plant_reactive_power
+              - entity: sensor.sigen_plant_max_active_power
+              - entity: sensor.sigen_max_apparent_power
+              - entity: sensor.sigen_plant_phase_a_active_power
+              - entity: sensor.sigen_plant_phase_b_active_power
+              - entity: sensor.sigen_plant_phase_c_active_power
+              - entity: sensor.sigen_plant_phase_a_reactive_power
+              - entity: sensor.sigen_plant_phase_b_reactive_power
+              - entity: sensor.sigen_plant_phase_c_reactive_power
+              - entity: sensor.sigen_available_max_active_power
+              - entity: sensor.sigen_available_max_reactive_power
+              - entity: sensor.sigen_available_min_active_power
+              - entity: sensor.sigen_available_min_reactive_power
+            title: Energy Mangement System (EMS)
+          - type: entities
+            entities:
+              - sensor.sigen_alarm1
+              - sensor.sigen_alarm2
+              - sensor.sigen_alarm3
+              - sensor.sigen_alarm4
+              - sensor.sigen_general_alarm1
+              - sensor.sigen_general_alarm2
+              - sensor.sigen_general_alarm3
+              - sensor.sigen_general_alarm4
+            title: Alarm
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.sigen_active_power_fixed_adjustment_target_value
+              - entity: sensor.sigen_reactive_power_fixed_adjustment_target_value
+              - entity: sensor.sigen_active_power_percentage_adjustment_target_value
+              - entity: sensor.sigen_q_s_adjustment_target_value
+              - entity: sensor.sigen_power_factor_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_a_active_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_b_active_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_c_active_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_a_reactive_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_b_reactive_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_c_reactive_power_fixed_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_a_active_power_percentage_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_b_active_power_percentage_adjustment_target_value
+              - entity: >-
+                  sensor.sigen_phase_c_active_power_percentage_adjustment_target_value
+              - entity: sensor.sigen_phase_a_q_s_adjustment_target_value
+              - entity: sensor.sigen_phase_b_q_s_adjustment_target_value
+              - entity: sensor.sigen_phase_c_q_s_adjustment_target_value
+            title: Configurable EMS settings only read
+          - type: entities
+            entities:
+              - entity: sensor.sigen_energy_storage_system_soc
+              - entity: sensor.sigen_battery_power
+              - entity: sensor.sigen_available_max_charging_power
+              - entity: sensor.sigen_available_max_discharging_power
+              - entity: sensor.sigen_available_max_charging_capacity
+              - entity: sensor.sigen_available_max_discharging_capacity
+              - entity: sensor.sigen_rated_ess_charging_power
+              - entity: sensor.sigen_rated_ess_discharging_power
+              - entity: sensor.sigen_ess_max_battery_charge_power
+              - entity: sensor.sigen_ess_max_battery_discharge_power
+              - entity: sensor.sigen_ess_available_battery_charge_energy
+              - entity: sensor.sigen_ess_available_battery_discharge_energy
+              - entity: sensor.sigen_ess_charge_discharge_power
+              - entity: sensor.sigen_ess_battery_soc
+              - entity: sensor.sigen_ess_battery_soh
+              - entity: sensor.sigen_ess_average_cell_temperature
+              - entity: sensor.sigen_ess_average_cell_voltage
+            title: Energy Storage System (ESS)
+          - type: entities
+            entities:
+              - entity: sensor.sigen_plant_pv_power
+              - entity: sensor.sigen_pv_power
+              - entity: sensor.sigen_pv1_power
+              - entity: sensor.sigen_pv2_power
+              - entity: sensor.sigen_pv3_power
+              - entity: sensor.sigen_pv_string_count
+              - entity: sensor.sigen_mptt_count
+              - entity: sensor.sigen_pv1_voltage
+              - entity: sensor.sigen_pv1_current
+              - entity: sensor.sigen_pv2_voltage
+              - entity: sensor.sigen_pv2_current
+              - entity: sensor.sigen_pv3_voltage
+              - entity: sensor.sigen_pv3_current
+              - entity: sensor.sigen_pv4_voltage
+              - entity: sensor.sigen_pv4_current
+              - entity: sensor.sigen_insulation_resistance
+              - entity: sensor.sigen_startup_time
+              - entity: sensor.sigen_shutdown_time
+            title: PV
+  - title: Calculated attributes
+    path: calculated-attributes
+    icon: mdi:calculator-variant
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.sigen_battery_charging_power
+              - entity: sensor.sigen_battery_discharging_power
+              - entity: sensor.sigen_8kwh_battery_waranty_life_spent
+              - entity: sensor.sigen_battery_usable_capacity
+            title: Calculated Battery values
+          - type: entities
+            entities:
+              - entity: sensor.sigen_accumulated_energy_consumption
+              - entity: sensor.sigen_accumulated_pv_energy_production
+              - entity: sensor.sigen_accumulated_grid_energy_export
+              - entity: sensor.sigen_accumulated_grid_energy_import
+            title: Calculated Accumulated Energy values
+          - type: gauge
+            entity: sensor.sigen_battery_usable_capacity
+            severity:
+              green: 80
+              yellow: 70
+              red: 0
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.sigen_grid_active_power
+              - entity: sensor.sigen_grid_reactive_power
+              - entity: sensor.sigen_daily_pv_energy_production
+              - entity: sensor.sigen_grid_sensor_import_power
+              - entity: sensor.sigen_grid_sensor_export_power
+              - entity: sensor.sigen_pv1_power
+              - entity: sensor.sigen_pv2_power
+              - entity: sensor.sigen_pv3_power
+              - entity: sensor.sigen_pv4_power
+              - entity: sensor.sigen_consumed_power
+            title: Calculated Power values
+          - type: gauge
+            entity: sensor.sigen_8kwh_battery_waranty_life_spent
+            needle: false
+            severity:
+              green: 0
+              yellow: 80
+              red: 90
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: binary_sensor.sigen_pv_generating
+              - entity: binary_sensor.sigen_battery_charging
+              - entity: binary_sensor.sigen_battery_discharging
+              - entity: binary_sensor.sigen_importing_from_grid
+              - entity: binary_sensor.sigen_exporting_to_grid
+            title: Calculated states
+          - type: entities
+            entities:
+              - entity: sensor.sigen_daily_energy_consumption
+              - entity: sensor.sigen_daily_pv_energy_production
+              - entity: sensor.sigen_daily_grid_energy_export
+              - entity: sensor.sigen_daily_grid_energy_import
+            title: Calculated Daily Energy values
