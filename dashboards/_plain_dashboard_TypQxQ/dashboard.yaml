@@ -465,7 +465,7 @@ views:
           - entity: sensor.sigen_accumulated_pv_energy_production
           - entity: sensor.sigen_accumulated_grid_energy_export
           - entity: sensor.sigen_accumulated_grid_energy_import
-        title: Calculated Daily Energy values
+        title: Calculated Accumulated Energy values
       - type: entities
         entities:
           - entity: sensor.sigen_daily_energy_consumption
