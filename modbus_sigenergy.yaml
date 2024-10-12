@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-09-25
+# last update: 2024-10-12
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -12,6 +12,8 @@
 # Entities where the unique_id starts with "sigendev_" are read from the Sigenergy inverter.
 # Entities where the unique_id starts with "sigen " are read for the Sigenergy EMS plant.
 # It's possible to add more inverters by adding more entities with the same structure but diffrent names and unique_id.
+
+# Using platform trigger may give errors in VsCode but it's for compability with HA prior to 2024.10 and not deprecated yet.
 
 modbus:
   - name: Sigen
@@ -951,7 +953,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 10
 
       - name: Sigen Alarm1 code
@@ -1000,7 +1002,7 @@ modbus:
         unit_of_measurement: V
         device_class: voltage
         state_class: measurement
-        scale: 0.01
+        scale: 0.1
         scan_interval: 600
 
       - name: Sigen Rated grid frequency
@@ -2925,6 +2927,3 @@ automation:
         data:
           value: "{{ states('sensor.sigen_pv_max_power_limit') }}"
     mode: single
-
-
-

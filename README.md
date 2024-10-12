@@ -8,8 +8,7 @@ An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC 
   - [4. Addons](#4-addons)
   - [5. Visual impressions](#5-visual-impressions)
   - [6. Tested configurations](#6-tested-configurations)
-  - [7. Status and future work](#7-status-and-future-work)
-  - [8. Contribution](#8-contribution)
+  - [7. Contribution](#7-contribution)
 
 
 # 1. Overview
@@ -32,11 +31,11 @@ The documentation covers following topics:
 
 ## 3. Support
 
-If you any kind of assistance, you have three options:
+If you any kind of assistance, you have two options:
 
 a) Use the [github discussion](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/discussions) 
 
-b) Only if code-related (bugs / contributions): Open an  [github issue](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/issues) or isse a pullrequest
+b) Only if code-related (bugs / contributions): Open an  [github issue](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/issues) or issue a pullrequest
 
 ## 4. Addons
 
@@ -83,14 +82,9 @@ Version: V1.8
 Release date: 2024-07-24
 ```
 
-## 7. Status and future work 
-1. Energy consumption differs from the app but maybe in a good way? Closer to grid provider.
-2. Nicer dashboard integrated with Nordpol.
-
-
-## 8. Contribution
+## 7. Contribution
 We are happy to share our experiences - feel encouraged to share yours with us, too! 
 
-If you have any questions, feature requests, found any bugs or have some hints how to update the documentation, just ask on Github Discutions.
+If you need have any questions, feature requests, found any bugs or have some hints how to update the documentation, just ask on Github Discutions.
 
 **Thanks to all the people, who are actively contributing to this project! Special thanks to @mkaiser for the Sungrow integration on wich this is based**

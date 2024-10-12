@@ -235,6 +235,11 @@ views:
               This values are updatedonce every 10s by default. Deselect textbox
               after changing the value to send it. If invalid value entered then
               it will not be shown in applied.
+          - type: section
+            label: >-
+              When manually switching from Sigen AI, the AI will remain active,
+              but inverter operating mode will change. To revert to Sigen AI,
+              first disable AI mode, then re-enable it in app.
         title: ESS limits
       - chart_type: line
         period: hour
@@ -269,6 +274,13 @@ views:
           - type: divider
           - entity: input_text.set_sigen_pv_max_power_limit
         title: Solar production limit (kW)
+      - type: entities
+        entities:
+          - type: section
+            label: EMS = Energy Management System (Inverter)
+          - type: section
+            label: ESS = Energy Storage System (Battery)
+        title: Glossary
   - title: All Sigenergy provided parameters
     icon: mdi:solar-power-variant-outline
     cards:
@@ -360,6 +372,7 @@ views:
               sensor.sigen_min_reactive_power_adjustment_value_absorbed_from_the_ac_terminal
           - entity: sensor.sigen_active_power
           - entity: sensor.sigen_reactive_power
+          - entity: sensor.sigen_rated_grid_voltage
           - entity: sensor.sigen_rated_grid_frequency
           - entity: sensor.sigen_grid_frequency
           - entity: sensor.sigen_inverter_temperature
@@ -476,7 +489,7 @@ views:
           - entity: sensor.sigen_accumulated_pv_energy_production
           - entity: sensor.sigen_accumulated_grid_energy_export
           - entity: sensor.sigen_accumulated_grid_energy_import
-        title: Calculated Daily Energy values
+        title: Calculated Accumulated Energy values
       - type: entities
         entities:
           - entity: sensor.sigen_daily_energy_consumption

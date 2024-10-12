@@ -20,7 +20,7 @@ This has not been tested on HA earlier than 2024.9 and requires the following HA
 The Nordpool entity should be changed from the default name to just "nordpool" as per the components installation instructions.
 
 # Installation
-- Copy - paste the raw card codefrom `card_nordpool_energy_chart.yaml` to your a new card on you lovelace dashboard. Add any card and replace the raw code that you can edit by clicking on the *SHOW CODE EDITOR* in the bottom left.
+- Copy - paste the raw card code from `card_nordpool_energy_chart.yaml` to your a new card on you lovelace dashboard. Add any card and replace the raw code that you can edit by clicking on the *SHOW CODE EDITOR* in the bottom left.
 
 
 # Configuration 
