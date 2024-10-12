@@ -2280,6 +2280,24 @@ template:
             ) | round(3)
           }}
 
+      # Assuming 5kWh batteries that have a Minimum Through Output Energy of 15.85 MWh according to waranty.
+      - name: Sigen 5kWh Battery waranty life spent
+        unique_id: sigen_5kwh_battery_waranty_life_spent
+        unit_of_measurement: "%"
+        state_class: total
+        state: >-
+          {{
+            (
+              (
+                states('sensor.sigen_accumulated_discharge_energy') | float
+              )
+              /
+              (
+                states('sensor.sigen_rated_battery_capacity') | float / 5 * 15850
+              ) * 100
+            ) | round(1)
+          }}
+
       # Assuming 8kWh batteries that have a Minimum Through Output Energy of 23.77 MWh according to waranty.
       - name: Sigen 8kWh Battery waranty life spent
         unique_id: sigen_8kwh_battery_waranty_life_spent
