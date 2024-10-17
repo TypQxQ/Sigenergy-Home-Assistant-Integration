@@ -59,7 +59,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid sensor reactive power
       # Data collected from grid sensor at grid to system checkpoint
@@ -73,7 +73,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen On/Off grid status code
       # 0: on grid
@@ -138,7 +138,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant phase B active Power
         unique_id: sigen_plant_phase_b_active_power
@@ -151,7 +151,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant phase C active Power
         unique_id: sigen_plant_phase_c_active_power
@@ -164,7 +164,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant phase A reactive Power
         unique_id: sigen_plant_phase_a_reactive_power
@@ -177,7 +177,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant phase B reactive Power
         unique_id: sigen_plant_phase_b_reactive_power
@@ -190,7 +190,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant phase C reactive Power
         unique_id: sigen_plant_phase_c_reactive_power
@@ -203,7 +203,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen General Alarm1 code
       # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
@@ -252,7 +252,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant reactive power
         unique_id: sigen_plant_reactive_power
@@ -265,7 +265,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Plant PV power
         unique_id: sigen_pv_power
@@ -400,7 +400,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase B active power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -416,7 +416,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase C active power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -432,7 +432,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase A reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -446,7 +446,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase B reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -460,7 +460,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase C reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -474,7 +474,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Available max charging capacity
       # Count only the running inverters
@@ -824,7 +824,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Reactive power
         unique_id: sigendev_reactive_power
@@ -837,7 +837,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen ESS Max. battery charge power
         unique_id: sigendev_ess_max_battery_charge_power
@@ -1185,7 +1185,7 @@ modbus:
         precision: 2
         device_class: power_factor
         state_class: measurement
-        scale: 0.01
+        scale: 0.001
         scan_interval: 10
 
       - name: Sigen OACK count
@@ -1559,7 +1559,7 @@ modbus:
         data_type: int32
         precision: 2
         unit_of_measurement: kVar
-        scale: 0.01
+        scale: 0.001
         scan_interval: 60
 
       - name: Sigen Phase B reactive power fixed adjustment target value
@@ -1571,7 +1571,7 @@ modbus:
         data_type: int32
         precision: 2
         unit_of_measurement: kVar
-        scale: 0.01
+        scale: 0.001
         scan_interval: 60
 
       - name: Sigen Phase C reactive power fixed adjustment target value
@@ -1583,7 +1583,7 @@ modbus:
         data_type: int32
         precision: 2
         unit_of_measurement: kVar
-        scale: 0.01
+        scale: 0.001
         scan_interval: 60
 
       - name: Sigen Phase A active power percentage adjustment target value
