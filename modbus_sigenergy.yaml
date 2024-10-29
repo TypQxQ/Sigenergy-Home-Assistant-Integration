@@ -2346,11 +2346,10 @@ template:
         unique_id: sigen_pv_generating
         availability: >-
           {{ 
-          not is_state('sensor.sigen_pv_power', 'unavailable') 
-          and not is_state('sensor.sigen_pv_power', 'unavailable') 
+          not is_state('sensor.sigen_plant_pv_power', 'unavailable') 
           }}
         state: >-
-          {% if states('sensor.sigen_pv_power')|round(0,"ceil") > 0 %}
+          {% if states('sensor.sigen_plant_pv_power')|round(0,"ceil") > 0 %}
             1
           {% else %} 
             0 
@@ -2362,7 +2361,6 @@ template:
         availability: >-
           {{ 
           not is_state('sensor.sigen_battery_power', 'unavailable') 
-          and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
           {% if states('sensor.sigen_battery_power')|float > 0.01 %}
@@ -2377,7 +2375,6 @@ template:
         availability: >-
           {{ 
           not is_state('sensor.sigen_battery_power', 'unavailable') 
-          and not is_state('sensor.sigen_battery_power', 'unavailable') 
           }}
         state: >-
           {% if states('sensor.sigen_battery_power')|float < -0.01 %}
@@ -2392,7 +2389,6 @@ template:
         availability: >-
           {{ 
           not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
-          and not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
           }}
         state: >-
           {% if states('sensor.sigen_grid_sensor_active_power')|float > 0.01 %}
@@ -2407,7 +2403,6 @@ template:
         availability: >-
           {{ 
           not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
-          and not is_state('sensor.sigen_grid_sensor_active_power', 'unavailable') 
           }}
         state: >-
           {% if states('sensor.sigen_grid_sensor_active_power')|float < -0.01 %}
