@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-10-12
+# last update: 2024-11-07
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -2419,30 +2419,35 @@ sensor:
     name: Sigen Accumulated energy consumption
     unique_id: sigen_accumulated_energy_consumption
     source: sensor.sigen_consumed_power
+    method: left
     round: 2
 
   - platform: integration
     name: Sigen Accumulated PV energy production
     unique_id: sigen_accumulated_pv_energy_production
     source: sensor.sigen_pv_power
+    method: left
     round: 2
 
   - platform: integration
     name: Sigen Accumulated Grid energy export
     unique_id: sigen_accumulated_grid_energy_export
     source: sensor.sigen_grid_sensor_export_power
+    method: left
     round: 2
 
   - platform: integration
     name: Sigen Accumulated Grid energy import
     unique_id: sigen_accumulated_grid_energy_import
     source: sensor.sigen_grid_sensor_import_power
+    method: left
     round: 2
 
   - platform: integration
     name: Sigen Accumulated Inverter energy usage
     unique_id: sigen_accumulated_inverter_energy_usage
     source: sensor.sigen_inverter_power_usage
+    method: left
     round: 2
 
 utility_meter:
