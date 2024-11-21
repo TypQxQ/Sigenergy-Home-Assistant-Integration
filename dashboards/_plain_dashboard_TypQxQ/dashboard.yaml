@@ -270,7 +270,7 @@ views:
       - type: entities
         entities:
           - type: section
-            label: EMS must be set in Remote mode before changing values.
+            label: EMS must be set in Remote mode (Home Assistant control) before changing values. Note that these values are ignored when EMS control mode is set to 'Maximum self-consumption (default)'.
           - type: divider
           - entity: input_text.set_sigen_pv_max_power_limit
         title: Solar production limit (kW)
@@ -280,7 +280,9 @@ views:
             label: EMS = Energy Management System (Inverter)
           - type: section
             label: ESS = Energy Storage System (Battery)
-        title: Glossary
+          - type: section
+            label: PCS = Power Conversion System (CheckWatt)
+            title: Glossary
   - title: All Sigenergy provided parameters
     icon: mdi:solar-power-variant-outline
     cards:
