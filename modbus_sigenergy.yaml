@@ -23,10 +23,10 @@ modbus:
     timeout: 30
     sensors:
       - name: Sigen EMS work mode code
-      # 0: Max self consumption;
-      # 1: Sigen AI Mode;
-      # 2: TOU
-      # 7: Remote EMS mode
+        # 0: Max self consumption;
+        # 1: Sigen AI Mode;
+        # 2: TOU
+        # 7: Remote EMS mode
         unique_id: sigen_ems_work_mode_code
         device_address: 247
         address: 30003
@@ -35,9 +35,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid sensor status code
-      # (gateway or meter connection status)
-      # 0: not connected
-      # 1: connected
+        # (gateway or meter connection status)
+        # 0: not connected
+        # 1: connected
         unique_id: sigen_grid_sensor_status_code
         device_address: 247
         address: 30004
@@ -46,9 +46,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid sensor active power
-      # Data collected from grid sensor at grid to system checkpoint
-      # > 0: power from grid to system
-      # < 0: power from system to grid
+        # Data collected from grid sensor at grid to system checkpoint
+        # > 0: power from grid to system
+        # < 0: power from system to grid
         unique_id: sigen_grid_sensor_active_power
         device_address: 247
         address: 30005
@@ -62,7 +62,7 @@ modbus:
         scan_interval: 5
 
       - name: Sigen Grid sensor reactive power
-      # Data collected from grid sensor at grid to system checkpoint
+        # Data collected from grid sensor at grid to system checkpoint
         unique_id: sigen_grid_sensor_reactive_power
         device_address: 247
         address: 30007
@@ -76,9 +76,9 @@ modbus:
         scan_interval: 5
 
       - name: Sigen On/Off grid status code
-      # 0: on grid
-      # 1: off grid (auto)
-      # 2: off grid (manual)
+        # 0: on grid
+        # 1: off grid (auto)
+        # 2: off grid (manual)
         unique_id: sigen_on_off_grid_status_code
         device_address: 247
         address: 30009
@@ -87,7 +87,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Plant max active power
-      # This should be the base value of all active power
+        # This should be the base value of all active power
         unique_id: sigen_max_active_power
         device_address: 247
         address: 30010
@@ -101,7 +101,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen Max apparent power
-      # This is should be the base value of all reactive power adjustment actions
+        # This is should be the base value of all reactive power adjustment actions
         unique_id: sigen_max_apparent_power
         device_address: 247
         address: 30012
@@ -206,7 +206,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen General Alarm1 code
-      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
+        # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
         unique_id: sigen_general_alarm1_code
         device_address: 247
         address: 30027
@@ -215,7 +215,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen General Alarm2 code
-      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 3
+        # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 3
         unique_id: sigen_general_alarm2_code
         device_address: 247
         address: 30028
@@ -224,7 +224,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen General Alarm3 code
-      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 4
+        # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 4
         unique_id: sigen_general_alarm3_code
         device_address: 247
         address: 30029
@@ -233,7 +233,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen General Alarm4 code
-      # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 5
+        # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 5
         unique_id: sigen_general_alarm4_code
         device_address: 247
         address: 30030
@@ -281,8 +281,8 @@ modbus:
         scan_interval: 5
 
       - name: Sigen Battery power
-      # <0: discharging
-      # >0: charging
+        # <0: discharging
+        # >0: charging
         unique_id: sigen_battery_power
         device_address: 247
         address: 30037
@@ -296,7 +296,7 @@ modbus:
         scan_interval: 5
 
       - name: Sigen Available max active power
-      # Feed to the ac terminal. Count only the running inverters
+        # Feed to the ac terminal. Count only the running inverters
         unique_id: sigen_available_max_active_power
         device_address: 247
         address: 30039
@@ -310,7 +310,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen Available min active power
-      # Absorb from the ac terminal. Count only the running inverters
+        # Absorb from the ac terminal. Count only the running inverters
         unique_id: sigen_available_min_active_power
         device_address: 247
         address: 30041
@@ -324,7 +324,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen Available max reactive power
-      # Feed to the ac terminal. Count only the running inverters
+        # Feed to the ac terminal. Count only the running inverters
         unique_id: sigen_available_max_reactive_power
         device_address: 247
         address: 30043
@@ -338,7 +338,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen Available min reactive power
-      # Absorb from the ac terminal. Count only the running inverters
+        # Absorb from the ac terminal. Count only the running inverters
         unique_id: sigen_available_min_reactive_power
         device_address: 247
         address: 30045
@@ -378,7 +378,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen Plant running state code
-      # Refer to Appendix 1
+        # Refer to Appendix 1
         unique_id: sigen_plant_running_state_code
         device_address: 247
         address: 30051
@@ -387,9 +387,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase A active power
-      # Data collected from grid sensor at grid to system checkpoint;
-      # >0 buy from grid;
-      # <0 sell to grid
+        # Data collected from grid sensor at grid to system checkpoint;
+        # >0 buy from grid;
+        # <0 sell to grid
         unique_id: sigen_grid_phase_a_active_power
         device_address: 247
         address: 30052
@@ -403,9 +403,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase B active power
-      # Data collected from grid sensor at grid to system checkpoint;
-      # >0 buy from grid;
-      # <0 sell to grid
+        # Data collected from grid sensor at grid to system checkpoint;
+        # >0 buy from grid;
+        # <0 sell to grid
         unique_id: sigen_grid_phase_b_active_power
         device_address: 247
         address: 30054
@@ -419,9 +419,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase C active power
-      # Data collected from grid sensor at grid to system checkpoint;
-      # >0 buy from grid;
-      # <0 sell to grid
+        # Data collected from grid sensor at grid to system checkpoint;
+        # >0 buy from grid;
+        # <0 sell to grid
         unique_id: sigen_grid_phase_c_active_power
         device_address: 247
         address: 30056
@@ -435,7 +435,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase A reactive power
-      # Data collected from grid sensor at grid to system checkpoint;
+        # Data collected from grid sensor at grid to system checkpoint;
         unique_id: sigen_grid_phase_a_reactive_power
         device_address: 247
         address: 30058
@@ -449,7 +449,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase B reactive power
-      # Data collected from grid sensor at grid to system checkpoint;
+        # Data collected from grid sensor at grid to system checkpoint;
         unique_id: sigen_grid_phase_b_reactive_power
         device_address: 247
         address: 30060
@@ -463,7 +463,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Grid Phase C reactive power
-      # Data collected from grid sensor at grid to system checkpoint;
+        # Data collected from grid sensor at grid to system checkpoint;
         unique_id: sigen_grid_phase_c_reactive_power
         device_address: 247
         address: 30062
@@ -477,7 +477,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Available max charging capacity
-      # Count only the running inverters
+        # Count only the running inverters
         unique_id: sigen_available_max_charging_capacity
         device_address: 247
         address: 30064
@@ -491,7 +491,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Available max discharging capacity
-      # Count only the running inverters
+        # Count only the running inverters
         unique_id: sigen_available_max_discharging_capacity
         device_address: 247
         address: 30066
@@ -753,7 +753,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Running state code
-      # refer to Appendix 1
+        # refer to Appendix 1
         unique_id: sigendev_running_state_code
         device_address: !secret sigen_modbus_slave
         address: 30578
@@ -957,7 +957,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Alarm1 code
-      # Refer to Appendix 2
+        # Refer to Appendix 2
         unique_id: sigendev_alarm1_code
         device_address: !secret sigen_modbus_slave
         address: 30605
@@ -966,7 +966,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Alarm2 code
-      # Refer to Appendix 3
+        # Refer to Appendix 3
         unique_id: sigendev_alarm2_code
         device_address: !secret sigen_modbus_slave
         address: 30606
@@ -975,7 +975,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Alarm3 code
-      # Refer to Appendix 4
+        # Refer to Appendix 4
         unique_id: sigendev_alarm3_code
         device_address: !secret sigen_modbus_slave
         address: 30607
@@ -984,14 +984,14 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Alarm4 code
-      # Refer to Appendix 5
+        # Refer to Appendix 5
         unique_id: sigendev_alarm4_code
         device_address: !secret sigen_modbus_slave
         address: 30608
         input_type: input
         data_type: uint16
         scan_interval: 10
-      
+
       - name: Sigen Rated grid voltage
         unique_id: sigendev_rated_grid_voltage
         device_address: !secret sigen_modbus_slave
@@ -1045,10 +1045,10 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Output type code
-      # 0: L/N
-      # 1: L1/L2/L3
-      # 2: L1/L2/L3/N
-      # 3: L1/L2/N
+        # 0: L/N
+        # 1: L1/L2/L3
+        # 2: L1/L2/L3/N
+        # 3: L1/L2/N
         unique_id: sigendev_output_type_code
         device_address: !secret sigen_modbus_slave
         address: 31004
@@ -1057,7 +1057,7 @@ modbus:
         scan_interval: 600
 
       - name: Sigen A-B line voltage
-      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
         unique_id: sigendev_a_b_line_voltage
         device_address: !secret sigen_modbus_slave
         address: 31005
@@ -1071,7 +1071,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen B-C line voltage
-      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
         unique_id: sigendev_b_c_line_voltage
         device_address: !secret sigen_modbus_slave
         address: 31007
@@ -1085,7 +1085,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen C-A line voltage
-      # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
         unique_id: sigendev_c_a_line_voltage
         device_address: !secret sigen_modbus_slave
         address: 31009
@@ -1439,13 +1439,12 @@ modbus:
       #   state_class: measurement
       #   scan_interval: 10
 
-
-################################################
-# Read/Write registers for Sigen Plant
-################################################
+      ################################################
+      # Read/Write registers for Sigen Plant
+      ################################################
       - name: Sigen Plant Start/Stop code
-      # 0: Stop
-      # 1: Start
+        # 0: Stop
+        # 1: Start
         unique_id: sigen_start_stop_code
         device_address: 247
         address: 40000
@@ -1477,7 +1476,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Active power percentage adjustment target value
-      # Range:[-100.00,100.00]
+        # Range:[-100.00,100.00]
         unique_id: sigen_active_power_percentage_adjustment_target_value
         device_address: 247
         address: 40005
@@ -1489,7 +1488,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Q/S adjustment target value
-      # Range:[-60.00,60.00]
+        # Range:[-60.00,60.00]
         unique_id: sigen_q_s_adjustment_target_value
         device_address: 247
         address: 40006
@@ -1501,7 +1500,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Power factor adjustment target value
-      # Range: [-1, -0.8] U [0.8, 1 ]
+        # Range: [-1, -0.8] U [0.8, 1 ]
         unique_id: sigen_power_factor_adjustment_target_value
         device_address: 247
         address: 40007
@@ -1512,7 +1511,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase A active power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_a_active_power_fixed_adjustment_target_value
         device_address: 247
         address: 40008
@@ -1525,7 +1524,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase B active power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_b_active_power_fixed_adjustment_target_value
         device_address: 247
         address: 40010
@@ -1538,7 +1537,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase C active power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_c_active_power_fixed_adjustment_target_value
         device_address: 247
         address: 40012
@@ -1551,7 +1550,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase A reactive power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_a_reactive_power_fixed_adjustment_target_value
         device_address: 247
         address: 40014
@@ -1563,7 +1562,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase B reactive power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_b_reactive_power_fixed_adjustment_target_value
         device_address: 247
         address: 40016
@@ -1575,7 +1574,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase C reactive power fixed adjustment target value
-      # Valid only when output type is L1/L2/L3/N.
+        # Valid only when output type is L1/L2/L3/N.
         unique_id: sigen_phase_c_reactive_power_fixed_adjustment_target_value
         device_address: 247
         address: 40018
@@ -1587,7 +1586,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase A active power percentage adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
         unique_id: sigen_phase_a_active_power_percentage_adjustment_target_value
         device_address: 247
         address: 40020
@@ -1599,7 +1598,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase B active power percentage adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
         unique_id: sigen_phase_b_active_power_percentage_adjustment_target_value
         device_address: 247
         address: 40021
@@ -1611,7 +1610,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase C active power percentage adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-100.00,100.00]
         unique_id: sigen_phase_c_active_power_percentage_adjustment_target_value
         device_address: 247
         address: 40022
@@ -1623,7 +1622,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase A Q/S adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
         unique_id: sigen_phase_a_q_s_adjustment_target_value
         device_address: 247
         address: 40023
@@ -1635,7 +1634,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Phase B Q/S adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
         unique_id: sigen_phase_b_q_s_adjustment_target_value
         device_address: 247
         address: 40024
@@ -1645,9 +1644,9 @@ modbus:
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
-      
+
       - name: Sigen Phase C Q/S adjustment target value
-      # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
+        # Valid only when output type is L1/L2/L3/N. Range: [-60.00,60.00]
         unique_id: sigen_phase_c_q_s_adjustment_target_value
         device_address: 247
         address: 40025
@@ -1657,8 +1656,8 @@ modbus:
         unit_of_measurement: "%"
         scale: 0.01
         scan_interval: 60
-      
-  # Following registers are not found as documented. Need to check with the manufacturer.
+
+      # Following registers are not found as documented. Need to check with the manufacturer.
       # - name: Sigen Active power fixed adjustment upper limit
       # # The actual power adjustment value will be the lesser of this register and register 40001.
       #   unique_id: sigen_active_power_fixed_adjustment_upper_limit
@@ -1685,10 +1684,10 @@ modbus:
       #   scan_interval: 60
 
       - name: Sigen Remote EMS code
-      # 0: disabled
-      # 1: enabled
-      # When needed to control EMS remotely, this register needs to be enabled.
-      # When enabled, the plant’s EMS work mode (30003) will switch to remote EMS.
+        # 0: disabled
+        # 1: enabled
+        # When needed to control EMS remotely, this register needs to be enabled.
+        # When enabled, the plant’s EMS work mode (30003) will switch to remote EMS.
         unique_id: sigen_remote_ems_code
         device_address: 247
         address: 40029
@@ -1697,9 +1696,9 @@ modbus:
         scan_interval: 10
 
       - name: Sigen Independent phase power control code
-      # Valid only when output type is L1/L2/L3/N. To enable independent phase control, this parameter must be enabled.
-      # 0: disabled
-      # 1: enabled
+        # Valid only when output type is L1/L2/L3/N. To enable independent phase control, this parameter must be enabled.
+        # 0: disabled
+        # 1: enabled
         unique_id: sigen_independent_phase_power_control_code
         device_address: 247
         address: 40030
@@ -1708,13 +1707,13 @@ modbus:
         scan_interval: 60
 
       - name: Sigen Remote EMS control mode code
-      # 0: PCS remote control
-      # 1: Standby
-      # 2: Maximum self-consumption
-      # 3: Command charging (consume power from the grid first)
-      # 4: Command charging (consume power from the PV first)
-      # 5: Command discharging (output power from PV first)
-      # 6: Command discharging (output power from the battery first)
+        # 0: PCS remote control
+        # 1: Standby
+        # 2: Maximum self-consumption
+        # 3: Command charging (consume power from the grid first)
+        # 4: Command charging (consume power from the PV first)
+        # 5: Command discharging (output power from PV first)
+        # 6: Command discharging (output power from the battery first)
         unique_id: sigen_remote_ems_control_mode_code
         device_address: 247
         address: 40031
@@ -1723,7 +1722,7 @@ modbus:
         scan_interval: 60
 
       - name: Sigen ESS max charging limit
-      # [0, Rated ESS charging power]. This register will take effect when Remote EMS control mode (40031) is 3 or 4.
+        # [0, Rated ESS charging power]. This register will take effect when Remote EMS control mode (40031) is 3 or 4.
         unique_id: sigen_ess_max_charging_limit
         device_address: 247
         address: 40032
@@ -1736,7 +1735,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen ESS max discharging limit
-      # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
+        # [0, Rated ESS discharging power]. This register will take effect when Remote EMS control mode (40031) is 5 or 6.
         unique_id: sigen_ess_max_discharging_limit
         device_address: 247
         address: 40034
@@ -1749,7 +1748,7 @@ modbus:
         scan_interval: 10
 
       - name: Sigen PV max power limit
-      # This register will take effect when Remote EMS control mode (40031) is 3, 4, 5 or 6.
+        # This register will take effect when Remote EMS control mode (40031) is 3, 4, 5 or 6.
         unique_id: sigen_pv_max_power_limit
         device_address: 247
         address: 40036
@@ -1761,12 +1760,12 @@ modbus:
         scale: 0.001
         scan_interval: 10
 
-################################################
-# Read/Write registers for device
-################################################
+      ################################################
+      # Read/Write registers for device
+      ################################################
       - name: Sigen Start/Stop code
-      # 0: Stop
-      # 1: Start
+        # 0: Stop
+        # 1: Start
         unique_id: sigendev_start_stop_code
         device_address: !secret sigen_modbus_slave
         address: 40500
@@ -1793,7 +1792,6 @@ modbus:
       #   input_type: holding
       #   data_type: uint16
       #   scan_interval: 60
-
 
 ################################################
 # 'virtual' template sensors for better readability
@@ -2050,7 +2048,6 @@ template:
           {% endif %}
         icon: mdi:alert
 
-
       - name: Sigen Plant Running state
         unique_id: sigen_plant_running_state
         state: >-
@@ -2130,10 +2127,9 @@ template:
             0 
           {% endif %}
 
-
-################################################
-# 'virtual' template sensors for calculations
-################################################
+      ################################################
+      # 'virtual' template sensors for calculations
+      ################################################
       # - name: Sigen Grid active power
       #   unique_id: sigen_grid_active_power
       #   state: >-
@@ -2185,13 +2181,13 @@ template:
         device_class: power
         state_class: measurement
         icon: mdi:power
-        
+
       - name: Sigen PV1 power
         unique_id: sigendev_pv1_power
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state:  >-
+        state: >-
           {{
             (
               (
@@ -2207,7 +2203,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state:  >-
+        state: >-
           {{
             (
               (
@@ -2223,7 +2219,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state:  >-
+        state: >-
           {{
             (
               (
@@ -2239,7 +2235,7 @@ template:
         unit_of_measurement: kW
         device_class: power
         state_class: measurement
-        state:  >-
+        state: >-
           {{
             (
               (
@@ -2337,10 +2333,9 @@ template:
             ) | round(1)
           }}
 
-
-################################################
-# 'virtual' template binary sensors
-################################################
+  ################################################
+  # 'virtual' template binary sensors
+  ################################################
   - binary_sensor:
       - name: Sigen PV generating
         unique_id: sigen_pv_generating
@@ -2466,7 +2461,7 @@ utility_meter:
     unique_id: sigen_daily_energy_consumption
     source: sensor.sigen_accumulated_energy_consumption
     cycle: daily
-    
+
   sigen_daily_pv_energy_production:
     name: Sigen Daily PV Energy production
     unique_id: sigen_daily_pv_energy_production
@@ -2484,7 +2479,7 @@ utility_meter:
     unique_id: sigen_daily_grid_energy_import
     source: sensor.sigen_accumulated_grid_energy_import
     cycle: daily
-    
+
 ################################################
 # Create input option selectors
 ################################################
@@ -2546,9 +2541,6 @@ input_text:
     pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
     icon: mdi:solar-power
 
-  
-
-  
   # # get input for battery mode (forced charge/discharge, stop (default) )
   # set_sg_ems_mode:
   #   name: EMS mode
@@ -2570,11 +2562,9 @@ automation:
   - id: "automation_sigen_plant_run_mode_input_selector_action"
     alias: "sigen plant run mode input selector action"
     description: "Sigen Plant Start/Stop"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_select.sigen_plant_run_mode
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_select.sigen_plant_run_mode
     variables:
       sg_start: 0x0001
       sg_stop: 0x0000
@@ -2595,11 +2585,10 @@ automation:
   - id: "automation_sigen_plant_run_mode_input_selector_update"
     alias: "sigen plant run mode input selector update"
     description: "Updates enable/ stops input selector"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_start_stop_code
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_start_stop_code
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2620,10 +2609,9 @@ automation:
   - id: "automation_sigen_remote_ems_input_selector_action"
     alias: "sigen remote EMS input selector action"
     description: "Enables/ disables remote EMS"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_select.set_sigen_remote_ems
+    triggers:
+      - trigger: state
+        entity_id: input_select.set_sigen_remote_ems
     condition: []
     variables:
       sg_disable: 0
@@ -2645,11 +2633,10 @@ automation:
   - id: "automation_sigen_remote_ems_input_selector_update"
     alias: "sigen remote EMS input selector update"
     description: "Updates remote EMS input selector"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_remote_ems_code
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_remote_ems_code
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2670,11 +2657,10 @@ automation:
   - id: "automation_sigen_remote_ems_control_mode_input_selector_action"
     alias: "sigen remote EMS control mode input selector action"
     description: "Sets the remote EMS control mode"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - input_select.set_sigen_remote_ems_control_mode
-    condition: []
     action:
       - action: modbus.write_register
         data_template:
@@ -2695,11 +2681,10 @@ automation:
   - id: "automation_sigen_remote_ems_control_mode_input_selector_update"
     alias: "sigen remote EMS control mode input selector update"
     description: "Updates remote EMS control mode input selector"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_remote_ems_control_mode_code
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_remote_ems_control_mode_code
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2730,11 +2715,9 @@ automation:
   - id: "automation_sigen_run_mode_input_selector_action"
     alias: "sigen run mode input selector action"
     description: "Sigen Start/Stop"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_select.sigen_run_mode
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_select.sigen_run_mode
     variables:
       sg_start: 0x0001
       sg_stop: 0x0000
@@ -2755,11 +2738,10 @@ automation:
   - id: "automation_sigen_run_mode_input_selector_update"
     alias: "sigen run mode input selector update"
     description: "Updates enable/ stops input selector"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_start_stop_code
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_start_stop_code
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2780,11 +2762,9 @@ automation:
   - id: "automation_sigen_indenpendent_phase_power_control_input_selector_action"
     alias: "sigen indenpendent phase power control input selector action"
     description: "Sigen Independent phase power control action"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_select.set_sigen_indenpendent_phase_power_control
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_select.set_sigen_indenpendent_phase_power_control
     variables:
       sg_disable: 0
       sg_enable: 1
@@ -2805,11 +2785,10 @@ automation:
   - id: "automation_sigen_indenpendent_phase_power_control_input_selector_update"
     alias: "sigen indenpendent phase power control input selector update"
     description: "Updates indenpendent phase power control input selector"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_independent_phase_power_control_code
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_independent_phase_power_control_code
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2830,11 +2809,9 @@ automation:
   - id: "automation_sigen_ess_max_charging_limit_input_text_action"
     alias: "sigen ESS max charging limit input text action"
     description: "Sigen ESS max charging limit action"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_text.set_sigen_ess_max_charging_limit
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_text.set_sigen_ess_max_charging_limit
     action:
       - action: modbus.write_register
         data_template:
@@ -2853,11 +2830,10 @@ automation:
   - id: "automation_sigen_ess_max_charging_limit_input_text_update"
     alias: "sigen ESS max charging limit input text update"
     description: "Updates ESS max charging limit input text"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_ess_max_charging_limit
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_ess_max_charging_limit
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2873,11 +2849,9 @@ automation:
   - id: "automation_sigen_ess_max_discharging_limit_input_text_action"
     alias: "sigen ESS max discharging limit input text action"
     description: "Sigen ESS max discharging limit action"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_text.set_sigen_ess_max_discharging_limit
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_text.set_sigen_ess_max_discharging_limit
     action:
       - action: modbus.write_register
         data_template:
@@ -2896,11 +2870,10 @@ automation:
   - id: "automation_sigen_ess_max_discharging_limit_input_text_update"
     alias: "sigen ESS max discharging limit input text update"
     description: "Updates ESS max discharging limit input text"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_ess_max_discharging_limit
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_ess_max_discharging_limit
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
@@ -2916,11 +2889,9 @@ automation:
   - id: "automation_sigen_pv_max_power_limit_input_text_action"
     alias: "sigen PV max power limit input text action"
     description: "Sigen PV max power limit action"
-    trigger:
-      - platform: state
-        entity_id:
-          - input_text.set_sigen_pv_max_power_limit
-    condition: []
+    triggers:
+      - trigger: state
+        entity_id: input_text.set_sigen_pv_max_power_limit
     action:
       - action: modbus.write_register
         data_template:
@@ -2935,15 +2906,14 @@ automation:
               {{ (states('input_text.set_sigen_pv_max_power_limit')| float * 1000) |
               round(0) | int % 2**16 }}
     mode: single
-    
+
   - id: "automation_sigen_pv_max_power_limit_input_text_update"
     alias: "sigen PV max power limit input text update"
     description: "Updates PV max power limit input text"
-    trigger:
-      - platform: state
-        entity_id:
-          - sensor.sigen_pv_max_power_limit
-      - platform: homeassistant
+    triggers:
+      - trigger: state
+        entity_id: sensor.sigen_pv_max_power_limit
+      - trigger: homeassistant
         event: start
     condition:
       - condition: template
