@@ -464,9 +464,6 @@ views:
         title: Calculated Battery values
       - type: entities
         entities:
-          - entity: sensor.sigen_grid_active_power
-          - entity: sensor.sigen_grid_reactive_power
-          - entity: sensor.sigen_daily_pv_energy_production
           - entity: sensor.sigen_grid_sensor_import_power
           - entity: sensor.sigen_grid_sensor_export_power
           - entity: sensor.sigen_pv1_power
