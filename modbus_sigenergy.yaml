@@ -138,7 +138,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Plant phase B active Power
         unique_id: sigen_plant_phase_b_active_power
@@ -151,7 +151,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Plant phase C active Power
         unique_id: sigen_plant_phase_c_active_power
@@ -164,7 +164,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Plant phase A reactive Power
         unique_id: sigen_plant_phase_a_reactive_power
@@ -177,7 +177,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Plant phase B reactive Power
         unique_id: sigen_plant_phase_b_reactive_power
@@ -190,7 +190,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Plant phase C reactive Power
         unique_id: sigen_plant_phase_c_reactive_power
@@ -203,7 +203,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen General Alarm1 code
       # If any hybrid inverter has alarm , then this alarm will be set accordingly. Refer to Appendix 2
@@ -278,7 +278,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Battery power
       # <0: discharging
@@ -293,7 +293,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Available max active power
       # Feed to the ac terminal. Count only the running inverters
@@ -400,7 +400,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Grid Phase B active power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -416,7 +416,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Grid Phase C active power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -432,7 +432,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Grid Phase A reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -446,7 +446,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Grid Phase B reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -460,7 +460,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Grid Phase C reactive power
       # Data collected from grid sensor at grid to system checkpoint;
@@ -474,7 +474,7 @@ modbus:
         # device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 5
+        scan_interval: 10
 
       - name: Sigen Available max charging capacity
       # Count only the running inverters
@@ -902,7 +902,7 @@ modbus:
         device_class: power
         state_class: measurement
         scale: 0.001
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen ESS battery SOC
         unique_id: sigendev_ess_battery_soc
@@ -2134,31 +2134,31 @@ template:
 ################################################
 # 'virtual' template sensors for calculations
 ################################################
-      - name: Sigen Grid active power
-        unique_id: sigen_grid_active_power
-        state: >-
-          {{
-            states('sensor.sigen_grid_phase_a_active_power') | float
-            + states('sensor.sigen_grid_phase_b_active_power') | float
-            + states('sensor.sigen_grid_phase_c_active_power') | float
-          }}
-        unit_of_measurement: kW
-        device_class: power
-        state_class: measurement
-        icon: mdi:power
+      # - name: Sigen Grid active power
+      #   unique_id: sigen_grid_active_power
+      #   state: >-
+      #     {{
+      #       states('sensor.sigen_grid_phase_a_active_power') | float
+      #       + states('sensor.sigen_grid_phase_b_active_power') | float
+      #       + states('sensor.sigen_grid_phase_c_active_power') | float
+      #     }}
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   state_class: measurement
+      #   icon: mdi:power
 
-      - name: Sigen Grid reactive power
-        unique_id: sigen_grid_reactive_power
-        state: >-
-          {{
-            states('sensor.sigen_grid_phase_a_reactive_power') | float
-            + states('sensor.sigen_grid_phase_b_reactive_power') | float
-            + states('sensor.sigen_grid_phase_c_reactive_power') | float
-          }}
-        unit_of_measurement: kVAr
-        # device_class: power
-        state_class: measurement
-        icon: mdi:power
+      # - name: Sigen Grid reactive power
+      #   unique_id: sigen_grid_reactive_power
+      #   state: >-
+      #     {{
+      #       states('sensor.sigen_grid_phase_a_reactive_power') | float
+      #       + states('sensor.sigen_grid_phase_b_reactive_power') | float
+      #       + states('sensor.sigen_grid_phase_c_reactive_power') | float
+      #     }}
+      #   unit_of_measurement: kVAr
+      #   # device_class: power
+      #   state_class: measurement
+      #   icon: mdi:power
 
       - name: Sigen Grid Sensor import power
         unique_id: sigen_grid_sensor_import_power
@@ -2419,36 +2419,46 @@ sensor:
     name: Sigen Accumulated energy consumption
     unique_id: sigen_accumulated_energy_consumption
     source: sensor.sigen_consumed_power
-    method: left
+    method: trapezoidal
     round: 2
+    max_sub_interval:
+      seconds: 5
 
   - platform: integration
     name: Sigen Accumulated PV energy production
     unique_id: sigen_accumulated_pv_energy_production
     source: sensor.sigen_pv_power
-    method: left
+    method: trapezoidal
     round: 2
+    max_sub_interval:
+      seconds: 5
 
   - platform: integration
     name: Sigen Accumulated Grid energy export
     unique_id: sigen_accumulated_grid_energy_export
     source: sensor.sigen_grid_sensor_export_power
-    method: left
+    method: trapezoidal
     round: 2
+    max_sub_interval:
+      seconds: 5
 
   - platform: integration
     name: Sigen Accumulated Grid energy import
     unique_id: sigen_accumulated_grid_energy_import
     source: sensor.sigen_grid_sensor_import_power
-    method: left
+    method: trapezoidal
     round: 2
+    max_sub_interval:
+      seconds: 5
 
   - platform: integration
     name: Sigen Accumulated Inverter energy usage
     unique_id: sigen_accumulated_inverter_energy_usage
     source: sensor.sigen_inverter_power_usage
-    method: left
+    method: trapezoidal
     round: 2
+    max_sub_interval:
+      seconds: 5
 
 utility_meter:
   sigen_daily_energy_consumption:
