@@ -270,7 +270,10 @@ views:
       - type: entities
         entities:
           - type: section
-            label: EMS must be set in Remote mode (Home Assistant control) before changing values. Note that these values are ignored when EMS control mode is set to 'Maximum self-consumption (default)'.
+            label: >-
+              EMS must be set in Remote mode (Home Assistant control) before
+              changing values. Note that these values are ignored when EMS
+              control mode is set to 'Maximum self-consumption (default)'.
           - type: divider
           - entity: input_text.set_sigen_pv_max_power_limit
         title: Solar production limit (kW)
@@ -296,10 +299,6 @@ views:
           - entity: input_text.set_sigen_ess_max_discharging_limit
           - entity: input_text.set_sigen_pv_max_power_limit
         title: Configurable EMS values
-      - type: entities
-        entities:
-          - entity: input_select.set_sigen_run_mode
-        title: Configurable device settings
       - type: entities
         entities:
           - sensor.sigen_grid_code
