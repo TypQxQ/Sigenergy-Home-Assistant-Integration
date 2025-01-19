@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2024-11-07
+# last update: 2025-01-19
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -384,7 +384,7 @@ modbus:
         address: 30051
         input_type: input
         data_type: uint16
-        scan_interval: 10
+        scan_interval: 5
 
       - name: Sigen Grid Phase A active power
         # Data collected from grid sensor at grid to system checkpoint;
@@ -1442,15 +1442,17 @@ modbus:
       ################################################
       # Read/Write registers for Sigen Plant
       ################################################
-      - name: Sigen Plant Start/Stop code
-        # 0: Stop
-        # 1: Start
-        unique_id: sigen_start_stop_code
-        device_address: 247
-        address: 40000
-        input_type: holding
-        data_type: uint16
-        scan_interval: 10
+
+      #  --- Read only value ---
+      # - name: Sigen Plant Start/Stop code
+      #   # 0: Stop
+      #   # 1: Start
+      #   unique_id: sigen_start_stop_code
+      #   device_address: 247
+      #   address: 40000
+      #   input_type: input
+      #   data_type: uint16
+      #   scan_interval: 10
 
       - name: Sigen Active power fixed adjustment target value
         unique_id: sigen_active_power_fixed_adjustment_target_value
@@ -2052,19 +2054,31 @@ template:
         unique_id: sigen_plant_running_state
         state: >-
           {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
+            Standby
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 1) %}
+            Running
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 2) %}
+            Fault
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 3) %}
             Shutdown
           {% else %}
-            Enabled
+            Unknown code: {{ states('sensor.sigen_plant_running_state_code') }}
           {% endif %}
         icon: mdi:power
 
       - name: Sigen Running state
         unique_id: sigen_running_state
         state: >-
-          {% if ((states('sensor.sigen_running_state_code') |int) == 0) %}
+          {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
+            Standby
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 1) %}
+            Running
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 2) %}
+            Fault
+          {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 3) %}
             Shutdown
           {% else %}
-            Enabled
+            Unknown code: {{ states('sensor.sigen_plant_running_state_code') }}
           {% endif %}
         icon: mdi:power
 
@@ -2510,11 +2524,11 @@ input_select:
     # icon: mdi:remote
     icon: mdi:battery-unknown
 
-  set_sigen_run_mode:
-    name: Set Sigen Run mode
-    options:
-      - "Enabled"
-      - "Shutdown"
+  # set_sigen_run_mode:
+  #   name: Set Sigen Run mode
+  #   options:
+  #     - "Enabled"
+  #     - "Shutdown"
 
   set_sigen_indenpendent_phase_power_control:
     name: Set Sigen Independent phase power control
@@ -2564,18 +2578,18 @@ automation:
     description: "Sigen Plant Start/Stop"
     triggers:
       - trigger: state
-        entity_id: input_select.sigen_plant_run_mode
+        entity_id: input_select.set_sigen_plant_run_mode
     variables:
-      sg_start: 0x0001
-      sg_stop: 0x0000
+      sg_start: 1
+      sg_stop: 0
     action:
       - action: modbus.write_register
         data_template:
           hub: Sigen
           slave: 247
-          address: 40000 # reg 13000
+          address: 40000
           value: >
-            {% if is_state('input_select.', "Enabled") %}
+            {% if is_state('input_select.set_sigen_plant_run_mode', "Enabled") %}
               {{sg_start}}
             {% else %}
               {{sg_stop}}
@@ -2587,23 +2601,25 @@ automation:
     description: "Updates enable/ stops input selector"
     triggers:
       - trigger: state
-        entity_id: sensor.sigen_start_stop_code
+        entity_id: sensor.sigen_plant_running_state_code
       - trigger: homeassistant
         event: start
     condition:
       - condition: template
-        value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
+        value_template: "{{ not is_state('sensor.sigen_plant_running_state_code', 'unavailable') }}"
     action:
       - action: input_select.select_option
         target:
           entity_id: input_select.set_sigen_plant_run_mode
         data:
           option: >
-            {% if is_state('sensor.sigen_start_stop', "0") %}
-              Shutdown
-            {% else %}
+            {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
               Enabled
-            {% endif %}
+            {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 1) %}
+              Enabled
+            {% else %}
+              Shutdown
+            {% endif %}          
     mode: single
 
   - id: "automation_sigen_remote_ems_input_selector_action"
@@ -2712,52 +2728,52 @@ automation:
             {% endif %}
     mode: single
 
-  - id: "automation_sigen_run_mode_input_selector_action"
-    alias: "sigen run mode input selector action"
-    description: "Sigen Start/Stop"
-    triggers:
-      - trigger: state
-        entity_id: input_select.sigen_run_mode
-    variables:
-      sg_start: 0x0001
-      sg_stop: 0x0000
-    action:
-      - action: modbus.write_register
-        data_template:
-          hub: Sigen
-          slave: 247
-          address: 40000 # reg 13000
-          value: >
-            {% if is_state('input_select.', "Enabled") %}
-              {{sg_start}}
-            {% else %}
-              {{sg_stop}}
-            {% endif %}
-    mode: single
+  # - id: "automation_sigen_run_mode_input_selector_action"
+  #   alias: "sigen run mode input selector action"
+  #   description: "Sigen Start/Stop"
+  #   triggers:
+  #     - trigger: state
+  #       entity_id: input_select.set_sigen_run_mode
+  #   variables:
+  #     sg_start: 0x0001
+  #     sg_stop: 0x0000
+  #   action:
+  #     - action: modbus.write_register
+  #       data_template:
+  #         hub: Sigen
+  #         slave: 247
+  #         address: 40000
+  #         value: >
+  #           {% if is_state('input_select.', "Enabled") %}
+  #             {{sg_start}}
+  #           {% else %}
+  #             {{sg_stop}}
+  #           {% endif %}
+  #   mode: single
 
-  - id: "automation_sigen_run_mode_input_selector_update"
-    alias: "sigen run mode input selector update"
-    description: "Updates enable/ stops input selector"
-    triggers:
-      - trigger: state
-        entity_id: sensor.sigen_start_stop_code
-      - trigger: homeassistant
-        event: start
-    condition:
-      - condition: template
-        value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
-    action:
-      - action: input_select.select_option
-        target:
-          entity_id: input_select.set_sigen_run_mode
-        data:
-          option: >
-            {% if is_state('sensor.sigen_start_stop', "0") %}
-              Shutdown
-            {% else %}
-              Enabled
-            {% endif %}
-    mode: single
+  # - id: "automation_sigen_run_mode_input_selector_update"
+  #   alias: "sigen run mode input selector update"
+  #   description: "Updates enable/ stops input selector"
+  #   triggers:
+  #     - trigger: state
+  #       entity_id: sensor.sigen_start_stop_code
+  #     - trigger: homeassistant
+  #       event: start
+  #   condition:
+  #     - condition: template
+  #       value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
+  #   action:
+  #     - action: input_select.select_option
+  #       target:
+  #         entity_id: input_select.set_sigen_run_mode
+  #       data:
+  #         option: >
+  #           {% if is_state('sensor.sigen_start_stop', "0") %}
+  #             Shutdown
+  #           {% else %}
+  #             Enabled
+  #           {% endif %}
+  #   mode: single
 
   - id: "automation_sigen_indenpendent_phase_power_control_input_selector_action"
     alias: "sigen indenpendent phase power control input selector action"
