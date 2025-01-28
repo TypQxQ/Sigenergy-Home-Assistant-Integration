@@ -1,0 +1,935 @@
+# Home Assistant Sigenergy inverter integration
+# https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
+# by Andrei Ignat (TypQxQ)
+# last update: 2025-01-28
+#
+# Adapted from Sungrow SHx Inverter Modbus Home Assistant
+# https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
+# by Martin Kaiser
+#
+# Note: This YAML file will only work with Home Assistant >= 2024.10
+
+# Entities where the unique_id starts with "sigendev_second_" are read for the second Sigenergy EMS plant.
+# It's possible to add more inverters by adding more entities with the same structure but diffrent names and unique_id.
+
+modbus:
+      - name: Sigen Type
+        unique_id: sigendev_second_type
+        device_address: !secret sigen_modbus_slave_second
+        address: 30500
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigen Serial number
+        unique_id: sigendev_second_serial_number
+        device_address: !secret sigen_modbus_slave_second
+        address: 30515
+        input_type: input
+        data_type: string
+        count: 10
+        scan_interval: 600
+
+      - name: Sigen Firmware version
+        unique_id: sigendev_second_firmware_version
+        device_address: !secret sigen_modbus_slave_second
+        address: 30525
+        input_type: input
+        data_type: string
+        count: 15
+        scan_interval: 600
+
+      - name: Sigen Rated active power
+        unique_id: sigendev_second_rated_active_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30540
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max rated apparent power
+        unique_id: sigendev_second_max_rated_apparent_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30542
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kVA
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max active power
+        unique_id: sigendev_second_max_active_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30544
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max absorbtion power
+        unique_id: sigendev_second_max_absorb_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30546
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Rated Battery capacity
+        unique_id: sigendev_second_rated_battery_capacity
+        device_address: !secret sigen_modbus_slave_second
+        address: 30548
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Rated charging power
+        unique_id: sigendev_second_rated_charging_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30550
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Rated discharging power
+        unique_id: sigendev_second_rated_discharging_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30552
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Daily export energy
+        unique_id: sigendev_second_daily_export_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30554
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Accumulated export energy
+        unique_id: sigendev_second_accumulated_export_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30556
+        input_type: input
+        data_type: uint64
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen daily import energy
+        unique_id: sigendev_second_daily_import_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30560
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Accumulated import energy
+        unique_id: sigendev_second_accumulated_import_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30562
+        input_type: input
+        data_type: uint64
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Daily charge energy
+        unique_id: sigendev_second_daily_charge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30566
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Accumulated charge energy
+        unique_id: sigendev_second_accumulated_charge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30568
+        input_type: input
+        data_type: uint64
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Daily discharge energy
+        unique_id: sigendev_second_daily_discharge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30572
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Accumulated discharge energy
+        unique_id: sigendev_second_accumulated_discharge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30574
+        input_type: input
+        data_type: uint64
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Running state code
+        # refer to Appendix 1
+        unique_id: sigendev_second_running_state_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 30578
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Max. active power adjustment value
+        unique_id: sigendev_second_max_active_power_adjustment_value
+        device_address: !secret sigen_modbus_slave_second
+        address: 30579
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Min active power adjustment value
+        unique_id: sigendev_second_min_active_power_adjustment_value
+        device_address: !secret sigen_modbus_slave_second
+        address: 30581
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Max reactive power adjustment value
+        unique_id: sigendev_second_max_reactive_power_adjustment_value
+        device_address: !secret sigen_modbus_slave_second
+        address: 30583
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Min reactive power adjustment value absorbed from the ac terminal
+        unique_id: sigendev_second_min_reactive_power_adjustment_value
+        device_address: !secret sigen_modbus_slave_second
+        address: 30585
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen Active power
+        unique_id: sigendev_second_active_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30587
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 5
+
+      - name: Sigen Reactive power
+        unique_id: sigendev_second_reactive_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30589
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kVAr
+        # device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 5
+
+      - name: Sigen ESS Max. battery charge power
+        unique_id: sigendev_second_ess_max_battery_charge_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30591
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen ESS Max. battery discharge power
+        unique_id: sigendev_second_ess_max_battery_discharge_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30593
+        input_type: input
+        data_type: uint32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 600
+
+      - name: Sigen ESS Available battery charge Energy
+        unique_id: sigendev_second_ess_available_battery_charge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30595
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        # state_class: measurement
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen ESS Available battery discharge Energy
+        unique_id: sigendev_second_ess_available_battery_discharge_energy
+        device_address: !secret sigen_modbus_slave_second
+        address: 30597
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        # state_class: measurement
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen ESS charge / discharge power
+        unique_id: sigendev_second_ess_charge_discharge_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 30599
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 5
+
+      - name: Sigen ESS battery SOC
+        unique_id: sigendev_second_ess_battery_soc
+        device_address: !secret sigen_modbus_slave_second
+        address: 30601
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: Sigen ESS battery SOH
+        unique_id: sigendev_second_ess_battery_soh
+        device_address: !secret sigen_modbus_slave_second
+        address: 30602
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: Sigen ESS average cell temperature
+        unique_id: sigendev_second_ess_average_cell_temperature
+        device_address: !secret sigen_modbus_slave_second
+        address: 30603
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen ESS average cell voltage
+        unique_id: sigendev_second_ess_average_cell_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 30604
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen Alarm1 code
+        # Refer to Appendix 2
+        unique_id: sigendev_second_alarm1_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 30605
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm2 code
+        # Refer to Appendix 3
+        unique_id: sigendev_second_alarm2_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 30606
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm3 code
+        # Refer to Appendix 4
+        unique_id: sigendev_second_alarm3_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 30607
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Alarm4 code
+        # Refer to Appendix 5
+        unique_id: sigendev_second_alarm4_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 30608
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Rated grid voltage
+        unique_id: sigendev_second_rated_grid_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31000
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 600
+
+      - name: Sigen Rated grid frequency
+        unique_id: sigendev_second_rated_grid_frequency
+        device_address: !secret sigen_modbus_slave_second
+        address: 31001
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Sigen Grid frequency
+        unique_id: sigendev_second_grid_frequency
+        device_address: !secret sigen_modbus_slave_second
+        address: 31002
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: Hz
+        device_class: frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen Inverter temperature
+        unique_id: sigendev_second_inverter_temperature
+        device_address: !secret sigen_modbus_slave_second
+        address: 31003
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: Sigen Output type code
+        # 0: L/N
+        # 1: L1/L2/L3
+        # 2: L1/L2/L3/N
+        # 3: L1/L2/N
+        unique_id: sigendev_second_output_type_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 31004
+        input_type: input
+        data_type: uint16
+        scan_interval: 600
+
+      - name: Sigen A-B line voltage
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_second_a_b_line_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31005
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen B-C line voltage
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_second_b_c_line_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31007
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen C-A line voltage
+        # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+        unique_id: sigendev_second_c_a_line_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31009
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase A voltage
+        unique_id: sigendev_second_phase_a_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31011
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase B voltage
+        unique_id: sigendev_second_phase_b_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31013
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase C voltage
+        unique_id: sigendev_second_phase_c_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31015
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase A current
+        unique_id: sigendev_second_phase_a_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31017
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase B current
+        unique_id: sigendev_second_phase_b_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31019
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Phase C current
+        unique_id: sigendev_second_phase_c_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31021
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: Sigen Power factor
+        unique_id: sigendev_second_power_factor
+        device_address: !secret sigen_modbus_slave_second
+        address: 31023
+        input_type: input
+        data_type: uint16
+        precision: 2
+        device_class: power_factor
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen OACK count
+        unique_id: sigendev_second_oack_count
+        device_address: !secret sigen_modbus_slave_second
+        address: 31024
+        input_type: input
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen PV string count
+        unique_id: sigendev_second_pv_string_count
+        device_address: !secret sigen_modbus_slave_second
+        address: 31025
+        input_type: input
+        data_type: uint16
+        scan_interval: 600
+
+      - name: Sigen MPTT count
+        unique_id: sigendev_second_mptt_count
+        device_address: !secret sigen_modbus_slave_second
+        address: 31026
+        input_type: input
+        data_type: uint16
+        scan_interval: 600
+
+      - name: Sigen PV1 voltage
+        unique_id: sigendev_second_pv1_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31027
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen PV1 current
+        unique_id: sigendev_second_pv1_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31028
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV2 voltage
+        unique_id: sigendev_second_pv2_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31029
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen PV2 current
+        unique_id: sigendev_second_pv2_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31030
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV3 voltage
+        unique_id: sigendev_second_pv3_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31031
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen PV3 current
+        unique_id: sigendev_second_pv3_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31032
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV4 voltage
+        unique_id: sigendev_second_pv4_voltage
+        device_address: !secret sigen_modbus_slave_second
+        address: 31033
+        input_type: input
+        data_type: int16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Sigen PV4 current
+        unique_id: sigendev_second_pv4_current
+        device_address: !secret sigen_modbus_slave_second
+        address: 31034
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Sigen PV power
+        unique_id: sigendev_second_pv_power
+        device_address: !secret sigen_modbus_slave_second
+        address: 31035
+        input_type: input
+        data_type: int32
+        precision: 3
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 10
+
+      - name: Sigen Insulation resistance
+        unique_id: sigendev_second_insulation_resistance
+        device_address: !secret sigen_modbus_slave_second
+        address: 31037
+        input_type: input
+        data_type: uint16
+        precision: 3
+        unit_of_measurement: "MΩ"
+        # device_class: conductivity
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 60
+
+      - name: Sigen Startup time
+        unique_id: sigendev_second_startup_time
+        device_address: !secret sigen_modbus_slave_second
+        address: 31038
+        input_type: input
+        data_type: uint32
+        scan_interval: 600
+        unit_of_measurement: s
+
+      - name: Sigen Shutdown time
+        unique_id: sigendev_second_shutdown_time
+        device_address: !secret sigen_modbus_slave_second
+        address: 31040
+        input_type: input
+        data_type: uint32
+        scan_interval: 600
+        unit_of_measurement: s
+
+      ################################################
+      # Read/Write registers for device
+      ################################################
+      - name: Sigen Start/Stop code
+        # 0: Stop
+        # 1: Start
+        unique_id: sigendev_second_start_stop_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 40500
+        input_type: holding
+        data_type: uint16
+        scan_interval: 10
+
+      - name: Sigen Grid code
+        unique_id: sigen_grid_code
+        device_address: !secret sigen_modbus_slave_second
+        address: 40501
+        input_type: holding
+        data_type: uint16
+        scan_interval: 60
+
+################################################
+# 'virtual' template sensors for better readability
+################################################
+template:
+  - sensor:
+      - name: Sigen PV1 power
+        unique_id: sigendev_second_pv1_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {{
+            (
+              (
+                states('sensor.sigen_pv1_voltage') | float 
+                * states('sensor.sigen_pv1_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
+        icon: mdi:solar-power
+
+      - name: Sigen PV2 power
+        unique_id: sigendev_second_pv2_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {{
+            (
+              (
+                states('sensor.sigen_pv2_voltage') | float 
+                * states('sensor.sigen_pv2_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
+        icon: mdi:solar-power
+
+      - name: Sigen PV3 power
+        unique_id: sigendev_second_pv3_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {{
+            (
+              (
+                states('sensor.sigen_pv3_voltage') | float 
+                * states('sensor.sigen_pv3_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
+        icon: mdi:solar-power
+
+      - name: Sigen PV4 power
+        unique_id: sigendev_second_pv4_power
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        state: >-
+          {{
+            (
+              (
+                states('sensor.sigen_pv4_voltage') | float 
+                * states('sensor.sigen_pv4_current') | float
+              ) * 0.001
+            ) | round(2)
+          }}
+        icon: mdi:solar-power
+

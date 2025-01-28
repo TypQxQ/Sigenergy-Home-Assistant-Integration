@@ -1,19 +1,17 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2025-01-19
+# last update: 2025-01-28
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
 # by Martin Kaiser
 #
-# Note: This YAML file will only work with Home Assistant >= 2023.10
+# Note: This YAML file will only work with Home Assistant >= 2024.10
 
 # Entities where the unique_id starts with "sigendev_" are read from the Sigenergy inverter.
 # Entities where the unique_id starts with "sigen " are read for the Sigenergy EMS plant.
 # It's possible to add more inverters by adding more entities with the same structure but diffrent names and unique_id.
-
-# Using platform trigger may give errors in VsCode but it's for compability with HA prior to 2024.10 and not deprecated yet.
 
 modbus:
   - name: Sigen
