@@ -1360,84 +1360,85 @@ modbus:
         scan_interval: 600
         unit_of_measurement: s
 
-      #  DC Charger doesn't work as documented. Getting "invalid address".
+      # Updated DC Charger to correct data_type
+      # Updated scales across DC Charger to report correctly
 
-      # - name: Sigen DC Charger - Vehicle battery voltage
-      #   unique_id: sigendev_dc_charger_vehicle_battery_voltage
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31500
-      #   input_type: input
-      #   data_type: uint16
-      #   precision: 1
-      #   unit_of_measurement: V
-      #   device_class: voltage
-      #   state_class: measurement
-      #   scale: 0.1
-      #   scan_interval: 60
+      - name: Sigen DC Charger - Vehicle battery voltage
+        unique_id: sigendev_dc_charger_vehicle_battery_voltage
+        device_address: !secret sigen_modbus_slave
+        address: 31500
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 5
 
-      # - name: Sigen DC Charger - Charging current
-      #   unique_id: sigendev_dc_charger_charging_current
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31501
-      #   input_type: input
-      #   data_type: uint16
-      #   precision: 1
-      #   unit_of_measurement: A
-      #   device_class: current
-      #   state_class: measurement
-      #   scale: 0.1
-      #   scan_interval: 10
+      - name: Sigen DC Charger - Charging current
+        unique_id: sigendev_dc_charger_charging_current
+        device_address: !secret sigen_modbus_slave
+        address: 31501
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: A
+        device_class: current
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 5
 
-      # - name: Sigen DC Charger - Output power
-      #   unique_id: sigendev_dc_charger_output_power
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31502
-      #   input_type: input
-      #   data_type: uint16
-      #   precision: 1
-      #   unit_of_measurement: kW
-      #   device_class: power
-      #   state_class: measurement
-      #   scale: 0.1
-      #   scan_interval: 10
+      - name: Sigen DC Charger - Output power
+        unique_id: sigendev_dc_charger_output_power
+        device_address: !secret sigen_modbus_slave
+        address: 31502
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kW
+        device_class: power
+        state_class: measurement
+        scale: 0.001
+        scan_interval: 5
 
-      # - name: Sigen DC Charger - Vehicle battery SOC
-      #   unique_id: sigendev_dc_charger_vehicle_battery_soc
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31504
-      #   input_type: input
-      #   data_type: uint16
-      #   precision: 1
-      #   unit_of_measurement: "%"
-      #   device_class: battery
-      #   state_class: measurement
-      #   scale: 0.1
-      #   scan_interval: 60
+      - name: Sigen DC Charger - Vehicle battery SOC
+        unique_id: sigendev_dc_charger_vehicle_battery_soc
+        device_address: !secret sigen_modbus_slave
+        address: 31504
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 5
 
-      # - name: Sigen DC Charger - Current charging capacity
-      #   unique_id: sigendev_dc_charger_current_charging_capacity
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31505
-      #   input_type: input
-      #   data_type: uint32
-      #   precision: 1
-      #   unit_of_measurement: kWh
-      #   device_class: energy
-      #   state_class: measurement
-      #   scale: 0.1
-      #   scan_interval: 60
+      - name: Sigen DC Charger - Current charging capacity
+        unique_id: sigendev_dc_charger_current_charging_capacity
+        device_address: !secret sigen_modbus_slave
+        address: 31505
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 5
 
-      # - name: Sigen DC Charger - Current charging duration
-      #   unique_id: sigendev_dc_charger_current_charging_duration
-      #   device_address: !secret sigen_modbus_slave
-      #   address: 31507
-      #   input_type: input
-      #   data_type: uint32
-      #   precision: 1
-      #   unit_of_measurement: s
-      #   device_class: duration
-      #   state_class: measurement
-      #   scan_interval: 10
+      - name: Sigen DC Charger - Current charging duration
+        unique_id: sigendev_dc_charger_current_charging_duration
+        device_address: !secret sigen_modbus_slave
+        address: 31507
+        input_type: input
+        data_type: uint32
+        precision: 1
+        unit_of_measurement: s
+        device_class: duration
+        state_class: measurement
+        scan_interval: 5
 
       ################################################
       # Read/Write registers for Sigen Plant
