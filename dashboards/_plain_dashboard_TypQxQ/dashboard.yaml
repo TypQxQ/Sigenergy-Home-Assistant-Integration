@@ -433,7 +433,7 @@ views:
           - sensor.sigen_general_alarm2
           - sensor.sigen_general_alarm3
           - sensor.sigen_general_alarm4
-        title: Alam
+        title: Alarm
       - type: entities
         entities:
           - entity: sensor.sigen_plant_pv_power
