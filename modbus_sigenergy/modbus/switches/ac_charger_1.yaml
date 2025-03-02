@@ -1,0 +1,7 @@
+- name: Sigen AC Charger 1 - Start/Stop
+  unique_id: sigen_ac_charger_1_start_stop
+  device_address: !secret sigen_modbus_ac_charger_1
+  address: 42000
+  write_type: holding
+  command_on: 0  # Start
+  command_off: 1 # Stop

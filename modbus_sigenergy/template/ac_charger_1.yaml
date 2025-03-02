@@ -1,0 +1,7 @@
+- binary_sensor:
+    - name: Sigen AC Charger 1 - System state
+      unique_id: sigen_ac_charger_1_system_state
+      attributes: !include ../attributes/ac_charger_system_state.yaml
+      state:  >-
+        {{ states_attr('sensor.sigen_ac_charger_1_system_state', state('sensor.sigen_ac_charger_1_system_state_code')|int) }}
+      icon: mdi:ev-station

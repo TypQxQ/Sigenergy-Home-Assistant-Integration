@@ -1,0 +1,840 @@
+- name: Sigen Inverter 1 - Model Type
+  unique_id: sigen_inverter_1_model_type
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30500
+  input_type: input
+  data_type: string
+  count: 15
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Serial number
+  unique_id: sigen_inverter_1_serial_number
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30515
+  input_type: input
+  data_type: string
+  count: 10
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Firmware version
+  unique_id: sigen_inverter_1_firmware_version
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30525
+  input_type: input
+  data_type: string
+  count: 15
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Rated active power
+  unique_id: sigen_inverter_1_rated_active_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30540
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Max rated apparent power
+  unique_id: sigen_inverter_1_max_rated_apparent_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30542
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVA
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Max active power
+  unique_id: sigen_inverter_1_max_active_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30544
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Max absorption power
+  unique_id: sigen_inverter_1_max_absorb_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30546
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Rated Battery capacity
+  unique_id: sigen_inverter_1_rated_battery_capacity
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30548
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS Rated charging power
+  unique_id: sigen_inverter_1_rated_charging_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30550
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS Rated discharging power
+  unique_id: sigen_inverter_1_rated_discharging_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30552
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Daily export energy
+  unique_id: sigen_inverter_1_daily_export_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30554
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Accumulated export energy
+  unique_id: sigen_inverter_1_accumulated_export_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30556
+  input_type: input
+  data_type: uint64
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Daily import energy
+  unique_id: sigen_inverter_1_daily_import_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30560
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Accumulated import energy
+  unique_id: sigen_inverter_1_accumulated_import_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30562
+  input_type: input
+  data_type: uint64
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Daily charge energy
+  unique_id: sigen_inverter_1_daily_charge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30566
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Accumulated charge energy
+  unique_id: sigen_inverter_1_accumulated_charge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30568
+  input_type: input
+  data_type: uint64
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Daily discharge energy
+  unique_id: sigen_inverter_1_daily_discharge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30572
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total_increasing
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Accumulated discharge energy
+  unique_id: sigen_inverter_1_accumulated_discharge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30574
+  input_type: input
+  data_type: uint64
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  state_class: total
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Running state code
+  # Refer to Appendix 1
+  unique_id: sigen_inverter_1_running_state_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30578
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Max. active power adjustment value
+  unique_id: sigen_inverter_1_max_active_power_adjustment_value
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30579
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Min active power adjustment value
+  unique_id: sigen_inverter_1_min_active_power_adjustment_value
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30581
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Max reactive power adjustment value
+  unique_id: sigen_inverter_1_max_reactive_power_adjustment_value
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30583
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVAr
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Min reactive power adjustment value absorbed from the ac terminal
+  unique_id: sigen_inverter_1_min_reactive_power_adjustment_value
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30585
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kVAr
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Active power
+  unique_id: sigen_inverter_1_active_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30587
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Inverter 1 - Reactive power
+  unique_id: sigen_inverter_1_reactive_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30589
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kVAr
+  # device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Inverter 1 - ESS Max. battery charge power
+  unique_id: sigen_inverter_1_ess_max_battery_charge_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30591
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS Max. battery discharge power
+  unique_id: sigen_inverter_1_ess_max_battery_discharge_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30593
+  input_type: input
+  data_type: uint32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS Available battery charge Energy
+  unique_id: sigen_inverter_1_ess_available_battery_charge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30595
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  # state_class: measurement
+  scale: 0.01
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS Available battery discharge Energy
+  unique_id: sigen_inverter_1_ess_available_battery_discharge_energy
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30597
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: kWh
+  device_class: energy
+  # state_class: measurement
+  scale: 0.01
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - ESS charge / discharge power
+  unique_id: sigen_inverter_1_ess_charge_discharge_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30599
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 5
+
+- name: Sigen Inverter 1 - ESS battery SOC
+  unique_id: sigen_inverter_1_ess_battery_soc
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30601
+  input_type: input
+  data_type: uint16
+  precision: 1
+  unit_of_measurement: "%"
+  device_class: battery
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - ESS battery SOH
+  unique_id: sigen_inverter_1_ess_battery_soh
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30602
+  input_type: input
+  data_type: uint16
+  precision: 1
+  unit_of_measurement: "%"
+  device_class: battery
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - ESS average cell temperature
+  unique_id: sigen_inverter_1_ess_average_cell_temperature
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30603
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: °C
+  device_class: Temperature
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - ESS average cell voltage
+  unique_id: sigen_inverter_1_ess_average_cell_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30604
+  input_type: input
+  data_type: uint16
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Alarm1 code
+  # Refer to Appendix 2
+  unique_id: sigen_inverter_1_alarm1_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30605
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Alarm2 code
+  # Refer to Appendix 3
+  unique_id: sigen_inverter_1_alarm2_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30606
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Alarm3 code
+  # Refer to Appendix 4
+  unique_id: sigen_inverter_1_alarm3_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30607
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Alarm4 code
+  # Refer to Appendix 5
+  unique_id: sigen_inverter_1_alarm4_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 30608
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Rated grid voltage
+  unique_id: sigen_inverter_1_rated_grid_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31000
+  input_type: input
+  data_type: uint16
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Rated grid frequency
+  unique_id: sigen_inverter_1_rated_grid_frequency
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31001
+  input_type: input
+  data_type: uint16
+  precision: 2
+  unit_of_measurement: Hz
+  device_class: frequency
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - Grid frequency
+  unique_id: sigen_inverter_1_grid_frequency
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31002
+  input_type: input
+  data_type: uint16
+  precision: 2
+  unit_of_measurement: Hz
+  device_class: frequency
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Power Conversion System internal temperature
+  unique_id: sigen_inverter_1_pcs_internal_temperature
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31003
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: °C
+  device_class: Temperature
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Output type code
+  # 0: L/N
+  # 1: L1/L2/L3
+  # 2: L1/L2/L3/N
+  # 3: L1/L2/N
+  unique_id: sigen_inverter_1_output_type_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31004
+  input_type: input
+  data_type: uint16
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - A-B line voltage
+  # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+  unique_id: sigen_inverter_1_a_b_line_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31005
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - B-C line voltage
+  # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+  unique_id: sigen_inverter_1_b_c_line_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31007
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - C-A line voltage
+  # Invalid when output type is L/N, L1/L2/N, or L1/L2/N
+  unique_id: sigen_inverter_1_c_a_line_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31009
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase A voltage
+  unique_id: sigen_inverter_1_phase_a_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31011
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase B voltage
+  unique_id: sigen_inverter_1_phase_b_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31013
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase C voltage
+  unique_id: sigen_inverter_1_phase_c_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31015
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase A current
+  unique_id: sigen_inverter_1_phase_a_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31017
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase B current
+  unique_id: sigen_inverter_1_phase_b_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31019
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Phase C current
+  unique_id: sigen_inverter_1_phase_c_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31021
+  input_type: input
+  data_type: uint32
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Power factor
+  unique_id: sigen_inverter_1_power_factor
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31023
+  input_type: input
+  data_type: uint16
+  precision: 2
+  device_class: power_factor
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PACK count
+  unique_id: sigen_inverter_1_pack_count
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31024
+  input_type: input
+  data_type: uint16
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV string count
+  unique_id: sigen_inverter_1_pv_string_count
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31025
+  input_type: input
+  data_type: uint16
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - MPPT count
+  unique_id: sigen_inverter_1_mppt_count
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31026
+  input_type: input
+  data_type: uint16
+  scan_interval: 600
+
+- name: Sigen Inverter 1 - PV1 voltage
+  unique_id: sigen_inverter_1_pv1_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31027
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV1 current
+  unique_id: sigen_inverter_1_pv1_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31028
+  input_type: input
+  data_type: int16
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV2 voltage
+  unique_id: sigen_inverter_1_pv2_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31029
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV2 current
+  unique_id: sigen_inverter_1_pv2_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31030
+  input_type: input
+  data_type: int16
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV3 voltage
+  unique_id: sigen_inverter_1_pv3_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31031
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV3 current
+  unique_id: sigen_inverter_1_pv3_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31032
+  input_type: input
+  data_type: int16
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV4 voltage
+  unique_id: sigen_inverter_1_pv4_voltage
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31033
+  input_type: input
+  data_type: int16
+  precision: 1
+  unit_of_measurement: V
+  device_class: voltage
+  state_class: measurement
+  scale: 0.1
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV4 current
+  unique_id: sigen_inverter_1_pv4_current
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31034
+  input_type: input
+  data_type: int16
+  precision: 2
+  unit_of_measurement: A
+  device_class: current
+  state_class: measurement
+  scale: 0.01
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - PV power
+  unique_id: sigen_inverter_1_pv_power
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31035
+  input_type: input
+  data_type: int32
+  precision: 3
+  unit_of_measurement: kW
+  device_class: power
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 10
+
+- name: Sigen Inverter 1 - Insulation resistance
+  unique_id: sigen_inverter_1_insulation_resistance
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31037
+  input_type: input
+  data_type: uint16
+  precision: 3
+  unit_of_measurement: "MΩ"
+  # device_class: conductivity
+  state_class: measurement
+  scale: 0.001
+  scan_interval: 60
+
+- name: Sigen Inverter 1 - Startup time
+  unique_id: sigen_inverter_1_startup_time
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31038
+  input_type: input
+  data_type: uint32
+  scan_interval: 600
+  unit_of_measurement: s
+
+- name: Sigen Inverter 1 - Shutdown time
+  unique_id: sigen_inverter_1_shutdown_time
+  device_address: !secret sigen_modbus_inverter_1
+  address: 31040
+  input_type: input
+  data_type: uint32
+  scan_interval: 600
+  unit_of_measurement: s
+
+################################################
+# Read/Write registers for device
+################################################
+- name: Sigen Inverter 1 - Grid code
+  unique_id: sigen_inverter_1_grid_code
+  device_address: !secret sigen_modbus_inverter_1
+  address: 40501
+  input_type: holding
+  data_type: uint16
+  scan_interval: 60

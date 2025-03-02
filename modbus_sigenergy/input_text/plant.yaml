@@ -1,0 +1,25 @@
+set_sigen_plant_ess_max_charging_limit:
+  name: Set Sigen Plant ESS max charging limit
+  pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
+  icon: mdi:battery-positive
+
+set_sigen_plant_ess_max_discharging_limit:
+  name: Set Sigen Plant ESS max discharging limit
+  pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
+  icon: mdi:battery-negative
+
+set_sigen_plant_pv_max_power_limit:
+  name: Set Sigen Plant PV max power limit
+  pattern: "^([1-9]\\d*|0)(\\.\\d+)?$"
+  icon: mdi:solar-power
+# get input for battery mode (forced charge/discharge, stop (default) )
+# set_sg_ems_mode:
+#   name: EMS mode
+#   options:
+#     - "Self-consumption mode (default)"
+#     - "Forced mode"
+#     - "External EMS" # required for multiple inverters main /follower?
+#   # these are commented, because they are rarely used
+#   #      - "VPP"
+#   #      - "MicroGrid"
+#   icon: mdi:battery-unknown

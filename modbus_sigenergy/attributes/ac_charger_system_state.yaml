@@ -1,0 +1,13 @@
+# System states according to IEC61851-1 definition:
+#
+# The values are based IEC 61851-1:2017 as documented by:
+# https://www.mathworks.com/help/autoblks/ug/charge-an-electric-vehicle.html
+
+0: System init - System is initialising # Not part of the IEC 61851-1 standard
+1: A1/A2 - Vehicle is not connected # A1: Charger not ready, A2: Charger ready
+2: B1 - Vehicle connected and not ready to accept energy, Charger not ready to supply energy
+3: B2 - Vehicle connected and not ready to accept energy, Charger ready to supply energy
+4: C1 - Vehicle connected and ready to accept energy, EV does not require charging area ventilation, Charger not ready to supply energy
+5: C2 - Vehicle connected and ready to accept energy, EV does not require charging area ventilation, Charger ready to supply energy
+6: F - Fault Other Charger problem (can be intentionally set by the Charger, for example, that maintenance is required)
+7: E - Error Charger disconnected from vehicle / Charger disconnected from utility, Charger loss of utility power or control pilot short to control pilot reference

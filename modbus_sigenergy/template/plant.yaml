@@ -1,0 +1,390 @@
+- sensor:
+    - name: Sigen Plant - EMS working mode
+      unique_id: sigen_plant_ems_working_mode
+      state: >-
+        {% if ((states('sensor.sigen_plant_ems_work_mode_code') |int) == 0) %}
+          Max self-consumption
+        {% elif ((states('sensor.sigen_plant_ems_work_mode_code') |int) == 1) %}
+          Sigen AI
+        {% elif ((states('sensor.sigen_plant_ems_work_mode_code') |int) == 2) %}
+          Time-based Control
+        {% elif ((states('sensor.sigen_plant_ems_work_mode_code') |int) == 5) %}
+          Fully Feed-in to Grid
+        {% elif ((states('sensor.sigen_plant_ems_work_mode_code') |int) == 7) %}
+          Remote EMS
+        {% else %}
+          Unknown
+        {% endif %}
+      icon: mdi:eye
+
+    - name: Sigen Plant - Grid sensor status
+      unique_id: sigen_plant_grid_sensor_status
+      state: >-
+        {% if ((states('sensor.sigen_plant_grid_sensor_status_code') |int) == 0) %}
+          Not connected
+        {% elif ((states('sensor.sigen_plant_grid_sensor_status_code') |int) == 1) %}
+          Connected
+        {% else %}
+          Unknown
+        {% endif %}
+      icon: mdi:eye
+
+    - name: Sigen Plant - On/Off grid status
+      unique_id: sigen_plant_on_off_grid_status
+      state: >-
+        {% if ((states('sensor.sigen_plant_on_off_grid_status_code') |int) == 0) %}
+          On grid
+        {% elif ((states('sensor.sigen_plant_on_off_grid_status_code') |int) == 1) %}
+          Off grid (auto)
+        {% else %}
+          Off grid (manual)
+        {% endif %}
+      icon: mdi:eye
+
+    - name: Sigen Plant - Running state
+      unique_id: sigen_plant_running_state
+      state: >-
+        {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
+          Standby
+        {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 1) %}
+          Running
+        {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 2) %}
+          Fault
+        {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 3) %}
+          Shutdown
+        {% else %}
+          Unknown code: {{ states('sensor.sigen_plant_running_state_code') }}
+        {% endif %}
+      icon: mdi:power
+
+    - name: Sigen Plant - Remote EMS Control mode
+      unique_id: sigen_plant_remote_ems_control_mode
+      state: "{{ states('input_select.set_sigen_plant_remote_ems_control_mode') }}"
+      icon: mdi:battery-unknown
+
+    - name: Sigen Plant - Independent phase power control
+      unique_id: sigen_plant_independent_phase_power_control
+      state: >-
+        {% if ((states('sensor.sigen_plant_independent_phase_power_control_code') |int) == 0) %}
+          Disabled
+        {% else %}
+          Enabled
+        {% endif %}
+      icon: mdi:eye
+
+    - name: Sigen Plant - Battery charging power
+      unique_id: sigen_plant_battery_charging_power
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        and not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_battery_power')|float > 0 %}
+          {{ states('sensor.sigen_plant_battery_power')|float }}
+        {% else %}
+          0
+        {% endif %}
+
+    - name: Sigen Plant - Battery discharging power
+      unique_id: sigen_plant_battery_discharging_power
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        and not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_battery_power')|float < 0 %}
+          {{ states('sensor.sigen_plant_battery_power')|float * -1 }}
+        {% else %}
+          0
+        {% endif %}
+
+    ################################################
+    # 'virtual' template sensors for calculations
+    ################################################
+    # - name: Sigen Plant - Grid active power
+    #   unique_id: sigen_plant_grid_active_power
+    #   state: >-
+    #     {{
+    #       states('sensor.sigen_plant_grid_phase_a_active_power') | float
+    #       + states('sensor.sigen_plant_grid_phase_b_active_power') | float
+    #       + states('sensor.sigen_plant_grid_phase_c_active_power') | float
+    #     }}
+    #   unit_of_measurement: kW
+    #   device_class: power
+    #   state_class: measurement
+    #   icon: mdi:power
+
+    # - name: Sigen Plant - Grid reactive power
+    #   unique_id: sigen_plant_grid_reactive_power
+    #   state: >-
+    #     {{
+    #       states('sensor.sigen_plant_grid_phase_a_reactive_power') | float
+    #       + states('sensor.sigen_plant_grid_phase_b_reactive_power') | float
+    #       + states('sensor.sigen_plant_grid_phase_c_reactive_power') | float
+    #     }}
+    #   unit_of_measurement: kVAR
+    #   # device_class: power
+    #   state_class: measurement
+    #   icon: mdi:power
+
+    - name: Sigen Plant - Grid Sensor import power
+      unique_id: sigen_plant_grid_sensor_import_power
+      state: >-
+        {{
+          states('sensor.sigen_plant_grid_sensor_active_power') | float
+          if states('sensor.sigen_plant_grid_sensor_active_power') | float > 0
+          else 0
+        }}
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      icon: mdi:power
+
+    - name: Sigen Plant - Grid Sensor export power
+      unique_id: sigen_plant_grid_sensor_export_power
+      state: >-
+        {{
+          states('sensor.sigen_plant_grid_sensor_active_power') | float * -1
+          if states('sensor.sigen_plant_grid_sensor_active_power') | float < 0
+          else 0
+        }}
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      icon: mdi:power
+
+    - name: Sigen Plant - Consumed power
+      unique_id: sigen_plant_consumed_power
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            states('sensor.sigen_plant_pv_power') | float(0)
+            + states('sensor.sigen_plant_battery_discharging_power') | float(0)
+            + states('sensor.sigen_plant_grid_sensor_import_power') | float(0)
+            - states('sensor.sigen_plant_battery_charging_power') | float(0)
+            - states('sensor.sigen_plant_grid_sensor_export_power') | float(0)
+          ) | round(3)
+        }}
+
+    # TODO: Confirm this is the right maths if there are multiple inverters or a
+    # DC Charger in the stack.
+    - name: Sigen Plant - Inverter power usage
+      unique_id: sigen_plant_inverter_power_usage
+      unit_of_measurement: kW
+      device_class: power
+      state_class: measurement
+      state: >-
+        {{
+          (
+            states('sensor.sigen_plant_consumed_power') | float(0)
+            - states('sensor.sigen_plant_active_power') | float(0)
+            - states('sensor.sigen_plant_grid_sensor_active_power') | float(0)
+          ) | round(3)
+        }}
+
+- binary_sensor:
+    - name: Sigen Plant - PV generating
+      unique_id: sigen_plant_pv_generating
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_pv_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_pv_power')|round(0,"ceil") > 0 %}
+          1
+        {% else %}
+          0
+        {% endif %}
+
+    - name: Sigen Plant - Battery charging
+      unique_id: sigen_plant_battery_charging
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_battery_power')|float > 0.01 %}
+          1
+        {% else %}
+          0
+        {% endif %}
+
+    - name: Sigen Plant - Battery discharging
+      unique_id: sigen_plant_battery_discharging
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_battery_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_battery_power')|float < -0.01 %}
+          1
+        {% else %}
+          0
+        {% endif %}
+
+    - name: Sigen Plant - Importing from grid
+      unique_id: sigen_plant_importing_from_grid
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_grid_sensor_active_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_grid_sensor_active_power')|float > 0.01 %}
+          1
+        {% else %}
+          0
+        {% endif %}
+
+    - name: Sigen Plant - Exporting to grid
+      unique_id: sigen_plant_exporting_to_grid
+      availability: >-
+        {{
+        not is_state('sensor.sigen_plant_grid_sensor_active_power', 'unavailable')
+        }}
+      state: >-
+        {% if states('sensor.sigen_plant_grid_sensor_active_power')|float < -0.01 %}
+          1
+        {% else %}
+          0
+        {% endif %}
+
+    # General Alarm1 - address 30027 from Appendix 2
+    - name: Sigen Plant - Software version mismatch
+      unique_id: sigen_plant_alarm1_software_version_mismatch
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(0) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Low insulation resistance
+      unique_id: sigen_plant_alarm1_low_insulation_resistance
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(1) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - The temperature is too high
+      unique_id: sigen_plant_alarm1_temperature_too_high
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(2) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Equipment failure
+      unique_id: sigen_plant_alarm1_equipment_failure
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(3) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - System grounding is abnormal
+      unique_id: sigen_plant_alarm1_system_grounding_abnormal
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(4) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - PV string voltage is high
+      unique_id: sigen_plant_alarm1_pv_string_voltage_high
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(5) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - PV string reverse connection
+      unique_id: sigen_plant_alarm1_pv_string_reverse_connection
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(6) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - PV string back-filling
+      unique_id: sigen_plant_alarm1_pv_string_back_filling
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(7) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - AFCI fault
+      unique_id: sigen_plant_alarm1_afci_fault
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(8) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid outage
+      unique_id: sigen_plant_alarm1_grid_outage
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(9) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid overvoltage
+      unique_id: sigen_plant_alarm1_grid_overvoltage
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(10) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid undervoltage
+      unique_id: sigen_plant_alarm1_grid_undervoltage
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(11) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid overfrequency
+      unique_id: sigen_plant_alarm1_grid_overfrequency
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(12) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid underfrequency
+      unique_id: sigen_plant_alarm1_grid_underfrequency
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(13) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Grid voltage imbalance
+      unique_id: sigen_plant_alarm1_grid_voltage_imbalance
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(14) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - The DC component of the output current exceeds the limits
+      unique_id: sigen_plant_alarm1_dc_component_exceeds_limits
+      state: "{{ states('sensor.sigen_plant_general_alarm1_code')|int|bitwise_and(15) > 0 }}"
+      icon: mdi:alert
+
+    # General Alarm2 - address 30028 from Appendix 3
+    - name: Sigen Plant - The leakage electricity exceeds the limits
+      unique_id: sigen_plant_alarm2_leakage_electricity_exceeds_limits
+      state: "{{ states('sensor.sigen_plant_general_alarm2_code')|int|bitwise_and(0) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Communication abnormal
+      unique_id: sigen_plant_alarm2_communication_abnormal
+      state: "{{ states('sensor.sigen_plant_general_alarm2_code')|int|bitwise_and(1) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - System internal protection
+      unique_id: sigen_plant_alarm2_system_internal_protection
+      state: "{{ states('sensor.sigen_plant_general_alarm2_code')|int|bitwise_and(2) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - AFCI self-test circuit fault
+      unique_id: sigen_plant_alarm2_afci_self_test_circuit_fault
+      state: "{{ states('sensor.sigen_plant_general_alarm2_code')|int|bitwise_and(3) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Off-grid protection
+      unique_id: sigen_plant_alarm2_off_grid_protection
+      state: "{{ states('sensor.sigen_plant_general_alarm2_code')|int|bitwise_and(4) > 0 }}"
+      icon: mdi:alert
+
+    # General Alarm3 - address 30029 from Appendix 4
+    - name: Sigen Plant - Software version mismatch
+      unique_id: sigen_plant_alarm3_software_version_mismatch
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(0) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Low insulation resistance
+      unique_id: sigen_plant_alarm3_low_insulation_resistance
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(1) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Temperature too high
+      unique_id: sigen_plant_alarm3_temperature_too_high
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(2) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Equipment failure
+      unique_id: sigen_plant_alarm3_equipment_failure
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(3) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Below desired temperature
+      unique_id: sigen_plant_alarm3_below_desired_temperature
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(4) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - System internal protection
+      unique_id: sigen_plant_alarm3_system_internal_protection
+      state: "{{ states('sensor.sigen_plant_general_alarm3_code')|int|bitwise_and(7) > 0 }}"
+      icon: mdi:alert
+
+    # General Alarm4 - address 30030 from Appendix 5
+    - name: Sigen Plant - Software version mismatch Output
+      unique_id: sigen_plant_alarm4_software_version_mismatch_output
+      state: "{{ states('sensor.sigen_plant_general_alarm4_code')|int|bitwise_and(0) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Temperature too high Output
+      unique_id: sigen_plant_alarm4_temperature_too_high_output
+      state: "{{ states('sensor.sigen_plant_general_alarm4_code')|int|bitwise_and(1) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Equipment failure Output
+      unique_id: sigen_plant_alarm4_equipment_failure_output
+      state: "{{ states('sensor.sigen_plant_general_alarm4_code')|int|bitwise_and(2) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - Excessive leakage current Output
+      unique_id: sigen_plant_alarm4_excessive_leakage_current_output
+      state: "{{ states('sensor.sigen_plant_general_alarm4_code')|int|bitwise_and(3) > 0 }}"
+      icon: mdi:alert
+    - name: Sigen Plant - N line grounding fault Output
+      unique_id: sigen_plant_alarm4_n_line_grounding_fault_output
+      state: "{{ states('sensor.sigen_plant_general_alarm4_code')|int|bitwise_and(4) > 0 }}"
+      icon: mdi:alert
