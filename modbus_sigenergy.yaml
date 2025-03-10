@@ -2431,7 +2431,7 @@ sensor:
     method: trapezoidal
     round: 2
     max_sub_interval:
-      seconds: 5
+      seconds: 30
 
   - platform: integration
     name: Sigen Accumulated PV energy production
@@ -2440,7 +2440,7 @@ sensor:
     method: trapezoidal
     round: 2
     max_sub_interval:
-      seconds: 5
+      seconds: 30
 
   - platform: integration
     name: Sigen Accumulated Grid energy export
@@ -2449,7 +2449,7 @@ sensor:
     method: trapezoidal
     round: 2
     max_sub_interval:
-      seconds: 5
+      seconds: 30
 
   - platform: integration
     name: Sigen Accumulated Grid energy import
@@ -2458,7 +2458,7 @@ sensor:
     method: trapezoidal
     round: 2
     max_sub_interval:
-      seconds: 5
+      seconds: 30
 
   - platform: integration
     name: Sigen Accumulated Inverter energy usage
@@ -2467,7 +2467,7 @@ sensor:
     method: trapezoidal
     round: 2
     max_sub_interval:
-      seconds: 5
+      seconds: 30
 
 utility_meter:
   sigen_daily_energy_consumption:
