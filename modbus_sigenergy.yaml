@@ -1360,6 +1360,166 @@ modbus:
         scan_interval: 600
         unit_of_measurement: s
 
+
+      ### AC CHARGER
+
+      ############################################################################################################
+      # Sigenergy AC Charger
+      # The AC Charger isn't tested because I don't have one.
+      # Uncomment the lines below to add the AC Charger sensors.
+      # Be aware that the AC Charger has a different Modbus slave address than the inverter.
+      ############################################################################################################
+
+      # - name: Sigen AC Charger - System state
+      #   # System states according to IEC61851-1 definition:
+      #   # I haen't found the exact definition of the states. The values are just a guess:
+      #   #
+      #   # 0: System innit: A state where the EVSE is not connected to the vehicle and is not ready to supply energy to the vehicle.???
+      #   # 1: A1/A2: A state where the EVSE is connected to the vehicle and is ready to supply energy to the vehicle.???
+      #   # 2: B1: A state where the EVSE is supplying energy to the vehicle.???
+      #   # 3: B2: A state where the EVSE is connected to the vehicle and is ready to supply energy to the vehicle, but the vehicle is not connected.???
+      #   # 4: C1: A state where the EVSE is connected to the vehicle and is ready to supply energy to the vehicle, but the vehicle is not ready to receive energy.???
+      #   # 5: C2: Not a clue
+      #   # 6: F: Fault???
+      #   # 7: E: Error???
+      #   unique_id: sigenac_system_state
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32000
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Total energy consumed
+      #   unique_id: sigenac_total_energy_consumed
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32001
+      #   input_type: input
+      #   data_type: uint32
+      #   precision: 1
+      #   unit_of_measurement: kWh
+      #   device_class: energy
+      #   state_class: total
+      #   scale: 0.01
+      #   scan_interval: 60
+
+      # - name: Sigen AC Charger - Charging power
+      #   unique_id: sigenac_charging_power
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32003
+      #   input_type: input
+      #   data_type: int32
+      #   precision: 1
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   state_class: measurement
+      #   scale: 0.001
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Rated power
+      #   unique_id: sigenac_rated_power
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32005
+      #   input_type: input
+      #   data_type: uint32
+      #   precision: 1
+      #   unit_of_measurement: kW
+      #   device_class: power
+      #   state_class: measurement
+      #   scale: 0.001
+      #   scan_interval: 600
+
+      # - name: Sigen AC Charger - Rated current
+      #   unique_id: sigenac_rated_current
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32007
+      #   input_type: input
+      #   data_type: int32
+      #   precision: 1
+      #   unit_of_measurement: A
+      #   device_class: current
+      #   state_class: measurement
+      #   scale: 0.01
+      #   scan_interval: 600
+
+      # - name: Sigen AC Charger - Rated voltage
+      #   unique_id: sigenac_rated_voltage
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32009
+      #   input_type: input
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: V
+      #   device_class: voltage
+      #   state_class: measurement
+      #   scale: 0.1
+      #   scan_interval: 600
+
+      # - name: Sigen AC Charger - AC-Charger input breaker
+      #   unique_id: sigenac_input_breaker
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32010
+      #   input_type: input
+      #   data_type: int32
+      #   precision: 1
+      #   unit_of_measurement: A
+      #   device_class: current
+      #   state_class: measurement
+      #   scale: 0.01
+      #   scan_interval: 600
+
+      # - name: Sigen AC Charger - Alarm1 code
+      #   unique_id: sigenac_alarm1_code
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32012
+      #   input_type: input
+      #   data_type: uint16
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Alarm2 code
+      #   unique_id: sigenac_alarm2_code
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32013
+      #   input_type: input
+      #   data_type: uint16
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Alarm3 code
+      #   unique_id: sigenac_alarm3_code
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 32014
+      #   input_type: input
+      #   data_type: uint16
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Start/Stop code
+      #   # Write only
+      #   # 0: Start
+      #   # 1: Stop
+      #   unique_id: sigen_ac_start_stop_code
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 42000
+      #   input_type: holding
+      #   data_type: uint16
+      #   scan_interval: 10
+
+      # - name: Sigen AC Charger - Charger output current
+      #   # [6, X] X is the smaller value between the rated current and the AC-Charger input breaker rated current.
+      #   unique_id: sigenac_charger_output_current
+      #   device_address: !secret sigen_ac_modbus_slave
+      #   address: 42001
+      #   input_type: input
+      #   data_type: uint32
+      #   precision: 1
+      #   unit_of_measurement: A
+      #   device_class: current
+      #   state_class: measurement
+      #   scale: 0.01
+      #   scan_interval: 10
+
+      ### END AC CHARGER
+
+
       #  DC Charger doesn't work as documented. Getting "invalid address".
 
       # - name: Sigen DC Charger - Vehicle battery voltage
