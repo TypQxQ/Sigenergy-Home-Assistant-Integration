@@ -1,7 +1,7 @@
 # Home Assistant Sigenergy inverter integration
 # https://github.com/TypQxQ/Sigenergy-Inverter-Modbus-Home-Assistant
 # by Andrei Ignat (TypQxQ)
-# last update: 2025-01-19
+# last update: 2025-04-15
 #
 # Adapted from Sungrow SHx Inverter Modbus Home Assistant
 # https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
@@ -2501,8 +2501,11 @@ input_select:
   set_sigen_plant_run_mode:
     name: Set Sigen Plant Run mode
     options:
-      - "Enabled"
+      - "Standby"
+      - "Running"
+      - "Fault"
       - "Shutdown"
+      - "Unknown"
 
   set_sigen_remote_ems:
     name: Set Sigen Remote EMS
@@ -2572,6 +2575,8 @@ input_text:
 # note: If you change a value by the sliders, it will take up to 60 seconds until the state variables are updated
 # Unfortunately, I could not find a way to "force update" modbus registers, yet...
 ################################################
+
+# Only Start if code is "Shutdown" and only Shutdown if the code is "Start" or "Standby"
 automation:
   - id: "automation_sigen_plant_run_mode_input_selector_action"
     alias: "sigen plant run mode input selector action"
@@ -2589,11 +2594,10 @@ automation:
           slave: 247
           address: 40000
           value: >
-            {% if is_state('input_select.set_sigen_plant_run_mode', "Enabled") %}
+            {% if is_state('input_select.set_sigen_plant_run_mode', "Running") and ((states('sensor.sigen_plant_running_state_code') |int) == 3) %}
               {{sg_start}}
-            {% else %}
+            {% elif is_state('input_select.set_sigen_plant_run_mode', "Shutdown") and ( ((states('sensor.sigen_plant_running_state_code') |int) == 0) or ((states('sensor.sigen_plant_running_state_code') |int) == 1) ) %}
               {{sg_stop}}
-            {% endif %}
     mode: single
 
   - id: "automation_sigen_plant_run_mode_input_selector_update"
@@ -2614,11 +2618,15 @@ automation:
         data:
           option: >
             {% if ((states('sensor.sigen_plant_running_state_code') |int) == 0) %}
-              Enabled
+              Standby
             {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 1) %}
-              Enabled
-            {% else %}
+              Running
+            {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 2) %}
+              Fault
+            {% elif ((states('sensor.sigen_plant_running_state_code') |int) == 3) %}
               Shutdown
+            {% else %}
+              Unknown
             {% endif %}          
     mode: single
 
@@ -2639,9 +2647,9 @@ automation:
           slave: 247
           address: 40029
           value: >
-            {% if is_state('input_select.set_sigen_remote_ems', "Enabled (Home Assistant control)") %}
+            {% if is_state('input_select.set_sigen_remote_ems', "Enabled (Home Assistant control)") and ((states('sensor.sigen_remote_ems_code') | int) == 0) %}
               {{sg_enable}}
-            {% else %}
+            {% elif is_state('input_select.set_sigen_remote_ems', "Disabled (default, uses the app)") and ((states('sensor.sigen_remote_ems_code') | int) == 1) %}
               {{sg_disable}}
             {% endif %}
     mode: single
@@ -2665,7 +2673,7 @@ automation:
           option: >
             {% if is_state('sensor.sigen_remote_ems_code', "0") %}
               Disabled (default, uses the app)
-            {% else %}
+            {% elif is_state('sensor.sigen_remote_ems_code', "1") %}
               Enabled (Home Assistant control)
             {% endif %}
     mode: single
@@ -2684,13 +2692,13 @@ automation:
           slave: 247
           address: 40031
           value: >
-            {% if is_state('input_select.set_sigen_remote_ems_control_mode', "PCS remote control") %} 0
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Standby") %} 1
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Maximum self-consumption (default)") %} 2
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the grid first)") %} 3
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the PV first)") %} 4
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from PV first)") %} 5
-            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from the battery first)") %} 6
+            {% if is_state('input_select.set_sigen_remote_ems_control_mode', "PCS remote control") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 0) %} 0
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Standby") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 1) %} 1
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Maximum self-consumption (default)") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 2) %} 2
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the grid first)") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 3) %} 3
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command charging (consume power from the PV first)") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 4) %} 4
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from PV first)") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 5) %} 5
+            {% elif is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from the battery first)") and ((states('sensor.sigen_remote_ems_control_mode_code') | int) != 6) %} 6
             {% endif %}
     mode: single
 
@@ -2728,53 +2736,6 @@ automation:
             {% endif %}
     mode: single
 
-  # - id: "automation_sigen_run_mode_input_selector_action"
-  #   alias: "sigen run mode input selector action"
-  #   description: "Sigen Start/Stop"
-  #   triggers:
-  #     - trigger: state
-  #       entity_id: input_select.set_sigen_run_mode
-  #   variables:
-  #     sg_start: 0x0001
-  #     sg_stop: 0x0000
-  #   action:
-  #     - action: modbus.write_register
-  #       data_template:
-  #         hub: Sigen
-  #         slave: 247
-  #         address: 40000
-  #         value: >
-  #           {% if is_state('input_select.', "Enabled") %}
-  #             {{sg_start}}
-  #           {% else %}
-  #             {{sg_stop}}
-  #           {% endif %}
-  #   mode: single
-
-  # - id: "automation_sigen_run_mode_input_selector_update"
-  #   alias: "sigen run mode input selector update"
-  #   description: "Updates enable/ stops input selector"
-  #   triggers:
-  #     - trigger: state
-  #       entity_id: sensor.sigen_start_stop_code
-  #     - trigger: homeassistant
-  #       event: start
-  #   condition:
-  #     - condition: template
-  #       value_template: "{{ not is_state('sensor.sigen_start_stop', 'unavailable') }}"
-  #   action:
-  #     - action: input_select.select_option
-  #       target:
-  #         entity_id: input_select.set_sigen_run_mode
-  #       data:
-  #         option: >
-  #           {% if is_state('sensor.sigen_start_stop', "0") %}
-  #             Shutdown
-  #           {% else %}
-  #             Enabled
-  #           {% endif %}
-  #   mode: single
-
   - id: "automation_sigen_indenpendent_phase_power_control_input_selector_action"
     alias: "sigen indenpendent phase power control input selector action"
     description: "Sigen Independent phase power control action"
@@ -2791,9 +2752,9 @@ automation:
           slave: 247
           address: 40030
           value: >
-            {% if is_state('input_select.set_sigen_indenpendent_phase_power_control', "Enabled") %}
+            {% if is_state('input_select.set_sigen_indenpendent_phase_power_control', "Enabled") and ((states('sensor.sigen_independent_phase_power_control_code') | int) == 0) %}
               {{sg_enable}}
-            {% else %}
+            {% elif is_state('input_select.set_sigen_indenpendent_phase_power_control', "Disabled") and ((states('sensor.sigen_independent_phase_power_control_code') | int) == 1) %}
               {{sg_disable}}
             {% endif %}
     mode: single
@@ -2817,7 +2778,7 @@ automation:
           option: >
             {% if is_state('sensor.sigen_independent_phase_power_control_code', "0") %}
               Disabled
-            {% else %}
+            {% elif is_state('sensor.sigen_independent_phase_power_control_code', "1") %}
               Enabled
             {% endif %}
     mode: single
@@ -2828,6 +2789,9 @@ automation:
     triggers:
       - trigger: state
         entity_id: input_text.set_sigen_ess_max_charging_limit
+    condition:
+      - condition: template
+        value_template: "{{ ((states('sensor.sigen_ess_max_charging_limit') | float) != (states('input_text.set_sigen_ess_max_charging_limit') | float)) }}"
     action:
       - action: modbus.write_register
         data_template:
@@ -2868,6 +2832,9 @@ automation:
     triggers:
       - trigger: state
         entity_id: input_text.set_sigen_ess_max_discharging_limit
+    condition:
+      - condition: template
+        value_template: "{{ ((states('sensor.sigen_ess_max_discharging_limit') | float) != (states('input_text.set_sigen_ess_max_discharging_limit') | float)) }}"
     action:
       - action: modbus.write_register
         data_template:
@@ -2908,6 +2875,9 @@ automation:
     triggers:
       - trigger: state
         entity_id: input_text.set_sigen_pv_max_power_limit
+    condition:
+      - condition: template
+        value_template: "{{ ((states('sensor.sigen_pv_max_power_limit') | float) != (states('input_text.set_sigen_pv_max_power_limit') | float)) }}"
     action:
       - action: modbus.write_register
         data_template:
