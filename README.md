@@ -13,7 +13,11 @@ An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC 
 
 # 1. Overview
 
-This integration lets you gather sensor data and control the EMS (Energy Management System) of Sigenergy inverter, battery and DC charger.
+This integration allows you to monitor sensor data and manage the EMS (Energy Management System) for Sigenergy inverters and batteries via Modbus TCP.
+
+**Note:** Due to the limitations inherent in YAML-based Modbus configurations within Home Assistant, direct control of Sigenergy AC and DC Chargers is **not supported** in this version.
+
+A new Python-based version, installable through HACS, is currently under development. This future version aims to provide comprehensive support, including AC/DC Chargers and setups with multiple inverters.
 
 ## 2. Documentation
 
@@ -71,15 +75,15 @@ Home Asisstants built-in Energy Dashboard
 <img src="doc/images/HA_Energy_Dashboard.png" width="600">
 
 ## 6. Tested configurations
-I have a **Sigenergy SigenStor EC 15.0 TP** Inverter and **2 8kWh batteries** updating frequently to the latest **Home Assistant** (> 2024.9). I try to thoroughly test features before releasing them, but I cannot test everything (e.g., backup capabilities, DO-related, ...)
+I have a **Sigenergy SigenStor EC 15.0 TP** Inverter and **4 8kWh batteries** updating frequently to the latest **Home Assistant** (> 2025.4).
 
 The Modbus register mapping is based on two documents I found online. I am not sure if I am allowed to share the files, but you can search for them using their names. 
 Let me know in the github discussions, if there are newer versions available.
 
 ```
 Sigenergy Modbus Protocol
-Version: V1.8
-Release date: 2024-07-24
+Version: V2.5
+Release date: 2025-02-19
 ```
 
 ## 7. Contribution
