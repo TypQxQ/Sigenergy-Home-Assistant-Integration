@@ -17,7 +17,8 @@ This integration allows you to monitor sensor data and manage the EMS (Energy Ma
 
 **Note:** Due to the limitations inherent in YAML-based Modbus configurations within Home Assistant, direct control of Sigenergy AC and DC Chargers is **not supported** in this version.
 
-A new Python-based version, installable through HACS, is currently under development. This future version aims to provide comprehensive support, including AC/DC Chargers and setups with multiple inverters.
+A new Python-based version, installable through HACS, is available at  https://github.com/TypQxQ/Sigenergy-Local-Modbus 
+The new version provides easier setup, updates, comprehensive support, including AC/DC Chargers and setups with multiple inverters.
 
 ## 2. Documentation
 
