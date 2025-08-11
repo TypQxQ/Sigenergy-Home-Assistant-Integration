@@ -1,3 +1,5 @@
+> **⚠️ LEGACY PROJECT:** This repository is superseded by the new HACS-based [Sigenergy-Local-Modbus](https://github.com/TypQxQ/Sigenergy-Local-Modbus) integration. No new features will be added here. See [Discussion #98](https://github.com/TypQxQ/Sigenergy-Home-Assistant-Integration/discussions/98).
+ 
 An *easy-to-use YAML-based integration* for Sigenergy inverters, battery and DC charger for Home Assistant. 
 
 # Contents
