@@ -2547,8 +2547,8 @@ automation:
               )
             )
           }}
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2572,8 +2572,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_plant_running_state_code', 'unavailable') }}"
-    action:
-      - service: input_select.select_option
+    actions:
+      - action: input_select.select_option
         target:
           entity_id: input_select.set_sigen_plant_run_mode
         data:
@@ -2588,14 +2588,14 @@ automation:
               Shutdown
             {% else %}
               Unknown
-            {% endif %}          
+            {% endif %}
     mode: single
 
   - id: "automation_sigen_remote_ems_input_selector_action"
     alias: "sigen remote EMS input selector action"
     description: "Enables/ disables remote EMS"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - input_select.set_sigen_remote_ems
     condition:
@@ -2608,8 +2608,8 @@ automation:
     variables:
       sg_disable: 0
       sg_enable: 1
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2633,8 +2633,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_remote_ems_code', 'unavailable') }}"
-    action:
-      - service: input_select.select_option
+    actions:
+      - action: input_select.select_option
         target:
           entity_id: input_select.set_sigen_remote_ems
         data:
@@ -2649,8 +2649,8 @@ automation:
   - id: "automation_sigen_remote_ems_control_mode_input_selector_action"
     alias: "sigen remote EMS control mode input selector action"
     description: "Sets the remote EMS control mode"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - input_select.set_sigen_remote_ems_control_mode
     condition:
@@ -2666,8 +2666,8 @@ automation:
             or (is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from PV first)") and not is_state('sensor.sigen_remote_ems_control_mode_code', '5'))
             or (is_state('input_select.set_sigen_remote_ems_control_mode', "Command discharging (output power from the battery first)") and not is_state('sensor.sigen_remote_ems_control_mode_code', '6'))
           }}
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2694,8 +2694,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_remote_ems_control_mode_code', 'unavailable') }}"
-    action:
-      - service: input_select.select_option
+    actions:
+      - action: input_select.select_option
         target:
           entity_id: input_select.set_sigen_remote_ems_control_mode
         data:
@@ -2720,8 +2720,8 @@ automation:
   - id: "automation_sigen_independent_phase_power_control_input_selector_action"
     alias: "sigen independent phase power control input selector action"
     description: "Sigen Independent phase power control action"
-    trigger:
-      - platform: state
+    triggers:
+      - trigger: state
         entity_id:
           - input_select.set_sigen_indenpendent_phase_power_control
     condition:
@@ -2734,8 +2734,8 @@ automation:
     variables:
       sg_disable: 0
       sg_enable: 1
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2757,8 +2757,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ ((states('sensor.sigen_ess_max_charging_limit') | float) != (states('input_text.set_sigen_ess_max_charging_limit') | float)) }}"
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2783,8 +2783,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_ess_max_charging_limit', 'unavailable') }}"
-    action:
-      - service: input_text.set_value
+    actions:
+      - action: input_text.set_value
         target:
           entity_id: input_text.set_sigen_ess_max_charging_limit
         data:
@@ -2800,8 +2800,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ ((states('sensor.sigen_ess_max_discharging_limit') | float) != (states('input_text.set_sigen_ess_max_discharging_limit') | float)) }}"
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2826,8 +2826,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_ess_max_discharging_limit', 'unavailable') }}"
-    action:
-      - service: input_text.set_value
+    actions:
+      - action: input_text.set_value
         target:
           entity_id: input_text.set_sigen_ess_max_discharging_limit
         data:
@@ -2843,8 +2843,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ ((states('sensor.sigen_pv_max_power_limit') | float) != (states('input_text.set_sigen_pv_max_power_limit') | float)) }}"
-    action:
-      - service: modbus.write_register
+    actions:
+      - action: modbus.write_register
         data:
           hub: Sigen
           slave: 247
@@ -2869,8 +2869,8 @@ automation:
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.sigen_pv_max_power_limit', 'unavailable') }}"
-    action:
-      - service: input_text.set_value
+    actions:
+      - action: input_text.set_value
         target:
           entity_id: input_text.set_sigen_pv_max_power_limit
         data:
